@@ -15,7 +15,7 @@ class Jeu:
         return self.Nom_jeu
 
     def get_Age(self):
-        return self.AgeMini
+        return self.Age
 
     def get_Description(self):
         return self.Description
