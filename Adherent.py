@@ -1,3 +1,4 @@
+
 class Adherent:
 
     def __init__(self,user_id=None,name="",pseudo="",password="",numTel="",adresse="",abonnementValide=False,empruntEnCours=False,reservationEnCours=False,nbRetard=0):
