@@ -1,3 +1,4 @@
+
 class Jeu:
 
     def __init__(self,id_Jeu=None,Nom_Jeu="",Annee=None,Editeur="",Age=None,NombreJoueurs="",Description=""):
