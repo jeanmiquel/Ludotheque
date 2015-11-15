@@ -13,10 +13,6 @@ class Adherent:
         self.empruntEnCours = empruntEnCours
         self.reservationEnCours = reservationEnCours
         self.nbRetard = nbRetard
-        self.abonnementValide = abonnementValide
-        self.empruntEnCours = empruntEnCours
-        self.reservationEnCours = reservationEnCours
-        self.nbRetard = nbRetard
 
 ##### GETTERS ########
 
