@@ -1,4 +1,6 @@
-class Jeu :
+from datetime import datetime
+
+class Adherent :
 
     def __init__(self, nomAdh : str, pseudoAdh : str, password : str, numTel : str, mail : str, adresse : str, dataBase = BD):
       self.cursor = dataBase.cursor()
@@ -6,102 +8,126 @@ class Jeu :
       self.idAdherent = str(mail)
       self.cursor.execute("""INSERT INTO Adherent(
       idAdherent, nomAdh, pseudoAdh, password, numTel, mail, adresse, dateAbonnement, empruntEnCours, reservEnCours, nbreRetards, nbreJoursRetards, estAdmin, NbreReservAnnulees)
-      VALUES(?, ?, ?, ?, ?, ?, ?, ?)""",
-      (self.idJeu, nomJeu, anneeJeu,
-      " ", 0, " ", False, " "))
+      VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+      (self.idAdherent, nomAdh, pseudoAdh, password, numTel, mail, adresse, "", None, None, 0, 0, False, 0))
 
 
 #setters ?
 
-    def setIdAdh(self, idJeu : str) : #On modifie l'id du jeu, dans l'objet et dans la BD
-      self.cursor.execute("""UPDATE Jeu SET idJeu = ? WHERE idJeu = ?""",
-      (idJeu, self.idJeu))
-      self.idJeu = idJeu
+    def setIdAdh(self, idAdh : str) : #On modifie l'id du jeu, dans l'objet et dans la BD
+      self.cursor.execute("""UPDATE Adherent SET idAdh = ? WHERE idAdh = ?""",
+      (idAdh, self.idAdh))
+      self.idAdh = idAdh
       return self
 
-    def setNomAdh(self, nomJeu : str) : #On modifie le nom du jeu dans la DB et donc son id
-      anneeJeu = self.getAnneeJeu()
-      self.cursor.execute("""UPDATE Jeu SET nomJeu = ? WHERE idJeu = ?""",
-      (nomJeu, self.idJeu))
-      self.setIdJeu(str(str(nomJeu) + str(anneeJeu)))
+    def setNomAdh(self, nomAdh : str) : #On modifie le nom du jeu dans la DB et donc son id
+      self.cursor.execute("""UPDATE Adherent SET nomAdh = ? WHERE idAdh = ?""",
+      (nomAdh, self.idAdh))
       return self
 
-    def setAnneeJeu(self, anneeJeu : int) : #On modifie la date du jeu, et donc son id
-      nomJeu = self.getNomJeu()
-      self.cursor.execute("""UPDATE Jeu SET anneeJeu = ? WHERE idJeu = ?""",
-      (anneeJeu, self.idJeu))
-      self.setIdJeu(str(str(nomJeu) + str(anneeJeu)))
+    def setPseudo(self, pseudoAdh : str) : #On modifie la date du jeu, et donc son id
+      self.cursor.execute("""UPDATE Adherent SET pseudoAdh = ? WHERE idAdh = ?""",
+      (pseudoAdh, self.idAdh))
       return self
 
-    def setNbJoueurJeu(self, nbJoueurJeu : str):
-      self.cursor.execute(""" UPDATE Jeu SET nbJoueurJeu = ? WHERE idJeu = ?""",(nbJoueurJeu,self.idJeu))
+    def setPassword(self, password : str):
+      self.cursor.execute(""" UPDATE Adherent SET password = ? WHERE idAdh = ?""",(password,self.idAdh))
       return self
 
-    def setQuantiteJeu(self, quantiteJeu : int) :
-      self.cursor.execute("""UPDATE Jeu SET quantiteJeu = ? WHERE idJeu = ?""",(quantiteJeu, self.idJeu))
+    def setNumTel(self, numTel : str):
+      self.cursor.execute(""" UPDATE Adherent SET numTel = ? WHERE idAdh = ?""",(numTel,self.idAdh))
       return self
 
-    def setEditeurJeu(self, editeurJeu : str) :
-      self.cursor.execute("""UPDATE Jeu SET editeurJeu = ? WHERE idJeu = ?""",(editeurJeu, self.idJeu))
+    def setMail(self, mail : str):
+      self.cursor.execute(""" UPDATE Adherent SET mail = ? WHERE idAdh = ?""",(mail,self.idAdh))
+      return self
+      
+    def setAdresse(self, adresse : str):
+      self.cursor.execute(""" UPDATE Adherent SET adresse = ? WHERE idAdh = ?""",(adresse,self.idAdh))
       return self
 
-    def setEmpruntable(self, booleen : bool):
-      self.cursor.execute("""UPDATE Jeu SET estEmpruntableJeu = ? WHERE idJeu = ?""",(booleen, self.idJeu))
+    def setDateAbonnement(self, dateAbonnement : Date):
+      self.cursor.execute(""" UPDATE Adherent SET dateAbonnement = ? WHERE idAdh = ?""",(dateAbonnement,self.idAdh))
       return self
 
-    def setSynopsisJeu(self, synopsisJeu : str):
-      self.cursor.execute("""UPDATE Jeu SET synopsisJeu = ? WHERE idJeu = ?""",(synopsisJeu, self.idJeu))
+    def setEmpruntEnCours(self, empruntEnCours : Emprunt):
+      self.cursor.execute(""" UPDATE Adherent SET empruntEnCours = ? WHERE idAdh = ?""",(empruntEnCours,self.idAdh))
       return self
 
+    def setReservEnCours(self, reservEnCours : Reservation):
+      self.cursor.execute(""" UPDATE Adherent SET reservEnCours = ? WHERE idAdh = ?""",(reservEnCours,self.idAdh))
+      return self
+
+    def setNbreRetards(self, nbreRetards : int):
+      self.cursor.execute(""" UPDATE Adherent SET nbreRetards = ? WHERE idAdh = ?""",(nbreRetards,self.idAdh))
+      return self
+      
+    def setNbreJoursRetards(self, nbreJoursRetards : int):
+      self.cursor.execute(""" UPDATE Adherent SET nbreJoursRetards = ? WHERE idAdh = ?""",(nbreJoursRetards,self.idAdh))
+      return self
+
+    def setAdmin(self, estAdmin : bool):
+      self.cursor.execute(""" UPDATE Adherent SET estAdmin = ? WHERE idAdh = ?""",(estAdmin,self.idAdh))
+      return self
+
+    def setNbreReservAnnulees(self, nbreReservAnnulees : int):
+      self.cursor.execute(""" UPDATE Adherent SET nbreReservAnnulees = ? WHERE idAdh = ?""",(nbreReservAnnulees,self.idAdh))
+      return self
 
 #getters ?
 
-    def getInfoJeu(self) : #Saisir tout d'un coup
-      """0 Id, 1 Nom, 2 Année, 3 NbJoueur, 4 Quantité, 5 Editeur, 6 Empruntable, 7 Synospis"""
+    def getInfoAdh(self) : #Saisir tout d'un coup
+      """0 Id, 1 Nom, 2 Pseudo, 3 Mot de passe, 4 Numero de telephone, 5 Mail, 6 Adresse, 7 Date d'abonnement, 8 Emprunt en cours, 9 Reservation en cours, 10 Nombre de retards, 11 Nombre de jours de retards, 12 Statut admin, 13 Nombre Reservations annulees"""
       self.cursor.execute("""SELECT
-      idJeu, nomJeu, anneeJeu, nbJoueurJeu,
-      quantiteJeu, editeurJeu, estEmpruntableJeu, synopsisJeu
-      FROM Jeu Where idJeu = ?""",(self.idJeu,))
+      idAdherent, nomAdh, pseudoAdh, password, numTel, mail, adresse, dateAbonnement, empruntEnCours, reservEnCours, nbreRetards, nbreJoursRetards, estAdmin, NbreReservAnnulees
+      FROM Adherent Where idAdh = ?""",(self.idAdh,))
       return self.cursor.fetchone()
 
-    def getIdJeu(self) :
-      return str(self.idJeu) #L'id est accessible dans les attributs
+    def getIdAdh(self) :
+      return str(self.idAdh) #L'id est accessible dans les attributs
 
-    def getNomJeu(self) : #Le nom est stocké dans la BD
-      return self.getInfoJeu()[1]
+    def getNomAdh(self) : 
+      return self.getInfoAdh()[1]
 
+    def getPseudo(self) : 
+      return self.getInfoAdh()[2]
 
-    def getAnneeJeu(self) : #L'annee est stoké dans la DB
-      return self.getInfoJeu()[2]
+    def getPassword(self) : 
+      return self.getInfoAdh()[3]
 
-    def getNbJoueurJeu(self) :
-      return self.getInfoJeu()[3]
+    def getNumTel(self) : 
+      return self.getInfoAdh()[4]
 
-    def getQuantiteJeu(self):
-      return self.getInfoJeu()[4]
+    def getMail(self) : 
+      return self.getInfoAdh()[5]
 
-    def getEditeurJeu(self):
-      return self.getInfoJeu()[5]
+    def getNomAdresse(self) : 
+      return self.getInfoAdh()[6]
 
-    def estEmpruntable(self):
-      return bool(self.getInfoJeu()[6])
-
-    def getSynopsisJeu(self):
-      return self.getInfoJeu()[7]
+    def getDateAbonnement(self) : 
+      return self.getInfoAdh()[7]
       
+    def getEmpruntEnCours(self) : 
+      return self.getInfoAdh()[8]
       
+    def getReservEnCours(self) : 
+      return self.getInfoAdh()[9]
+      
+    def getNbreRetards(self) : 
+      return self.getInfoAdh()[10]
+      
+    def getNbreJoursRetards(self) : 
+      return self.getInfoAdh()[11]
+      
+    def getEstAdmin(self) : 
+      return self.getInfoAdh()[12]
+      
+    def getNbreReservAnnulees(self) : 
+      return self.getInfoAdh()[13]
       
 #Fonctions usuelles:
 
-    def ajoutExemplaire(self):
-      return self.setQuantiteJeu(self.getQuantiteJeu()+1)
 
-    def retraitExemplaire(self):
-      return self.setQuantiteJeu(min(self.getQuantiteJeu()-1,0))
-
-    def changeEmpruntable(self):
-      return self.setEmpruntable(not self.estEmpruntable())
-  
-    def supprimerJeu(self):
-      cursor.execute("""DELETE FROM Jeu WHERE idJeu""",(self.idJeu,))
+    def retirerAdh(self):
+      cursor.execute("""DELETE FROM Adherent WHERE idAdh""",(self.idAdh,))
       return self
