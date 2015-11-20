@@ -1,12 +1,11 @@
 class Jeu :
 
-    def __init__(self, nomJeu : str, anneeJeu : int, dataBase = BD):
+    def __init__(self, nomAdh : str, pseudoAdh : str, password : str, numTel : str, mail : str, adresse : str, dataBase = BD):
       self.cursor = dataBase.cursor()
-      self.Table = "Jeu"
-      self.idJeu = str(str(nomJeu) + str(anneeJeu))
-      self.cursor.execute("""INSERT INTO Jeu(
-      idJeu, nomJeu, anneeJeu, nbJoueurJeu,
-      quantiteJeu, editeurJeu, estEmpruntableJeu, synopsisJeu)
+      self.Table = "Adherent"
+      self.idAdherent = str(mail)
+      self.cursor.execute("""INSERT INTO Adherent(
+      idAdherent, nomAdh, pseudoAdh, password, numTel, mail, adresse, dateAbonnement, empruntEnCours, reservEnCours, nbreRetards, nbreJoursRetards, estAdmin, NbreReservAnnulees)
       VALUES(?, ?, ?, ?, ?, ?, ?, ?)""",
       (self.idJeu, nomJeu, anneeJeu,
       " ", 0, " ", False, " "))
@@ -14,13 +13,13 @@ class Jeu :
 
 #setters ?
 
-    def setIdJeu(self, idJeu : str) : #On modifie l'id du jeu, dans l'objet et dans la BD
+    def setIdAdh(self, idJeu : str) : #On modifie l'id du jeu, dans l'objet et dans la BD
       self.cursor.execute("""UPDATE Jeu SET idJeu = ? WHERE idJeu = ?""",
       (idJeu, self.idJeu))
       self.idJeu = idJeu
       return self
 
-    def setNomJeu(self, nomJeu : str) : #On modifie le nom du jeu dans la DB et donc son id
+    def setNomAdh(self, nomJeu : str) : #On modifie le nom du jeu dans la DB et donc son id
       anneeJeu = self.getAnneeJeu()
       self.cursor.execute("""UPDATE Jeu SET nomJeu = ? WHERE idJeu = ?""",
       (nomJeu, self.idJeu))
