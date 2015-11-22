@@ -4,9 +4,8 @@ BD = sqlite3.connect(':memory:')
 
 cursor = BD.cursor()
 #idjeu int > varchar pour concatener le nom et l annee pour une id simple
-cursor.execute("""
 CREATE TABLE IF NOT EXISTS `Jeu` (
-`idJeu` varchar(54) NOT NULL,
+`idJeu` int(6) NOT NULL,
 `nomJeu` varchar(50) NOT NULL,
 `anneeJeu` int(4) NOT NULL,
 `nbJoueurJeu` varchar(5) NOT NULL,
@@ -14,7 +13,9 @@ CREATE TABLE IF NOT EXISTS `Jeu` (
 `editeurJeu` varchar(20) NOT NULL,
 `estEmpruntableJeu` tinyint(1) NOT NULL,
 `synopsisJeu` varchar(200) NOT NULL,
-PRIMARY KEY (`idJeu`))""")
+PRIMARY KEY (`idJeu`)
+)
+
 
 
 
