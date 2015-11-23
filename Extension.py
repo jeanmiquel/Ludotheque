@@ -1,29 +1,36 @@
-Class Extension:
+from datetime import datetime
+from sqlite3 import sqlite3
 
- def __init__(self, id_Ext=int, nameExt="", quantiteExt=int, jeuExt= Jeu):
-      self.id_Ext = id_Ext
-      self.nameExt = nameExt
-      self.quantiteExt = quantiteExt
-      self.jeuExt = jeuExt
+CREATE TABLE IF NOT EXISTS Extension (
+ idExt str(6) NOT NULL, 
+ idJeu str(6) NOT NULL, 
+ nomExt varchar(20) NOT NULL, 
+ nbreTotalExt int(3) NOT NULL)
 
- def getId_Ext(self):
-      return self.id_Ext
 
- def getNameExt(self):
-      return self.nameExt
+class Extension:
 
- def getQuantiteExt(self):
-      return self.quantiteExt
+ def __init__(self, nomExt : str, nbreTotalExt : int, database = BD):
+      self.cursor = dataBase.cursor()
+    		self.Table = "Extension"
 
- def getJeuExt(self):
-      return self.jeuExt
+    		self.cursor.execute("""INSERT INTO Extension(
+		idExt, idJeu, nomExt, nbreTotalExt)
+		VALUES(?, ?, ?, ?)""",
+    (self.idExt, self.idJeu, self.nomExt, self.nbreTotalExt)
+    
+ def setIdExt(self, idExt : str) :       
+    		self.cursor.execute("""UPDATE Extension SET idExt = ? WHERE idExt = ?""",
+                        	(idExt, self.idExt))
+    		self.idExt = idExt
+    		return self
+   	 
+	def setNomExt(self, nomExt : str) :       
+    		self.cursor.execute("""UPDATE Extension SET nomExt = ? WHERE idExt = ?""",
+                        	(nomExt, self.idExt))
+    		return self
 
- def estDispo(self):
-      return (self.quantiteExt != 0)
-
- def creerExtension(name: string, jeu: Jeu):
-      return new Extension(,name, 1, jeu)
-
- def ajoutExemplaireExt(self):
-      self.quantiteExt = self.quantiteExt + 1
-      return self
+	def setNbreTotalExt(self, nbreTotalExt : str) :       
+    		self.cursor.execute("""UPDATE Extension SET nbreTotalExt = ? WHERE idExt = ?""",
+                        	(nbreTotalExt, self.idExt))
+    		return self
