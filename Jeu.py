@@ -1,76 +1,51 @@
-import sqlite3
-
-BD = sqlite3.connect(':memory:')
-
-cursor = BD.cursor()
-#idjeu int > varchar pour concatener le nom et l annee pour une id simple
-CREATE TABLE IF NOT EXISTS `Jeu` (
-`idJeu` int(6) NOT NULL,
-`nomJeu` varchar(50) NOT NULL,
-`anneeJeu` int(4) NOT NULL,
-`nbJoueurJeu` varchar(5) NOT NULL,
-`quantiteJeu` int(3) NOT NULL,
-`editeurJeu` varchar(20) NOT NULL,
-`estEmpruntableJeu` tinyint(1) NOT NULL,
-`synopsisJeu` varchar(200) NOT NULL,
-PRIMARY KEY (`idJeu`)
-)
-
-
-
-
 class Jeu :
     
-	def __init__(self, nomJeu : str, anneeJeu : int, dataBase = BD):
-    		self.cursor = dataBase.cursor()
-    		self.Table = "Jeu"
-    		self.idJeu = str(str(nomJeu) + str(anneeJeu))
+	def __init__(nomJeu, anneeJeu=0, nbJoueurJeu=2,quantiteJeu=0, editeurJeu="", ageJeu=3, estEmpruntableJeu=False, synopsisJeu="", cursor):
+    		
+    		cursor.execute("SELECT MAX(idJeu) FROM Jeu")
+    		d = cursor.fetchone()
+    		idJeu = d[0] + 1
 
-    		self.cursor.execute("""INSERT INTO Jeu(
-		idJeu, nomJeu, anneeJeu, nbJoueurJeu,
-		quantiteJeu, editeurJeu, estEmpruntableJeu, synopsisJeu)
-		VALUES(?, ?, ?, ?, ?, ?, ?, ?)""",
-                        	(self.idJeu, nomJeu, anneeJeu,
-                         	" ", 0, " ", False, " "))
+    		cursor.execute("""INSERT INTO Jeu(idJeu, nomJeu, anneeJeu, nbJoueurJeu, quantiteJeu, editeurJeu, estEmpruntableJeu, synopsisJeu, ageJeu) VALUES(?, ?, ?, ?, ?, ?, ?, ?)""", (idJeu, nomJeu, anneeJeu, nbJoueurJeu, quantiteJeu, editeurJeu, estEmpruntableJeu, synopsisJeu, ageJeu))
 
 	#setters ?
-	def setIdJeu(self, idJeu : str) :       	#On modifie l'id du jeu, dans l'objet et dans la BD
+	def setIdJeu(self, idJeu) :       	#On modifie l'id du jeu, dans l'objet et dans la BD
     		self.cursor.execute("""UPDATE Jeu SET idJeu = ? WHERE idJeu = ?""",
                         	(idJeu, self.idJeu))
     		self.idJeu = idJeu
     		return self
    	 
-	def setNomJeu(self, nomJeu : str) :     	#On modifie le nom du jeu dans la DB et donc son id
+	def setNomJeu(self, nomJeu) :     	#On modifie le nom du jeu dans la DB et donc son id
     		anneeJeu = self.getAnneeJeu()
     		self.cursor.execute("""UPDATE Jeu SET nomJeu = ? WHERE idJeu = ?""",
                         	(nomJeu, self.idJeu))
     		self.setIdJeu(str(str(nomJeu) + str(anneeJeu)))
     		return self
 
-	def setAnneeJeu(self, anneeJeu : int) : 	#On modifie la date du jeu, et donc son id
+	def setAnneeJeu(self, anneeJeu) : 	#On modifie la date du jeu, et donc son id
     		nomJeu = self.getNomJeu()
     		self.cursor.execute("""UPDATE Jeu SET anneeJeu = ? WHERE idJeu = ?""",
                         	(anneeJeu, self.idJeu))
     		self.setIdJeu(str(str(nomJeu) + str(anneeJeu)))
     		return self
 
-	def setNbJoueurJeu(self, nbJoueurJeu : str):
+	def setNbJoueurJeu(self, nbJoueurJeu):
     		self.cursor.execute(""" UPDATE Jeu SET nbJoueurJeu = ? WHERE idJeu = ?""",(nbJoueurJeu,self.idJeu))
     		return self
 
-	def setQuantiteJeu(self, quantiteJeu : int) :
+	def setQuantiteJeu(self, quantiteJeu) :
     		self.cursor.execute("""UPDATE Jeu SET quantiteJeu = ? WHERE idJeu = ?""",(quantiteJeu, self.idJeu))
     		return self
 
-	def setEditeurJeu(self, editeurJeu : str) :
+	def setEditeurJeu(self, editeurJeu) :
     		self.cursor.execute("""UPDATE Jeu SET editeurJeu = ? WHERE idJeu = ?""",(editeurJeu, self.idJeu))
     		return self
 
-	def setEmpruntable(self, booleen : bool):
+	def setEmpruntable(self, booleen):
     		self.cursor.execute("""UPDATE Jeu SET estEmpruntableJeu = ? WHERE idJeu = ?""",(booleen, self.idJeu))
     		return self
 
-	def setSynopsisJeu(self, synopsisJeu : str):
+	def setSynopsisJeu(self, synopsisJeu):
     		self.cursor.execute("""UPDATE Jeu SET synopsisJeu = ? WHERE idJeu = ?""",(synopsisJeu, self.idJeu))
     		return self
  
