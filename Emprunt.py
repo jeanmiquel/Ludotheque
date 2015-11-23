@@ -47,49 +47,18 @@ class Emprunt :
 
 
 	#getters ?
-	def getInfoJeu(self) :                  	#Saisir tout d'un coup
-    		"""0 Id, 1 Nom, 2 Année, 3 NbJoueur, 4 Quantité, 5 Editeur, 6 Empruntable, 7 Synospis"""
-    		self.cursor.execute("""SELECT
-		idJeu, nomJeu, anneeJeu, nbJoueurJeu,
-		quantiteJeu, editeurJeu, estEmpruntableJeu, synopsisJeu
-		FROM Jeu Where idJeu = ?""",(self.idJeu,))
-    		return self.cursor.fetchone()
-    
-	def getIdJeu(self) : 
-		return str(self.idJeu) #L'id est accessible dans les attributs
-
-	def getNomJeu(self) :                   	#Le nom est stocké dans la BD
-    		return self.getInfoJeu()[1]
-
-	def getAnneeJeu(self) :                 	#L'annee est stoké dans la DB
-    		return self.getInfoJeu()[2]
-
-	def getNbJoueurJeu(self) :
-    		return self.getInfoJeu()[3]
-
-	def getQuantiteJeu(self):
-    		return self.getInfoJeu()[4]
-
-	def getEditeurJeu(self):
-    		return self.getInfoJeu()[5]
-
-	def estEmpruntable(self):
-    		return bool(self.getInfoJeu()[6])
-
-	def getSynopsisJeu(self):
-    		return self.getInfoJeu()[7]
+	def getIdEmprunt(self):
+		 return self.idEmprunt
+	  
+	def getDateDebutEmprunt(self):
+		 return self.dateDebutEmprunt
+	  
+	def getDureePrevue(self):
+		 return self.dureePrevue
 
 	#Fonctions usuelles:
 
-	def ajoutExemplaire(self):
-    		return self.setQuantiteJeu(self.getQuantiteJeu()+1)
-
-	def retraitExemplaire(self):
-    		return self.setQuantiteJeu(min(self.getQuantiteJeu()-1,0))
-
-	def changeEmpruntable(self):
-    		return self.setEmpruntable(not self.estEmpruntable())
-    
-	def supprimerJeu(self):
-    		cursor.execute("""DELETE FROM Jeu WHERE idJeu""",(self.idJeu,))
-    		return self
+	def rendre(self):
+		self.cursor("""DELETE FROM Emprunt WHERE idEmprunt = ?""",
+			(self.idEmprunt))
+			
