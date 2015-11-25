@@ -1,24 +1,30 @@
-from sqlite3 import sqlite3
-from datetime import datetime
+import sqlite3
+import datetime
 
-BD = sqlite3.connect(':memory:')
+conn = sqlite3.connect("Ludotheque.db")
+conn.execute('pragma foreign_keys = on')
+conn.commit()
+cur = conn.cursor()
 
-CREATE TABLE IF NOT EXISTS `Emprunt` (
-`idEmprunt` str(6) NOT NULL,
-`idAdherent` int(6) NOT NULL,
-`idJeu` int(6) NOT NULL,
-`idExtension` int(6) NOT NULL,
-`dateDebutEmprunt` date NOT NULL,
-`dureePrevue` int(3) NOT NULL,
-KEY `fk_idAdherent` (`idAdherent`),
-KEY `fk_idExtension` (`idExtension`),
-KEY `fk_idJeu` (`idJeu`)
-)
+
+cur.execute("""CREATE TABLE IF NOT EXISTS `Emprunt` (
+                                `idEmprunt` str(6) NOT NULL,
+                                `idAdherent` int(6) NOT NULL,
+                                `idJeu` int(6) NOT NULL,
+                                `idExtension` int(6) NOT NULL,
+                                `dateDebutEmprunt` date NOT NULL,
+                                `dureePrevue` int(3) NOT NULL,
+                                KEY `fk_idAdherent` (`idAdherent`),
+                                KEY `fk_idExtension` (`idExtension`),
+                                KEY `fk_idJeu` (`idJeu`)
+                                )""")
+conn.commit()
+
 
 
 class Emprunt :
     
-	def __init__(self, dataBase = BD):
+	def __init__(self, dataBase = conn):
     		self.cursor = dataBase.cursor()
     		self.Table = "Emprunt"
 
