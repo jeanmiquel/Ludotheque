@@ -1,7 +1,15 @@
-import Jeu
-import Adherent
+import datetime
+import sqlite3
+from Jeu import Jeu
+from Adherent import Adherent
+from Emprunt import Emprunt
 
-CREATE TABLE IF NOT EXISTS Reservation 
+conn = sqlite3.connect("Ludotheque.db")
+conn.execute('pragma foreign_keys = on')
+conn.commit()
+cur = conn.cursor()
+
+cur.execute("""CREATE TABLE IF NOT EXISTS Reservation 
   (idReserv str(6) NOT NULL, 
   idAdh str(6) NOT NULL, 
   idJeu str(6) NOT NULL, 
@@ -10,12 +18,12 @@ CREATE TABLE IF NOT EXISTS Reservation
   dureeEmpruntPrevue int(3) NOT NULL, 
   KEY fk_idExtR(idExtension), 
   KEY fk_idJeuR (idJeu),
-  KEY fk_idAdhR (idAdherent))
-
+  KEY fk_idAdhR (idAdherent))""")
+conn.commit()
 
 class Reservation:
 
-  def __init__(self, dataBase = BD):
+  def __init__(self, dataBase = conn):
     		self.cursor = dataBase.cursor()
     		self.Table = "Reservation"
 
