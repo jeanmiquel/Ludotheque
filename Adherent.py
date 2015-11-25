@@ -5,11 +5,7 @@ conn.execute('pragma foreign_keys = on')
 conn.commit()
 cur = conn.cursor()
 
-
-class Adherent :
-    
-    def createTable():
-        cur.execute("""CREATE TABLE IF NOT EXISTS `Adherent` (
+cur.execute("""CREATE TABLE IF NOT EXISTS `Adherent` (
                      `idAdh` str(6) NOT NULL,
                     `nomAdh` varchar(25) NOT NULL,
                     `prenomAdh` varchar(25) NOT NULL,
@@ -30,9 +26,12 @@ class Adherent :
                     `idReserv` int(11) NOT NULL,
                     PRIMARY KEY (`idAdherent`)
                     )""")
-         conn.commit()
+conn.commit()
 
-    def __init__(self, nomAdh : str, pseudoAdh : str, password : str, numTel : str, mail : str, adresse : str, dataBase = BD):
+class Adherent :
+    
+
+    def __init__(self, nomAdh : str, pseudoAdh : str, password : str, numTel : str, mail : str, adresse : str, dataBase = conn):
       self.cursor = dataBase.cursor()
       self.Table = "Adherent"
       self.idAdherent = str(mail)
@@ -44,18 +43,18 @@ class Adherent :
 
 #setters ?
 
-    def setIdAdh(self, idAdh : str) : #On modifie l'id du jeu, dans l'objet et dans la BD
+    def setIdAdh(self, idAdh : str) : 
       self.cursor.execute("""UPDATE Adherent SET idAdh = ? WHERE idAdh = ?""",
       (idAdh, self.idAdh))
       self.idAdh = idAdh
       return self
 
-    def setNomAdh(self, nomAdh : str) : #On modifie le nom du jeu dans la DB et donc son id
+    def setNomAdh(self, nomAdh : str) : 
       self.cursor.execute("""UPDATE Adherent SET nomAdh = ? WHERE idAdh = ?""",
       (nomAdh, self.idAdh))
       return self
 
-    def setPseudo(self, pseudoAdh : str) : #On modifie la date du jeu, et donc son id
+    def setPseudo(self, pseudoAdh : str) :
       self.cursor.execute("""UPDATE Adherent SET pseudoAdh = ? WHERE idAdh = ?""",
       (pseudoAdh, self.idAdh))
       return self
