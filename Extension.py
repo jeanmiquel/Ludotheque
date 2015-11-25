@@ -3,7 +3,7 @@ import sqlite3
 from Jeu import Jeu
 from Adherent import Adherent
 
-conn = sqlite3.connect("Ludotheque.db")
+conn = sqlite3.connect("C:\Users\Jean\Desktop\LUDOTHEQUE\Ludotheque.db")
 conn.execute('pragma foreign_keys = on')
 conn.commit()
 cur = conn.cursor()
