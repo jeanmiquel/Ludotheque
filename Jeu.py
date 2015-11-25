@@ -1,5 +1,7 @@
 import sqlite3
 import datetime
+from Extension import Extension
+from Adherent import Adherent
 
 conn = sqlite3.connect("Ludotheque.db")
 conn.execute('pragma foreign_keys = on')
