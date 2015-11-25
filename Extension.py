@@ -1,16 +1,20 @@
-from datetime import datetime
-from sqlite3 import sqlite3
+import datetime
+import sqlite3
 
-CREATE TABLE IF NOT EXISTS Extension (
+conn = sqlite3.connect("Ludotheque.db")
+conn.execute('pragma foreign_keys = on')
+conn.commit()
+cur = conn.cursor()
+
+cur.execute("""CREATE TABLE IF NOT EXISTS Extension (
  idExt str(6) NOT NULL, 
  idJeu str(6) NOT NULL, 
  nomExt varchar(20) NOT NULL, 
- nbreTotalExt int(3) NOT NULL)
-
+ nbreTotalExt int(3) NOT NULL)""")
 
 class Extension:
 
- def __init__(self, nomExt : str, nbreTotalExt : int, database = BD):
+ def __init__(self, nomExt : str, nbreTotalExt : int, database = conn):
       self.cursor = dataBase.cursor()
     		self.Table = "Extension"
 
