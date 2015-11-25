@@ -1,29 +1,36 @@
 from datetime import datetime
 
-CREATE TABLE IF NOT EXISTS `Adherent` (
-`idAdh` str(6) NOT NULL,
-`nomAdh` varchar(25) NOT NULL,
-`prenomAdh` varchar(25) NOT NULL,
-`dateNaissance` date NOT NULL,
-`adresse` varchar(30) NOT NULL,
-`codePostal` varchar(10) NOT NULL,
-`ville` varchar(10) NOT NULL,
-`numTel` int(10) NOT NULL,
-`pseudo` varchar(20) NOT NULL,
-`password` varchar(26) NOT NULL,
-`mail` varchar(50) NOT NULL,
-`estAdmin` tinyint(1) NOT NULL,
-`dateAbonnement` date NOT NULL,
-`nbreRetards` int(3) NOT NULL,
-`nbreJourRetards` int(3) NOT NULL,
-`nbreReservAnnulees` int(3) NOT NULL,
-`idEmprunt` int(11) NOT NULL,
-`idReserv` int(11) NOT NULL,
-PRIMARY KEY (`idAdherent`)
-)
+conn = sqlite3.connect("Ludotheque.db")
+conn.execute('pragma foreign_keys = on')
+conn.commit()
+cur = conn.cursor()
 
 
 class Adherent :
+    
+    def createTable():
+        cur.execute("""CREATE TABLE IF NOT EXISTS `Adherent` (
+                     `idAdh` str(6) NOT NULL,
+                    `nomAdh` varchar(25) NOT NULL,
+                    `prenomAdh` varchar(25) NOT NULL,
+                    `dateNaissance` date NOT NULL,
+                    `adresse` varchar(30) NOT NULL,
+                    `codePostal` varchar(10) NOT NULL,
+                    `ville` varchar(10) NOT NULL,
+                    `numTel` int(10) NOT NULL,
+                    `pseudo` varchar(20) NOT NULL,
+                    `password` varchar(26) NOT NULL,
+                    `mail` varchar(50) NOT NULL,
+                    `estAdmin` tinyint(1) NOT NULL,
+                    `dateAbonnement` date NOT NULL,
+                    `nbreRetards` int(3) NOT NULL,
+                    `nbreJourRetards` int(3) NOT NULL,
+                    `nbreReservAnnulees` int(3) NOT NULL,
+                    `idEmprunt` int(11) NOT NULL,
+                    `idReserv` int(11) NOT NULL,
+                    PRIMARY KEY (`idAdherent`)
+                    )""")
+         conn.commit()
 
     def __init__(self, nomAdh : str, pseudoAdh : str, password : str, numTel : str, mail : str, adresse : str, dataBase = BD):
       self.cursor = dataBase.cursor()
