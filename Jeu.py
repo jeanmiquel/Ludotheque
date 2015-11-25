@@ -1,10 +1,12 @@
 import sqlite3
+import datetime
 
-BD = sqlite3.connect(':memory:')
+conn = sqlite3.connect("Ludotheque.db")
+conn.execute('pragma foreign_keys = on')
+conn.commit()
+cur = conn.cursor()
 
-cursor = BD.cursor()
-#idjeu int > varchar pour concatener le nom et l annee pour une id simple
-CREATE TABLE IF NOT EXISTS `Jeu` (
+cur.execute("""CREATE TABLE IF NOT EXISTS `Jeu` (
 `idJeu` int(6) NOT NULL,
 `nomJeu` varchar(50) NOT NULL,
 `anneeJeu` int(4) NOT NULL,
@@ -14,14 +16,12 @@ CREATE TABLE IF NOT EXISTS `Jeu` (
 `estEmpruntableJeu` tinyint(1) NOT NULL,
 `synopsisJeu` varchar(200) NOT NULL,
 PRIMARY KEY (`idJeu`)
-)
-
-
+)""")
 
 
 class Jeu :
     
-	def __init__(self, nomJeu : str, anneeJeu : int, dataBase = BD):
+	def __init__(self, nomJeu : str, anneeJeu : int, dataBase = conn):
     		self.cursor = dataBase.cursor()
     		self.Table = "Jeu"
     		self.idJeu = str(str(nomJeu) + str(anneeJeu))
