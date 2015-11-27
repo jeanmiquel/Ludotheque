@@ -46,7 +46,7 @@ class Reservation:
 
   #getters ?
   
-  def getIdReserv(self):
+  def getIdReserv(self, idAdherent):
     cur.execute("""SELECT idReservation FROM Reservation WHERE idAdherent = ?""", (idAdherent))
     return cur.fetchone()[0]
     
@@ -56,6 +56,10 @@ class Reservation:
     
   def getIdAdhReserv(self, idReservation):
     cur.execute("""SELECT idAdherent FROM Reservation WHERE idReservation = ?""",(idReservation))
+    return cur.fetchone()[0]
+    
+  def getIdExtensionReserv(self, idReservation):
+    cur.execute("""SELECT idExtension FROM Reservation WHERE idReservation = ?""",(idReservation))
     return cur.fetchone()[0]
     
   def getDateReserv(self, idReservation):
