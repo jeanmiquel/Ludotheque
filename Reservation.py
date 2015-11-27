@@ -16,9 +16,9 @@ cur.execute("""CREATE TABLE IF NOT EXISTS Reservation
   idExt str(6) NOT NULL, 
   dateReserv date NOT NULL, 
   dureeEmpruntPrevue int(3) NOT NULL, 
-  KEY fk_idExtR(idExtension), 
-  KEY fk_idJeuR (idJeu),
-  KEY fk_idAdhR (idAdherent))""")
+  FOREIGN KEY(idExt), 
+  FOREIGN KEY (idJeu),
+  FOREIGN (idAdh))""")
 conn.commit()
 
 class Reservation:
