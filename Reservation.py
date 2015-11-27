@@ -16,6 +16,7 @@ cur.execute("""CREATE TABLE IF NOT EXISTS Reservation
   idExt str(6) NOT NULL, 
   dateReserv date NOT NULL, 
   dureeEmpruntPrevue int(3) NOT NULL, 
+  PRIMARY KEY (idReserv),
   FOREIGN KEY(idExt), 
   FOREIGN KEY (idJeu),
   FOREIGN KEY (idAdh))""")
