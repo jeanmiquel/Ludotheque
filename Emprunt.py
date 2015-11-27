@@ -54,6 +54,9 @@ class Emprunt :
                 cur.execute("""SELECT dateDebutEmprunt FROM Emprunt WHERE idEmprunt = ?""",
                                 (idEmprunt))
                 return cur.fetchone()[0]
+                
+        def getDateFinEmprunt(self, idEmprunt):
+                return (selg.getDateDebutEmprunt(idEmprunt).day + self.getDureePrevue(idEmprunt))
           
         def getDureePrevue(self, idEmprunt):
                 cur.execute("""SELECT dureePrevueEmprunt FROM Emprunt WHERE idEmprunt = ?""",
@@ -66,4 +69,7 @@ class Emprunt :
                 cur.execute("""DELETE FROM Emprunt WHERE idEmprunt = ?""",
                         (idEmprunt))
                 conn.commit()
+                
+        def estEnRetard(self, idEmprunt):
+                return(datetime.now() > 
                         
