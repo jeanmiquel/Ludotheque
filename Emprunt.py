@@ -13,7 +13,7 @@ cur.execute("""CREATE TABLE IF NOT EXISTS `Emprunt` (
                                 `idJeu` int(6) NOT NULL,
                                 `idExtension` int(6) NOT NULL,
                                 `dateDebutEmprunt` date NOT NULL,
-                                `dureePrevue` int(3) NOT NULL,
+                                `dureePrevueEmprunt` int(3) NOT NULL,
                                 PRIMARY KEY (`idEmprunt`),
                                 FOREIGN KEY (`idAdherent`),
                                 FOREIGN KEY (`idExtension`),
@@ -30,10 +30,9 @@ class Emprunt :
     		self.Table = "Emprunt"
 
     		self.cursor.execute("""INSERT INTO Emprunt(
-		idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dureePrevue)
+		idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dureePrevueEmprunt)
 		VALUES(?, ?, ?, ?, ?, ?)""",
-    (self.idEmprunt, self.idJeu, self.idAdh,
-   	date, 14)) #14 jours
+    		(self.idEmprunt, self.idJeu, self.idExtension, self.idAdherent, datetime.now(), 7) #7 jours d'emprunt
 
 	#setters ?
 	def setIdEmprunt(self, idEmprunt) :       
@@ -47,8 +46,8 @@ class Emprunt :
                         	(dateDebutEmprunt, self.idEmprunt))
     		return self
 
-	def setDureePrevue(self, dureePrevue) : 	
-    		self.cursor.execute("""UPDATE Emprunt SET dureePrevue = ? WHERE idEmprunt = ?""",
+	def setDureePrevue(self, dureePrevueEmprunt) : 	
+    		self.cursor.execute("""UPDATE Emprunt SET dureePrevueEmprunt = ? WHERE idEmprunt = ?""",
                         	(dureePrevue, self.idEmprunt))
     		return self
 
@@ -58,7 +57,7 @@ class Emprunt :
 		self.cursor.execute("""SELECT idEmprunt = ? FROM Emprunt WHERE idEmprunt = ?""",
                         	(idEmprunt, self.idEmprunt))
                 idEmprunt = cursor.fetchone()
-		 return idEmprunt
+		return idEmprunt
 	  
 	def getDateDebutEmprunt(self):
 		self.cursor.execute("""SELECT dateDebutEmprunt = ? FROM Emprunt WHERE idEmprunt = ?""",
@@ -67,9 +66,9 @@ class Emprunt :
 		 return dateDebutEmprunt
 	  
 	def getDureePrevue(self):
-		self.cursor.execute("""SELECT dureePrevue = ? FROM Emprunt WHERE idEmprunt = ?""",
+		self.cursor.execute("""SELECT dureePrevueEmprunt = ? FROM Emprunt WHERE idEmprunt = ?""",
                         	(idEmprunt, self.idEmprunt))
-                dureePrevue = cur.fetchone()
+                dureePrevueEmprunt = cur.fetchone()
 		 return dureePrevue
 
 	#Fonctions usuelles:
