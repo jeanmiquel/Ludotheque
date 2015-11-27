@@ -53,3 +53,7 @@ class Extension:
                             (nomExtension, self.idExtension))
         return cur.fetchone()[0]
                 
+    def getNbreTotalExtension(self,idExtension, nbreTotalExtension) :
+        cur.execute("""SELECT nbreTotalExtension = ?  FROM Extension WHERE idExtension = ?""",
+                            (nbreTotalExtension, self.idExtension))
+        return cur.fetchone()[0]
