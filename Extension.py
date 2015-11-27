@@ -25,7 +25,7 @@ class Extension:
     		self.cursor.execute("""INSERT INTO Extension(
 		idExtension, idJeu, nomExtension, nbreTotalExtension)
 		VALUES(?, ?, ?, ?)""",
-    (self.idExtension, self.idJeu, self.nomExtension, self.nbreTotalExtension)
+    		(self.idExtension, self.idJeu, self.nomExtension, self.nbreTotalExtension)
     
  def setIdExtension(self, idExtension) :       
     		self.cursor.execute("""UPDATE Extension SET idExtension = ? WHERE idExtension = ?""",
@@ -33,21 +33,22 @@ class Extension:
     		self.idExtension = idExtension
     		return self
    	 
-	def setNomExtension(self, nomExtension) :       
+ def setNomExtension(self, nomExtension) :       
     		self.cursor.execute("""UPDATE Extension SET nomExtension = ? WHERE idExtension = ?""",
                         	(nomExtension, self.idExtension))
     		return self
 
-	def setNbreTotalExtension(self, nbreTotalExtension) :       
+ def setNbreTotalExtension(self, nbreTotalExtension) :       
     		self.cursor.execute("""UPDATE Extension SET nbreTotalExtension = ? WHERE idExtension = ?""",
                         	(nbreTotalExtension, self.idExtension))
     		return self
 
-def getIdExtension(self):
+ def getIdExtension(self):
 		self.cursor.execute("""SELECT idExtension = ? FROM Extension WHERE idExtension = ?""",
                         	(idExtension, self.idExtension))
                 return cursor.fetchone()
-        def getNomExtension(self):
+                
+ def getNomExtension(self):
 		self.cursor.execute("""SELECT nomExtension = ? FROM Extension WHERE idExtension = ?""",
                         	(nomExtension, self.idExtension))
                 return cursor.fetchone()
