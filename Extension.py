@@ -12,7 +12,9 @@ cur.execute("""CREATE TABLE IF NOT EXISTS Extension (
  idExt str(6) NOT NULL, 
  idJeu str(6) NOT NULL, 
  nomExt varchar(20) NOT NULL, 
- nbreTotalExt int(3) NOT NULL)""")
+ nbreTotalExt int(3) NOT NULL
+ PRIMARY KEY (idExt),
+ FOREIGN KEY (idJeu))""")
 
 class Extension:
 
