@@ -1,7 +1,7 @@
 import sqlite3
 import datetime
 
-conn = sqlite3.connect("C:\Users\Jean\Desktop\LUDOTHEQUE\Ludotheque.db")
+conn = sqlite3.connect("P:\Ludotheque-master\Ludotheque.db")
 conn.execute('pragma foreign_keys = on')
 conn.commit()
 cur = conn.cursor()
@@ -25,55 +25,45 @@ conn.commit()
 
 class Emprunt :
     
-	def __init__(self, dataBase = conn):
-    		self.cursor = dataBase.cursor()
-    		self.Table = "Emprunt"
+        def __init__(self):
+                cur.execute("""INSERT INTO Emprunt(
+                idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dureePrevueEmprunt)
+                VALUES(?, ?, ?, ?, ?, ?)""",
+                (0, 0, 0, 0, datetime.now(), 7)) #7 jours d'emprunt
 
-    		self.cursor.execute("""INSERT INTO Emprunt(
-		idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dureePrevueEmprunt)
-		VALUES(?, ?, ?, ?, ?, ?)""",
-    		(self.idEmprunt, self.idJeu, self.idExtension, self.idAdherent, datetime.now(), 7) #7 jours d'emprunt
+        #setters ?
+        def setIdEmprunt(self, idEmprunt) :       
+                cur.execute("""UPDATE Emprunt SET idEmprunt = ? WHERE idEmprunt = ?""",
+                                (idEmprunt, idEmprunt))
+                conn.commit()
+         
+        def setDateDebutEmprunt(self,idEmprunt, dateDebutEmprunt) :    
+                cur.execute("""UPDATE Emprunt SET dateDebutEmprunt = ? WHERE idEmprunt = ?""",
+                                (dateDebutEmprunt, idEmprunt))
+                conn.commit()
 
-	#setters ?
-	def setIdEmprunt(self, idEmprunt) :       
-    		self.cursor.execute("""UPDATE Emprunt SET idEmprunt = ? WHERE idEmprunt = ?""",
-                        	(idEmprunt, self.idEmprunt))
-    		self.idEmprunt = idEmprunt
-    		return self
-   	 
-	def setDateDebutEmprunt(self, dateDebutEmprunt) :    
-    		self.cursor.execute("""UPDATE Emprunt SET dateDebutEmprunt = ? WHERE idEmprunt = ?""",
-                        	(dateDebutEmprunt, self.idEmprunt))
-    		return self
-
-	def setDureePrevue(self, dureePrevueEmprunt) : 	
-    		self.cursor.execute("""UPDATE Emprunt SET dureePrevueEmprunt = ? WHERE idEmprunt = ?""",
-                        	(dureePrevue, self.idEmprunt))
-    		return self
+        def setDureePrevue(self,idEmprunt, dureePrevueEmprunt) :  
+                cur.execute("""UPDATE Emprunt SET dureePrevueEmprunt = ? WHERE idEmprunt = ?""",
+                                (dureePrevue, idEmprunt))
+                conn.commit()
 
 
-	#getters ?
-	def getIdEmprunt(self):
-		self.cursor.execute("""SELECT idEmprunt = ? FROM Emprunt WHERE idEmprunt = ?""",
-                        	(idEmprunt, self.idEmprunt))
-                return cursor.fetchone()
-		
-	  
-	def getDateDebutEmprunt(self):
-		self.cursor.execute("""SELECT dateDebutEmprunt = ? FROM Emprunt WHERE idEmprunt = ?""",
-                        	(dateDebutEmprunt, self.idEmprunt))
-                return cursor.fetchone()
-		 
-	  
-	def getDureePrevue(self):
-		self.cursor.execute("""SELECT dureePrevueEmprunt = ? FROM Emprunt WHERE idEmprunt = ?""",
-                        	(dureePrevue, self.idEmprunt))
-                return cursor.fetchone()
-		 
+        #getters ?
+          
+        def getDateDebutEmprunt(self, idEmprunt):
+                cur.execute("""SELECT dateDebutEmprunt FROM Emprunt WHERE idEmprunt = ?""",
+                                (idEmprunt))
+                return cur.fetchone()[0]
+          
+        def getDureePrevue(self, idEmprunt):
+                cur.execute("""SELECT dureePrevueEmprunt FROM Emprunt WHERE idEmprunt = ?""",
+                                (idEmprunt))
+                return cur.fetchone()[0]
 
-	#Fonctions usuelles:
+        #Fonctions usuelles:
 
-	def rendre(self):
-		self.cursor("""DELETE FROM Emprunt WHERE idEmprunt = ?""",
-			(self.idEmprunt))
-			
+        def rendre(self, idEmprunt):
+                cur.execute("""DELETE FROM Emprunt WHERE idEmprunt = ?""",
+                        (idEmprunt))
+                conn.commit()
+                        
