@@ -156,9 +156,10 @@ class Adherent :
       return self
 
     def ajoutAdherent(self, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, motDePasseAdherent, adresseMailAdherent):
-      cur.execute("""SELECT MAX(idAdherent) FROM Adherent
+      cur.execute("""SELECT MAX(idAdherent) FROM Adherent""")
+      idAdherent =cur.fetchone()[0]
       cur.execute("""INSERT INTO Adherent(
       idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent, nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation)
-      VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+      VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
       (idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, motDePasseAdherent, adresseMailAdherent, False, datetime.now(), 0, 0, 0,0))
     
