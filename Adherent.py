@@ -1,4 +1,5 @@
-from datetime import datetime
+import datetime
+import sqlite3
 
 conn = sqlite3.connect("C:\Users\Jean\Desktop\LUDOTHEQUE\Ludotheque.db")
 conn.execute('pragma foreign_keys = on')
