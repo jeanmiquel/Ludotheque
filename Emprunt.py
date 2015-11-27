@@ -56,7 +56,8 @@ class Emprunt :
                 return cur.fetchone()[0]
                 
         def getDateFinEmprunt(self, idEmprunt):
-                return (selg.getDateDebutEmprunt(idEmprunt).day + self.getDureePrevue(idEmprunt))
+                dateFin = self.getDateDebutEmprunt(idEmprunt).day + self.getDureePrevue(idEmprunt))
+                return dateFin
           
         def getDureePrevue(self, idEmprunt):
                 cur.execute("""SELECT dureePrevueEmprunt FROM Emprunt WHERE idEmprunt = ?""",
@@ -71,5 +72,5 @@ class Emprunt :
                 conn.commit()
                 
         def estEnRetard(self, idEmprunt):
-                return(datetime.now() > 
+                return(datetime.now() > self.getDateFinEmprunt(idEmprunt))
                         
