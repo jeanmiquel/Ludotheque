@@ -24,28 +24,28 @@ conn.commit()
 
 class Reservation:
 
-  def __init__(self, dataBase = conn):
+  def __init__(self, idJeu, idAdh, idExt, date dataBase = conn):
     		self.cursor = dataBase.cursor()
     		self.Table = "Reservation"
 
     		self.cursor.execute("""INSERT INTO Reservation(
 		idReserv, idJeu, idAdh, idExt, dateReserv, dureeEmpruntPrevue)
 		VALUES(?, ?, ?, ?, ?, ?)""",
-    (self.idReserv, self.idJeu, self.idAdh, self.idExt, date, 14)) #14 jours
+    (idReserv, idJeu, idAdh, idExt, date, 14)) #14 jours
 
 	#setters ?
-	def setIdReserv(self, idReserv : str) :       
+	def setIdReserv(self, idReserv) :       
     		self.cursor.execute("""UPDATE Reservation SET idReserv = ? WHERE idReserv = ?""",
                         	(idReserv, self.idReserv))
     		self.idReserv = idReserv
     		return self
    	 
-	def setDateReserv(self, dateReserv : date) :    
+	def setDateReserv(self, dateReserv) :    
     		self.cursor.execute("""UPDATE Reservation SET dateReserv = ? WHERE idReserv = ?""",
                         	(dateReserv, self.idReserv))
     		return self
 
-	def setDureeEmpruntPrevue(self, dureeEmpruntPrevue : int) : 	
+	def setDureeEmpruntPrevue(self, dureeEmpruntPrevue) : 	
     		self.cursor.execute("""UPDATE Reservation SET dureeEmpruntPrevue = ? WHERE idReserv = ?""",
                         	(dureeEmpruntPrevue, self.idReserv))
     		return self
