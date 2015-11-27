@@ -77,9 +77,11 @@ class Jeu :
     		return self
  
 
-	#getters ?
+
+	#getter
+	
 	def getInfoJeu(self) :                  	#Saisir tout d'un coup
-    		"""0 Id, 1 Nom, 2 Année, 3 NbJoueur, 4 Quantité, 5 Editeur, 6 Empruntable, 7 Synospis"""
+    		"""0 Id, 1 Nom, 2 AnnÃ©e, 3 NbJoueur, 4 QuantitÃ©, 5 Editeur, 6 Empruntable, 7 Synospis"""
     		self.cursor.execute("""SELECT
 		idJeu, nomJeu, anneeJeu, nbJoueurJeu,
 		quantiteJeu, editeurJeu, estEmpruntableJeu, synopsisJeu
@@ -89,26 +91,34 @@ class Jeu :
 	def getIdJeu(self) : 
 		return str(self.idJeu) #L'id est accessible dans les attributs
 
-	def getNomJeu(self) :                   	#Le nom est stocké dans la BD
-    		return self.getInfoJeu()[1]
+	def getNomJeu(self) :
+                #Le nom est stockÃ© dans la BD
+                self.cursor.execute("""SELECT nomJeu FROM WHERE idJeu = ?""",(self.idJeu))
+    		return cursor.fetchone()
 
-	def getAnneeJeu(self) :                 	#L'annee est stoké dans la DB
-    		return self.getInfoJeu()[2]
-
+	def getAnneeJeu(self) :         #L'annee est stokÃ© dans la DB
+    		self.cursor.execute("""SELECT anneeJeu FROM WHERE idJeu = ?""",(self.idJeu))
+    		return cursor.fetchone()
+    	
 	def getNbJoueurJeu(self) :
-    		return self.getInfoJeu()[3]
+    		self.cursor.execute("""SELECT nbJoueurJeu FROM WHERE idJeu = ?""",(self.idJeu))
+    		return cursor.fetchone()
 
 	def getQuantiteJeu(self):
-    		return self.getInfoJeu()[4]
+    		self.cursor.execute("""SELECT quantiteJeu FROM WHERE idJeu = ?""",(self.idJeu))
+    		return cursor.fetchone()
 
 	def getEditeurJeu(self):
-    		return self.getInfoJeu()[5]
+    		self.cursor.execute("""SELECT editeurJeu FROM WHERE idJeu = ?""",(self.idJeu))
+    		return cursor.fetchone()
 
 	def estEmpruntable(self):
-    		return bool(self.getInfoJeu()[6])
+    		self.cursor.execute("""SELECT estEmpruntableJeu FROM WHERE idJeu = ?""",(self.idJeu))
+    		return cursor.fetchone()
 
 	def getSynopsisJeu(self):
-    		return self.getInfoJeu()[7]
+    		self.cursor.execute("""SELECT synopsisJeu FROM WHERE idJeu = ?""",(self.idJeu))
+    		return cursor.fetchone()
 
 	#Fonctions usuelles:
 
