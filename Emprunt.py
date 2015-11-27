@@ -56,20 +56,20 @@ class Emprunt :
 	def getIdEmprunt(self):
 		self.cursor.execute("""SELECT idEmprunt = ? FROM Emprunt WHERE idEmprunt = ?""",
                         	(idEmprunt, self.idEmprunt))
-                idEmprunt = cursor.fetchone()
-		return idEmprunt
+                return cursor.fetchone()
+		
 	  
 	def getDateDebutEmprunt(self):
 		self.cursor.execute("""SELECT dateDebutEmprunt = ? FROM Emprunt WHERE idEmprunt = ?""",
-                        	(idEmprunt, self.idEmprunt))
-                dateDebutEmprunt = cursor.fetchone()
-		 return dateDebutEmprunt
+                        	(dateDebutEmprunt, self.idEmprunt))
+                return cursor.fetchone()
+		 
 	  
 	def getDureePrevue(self):
 		self.cursor.execute("""SELECT dureePrevueEmprunt = ? FROM Emprunt WHERE idEmprunt = ?""",
-                        	(idEmprunt, self.idEmprunt))
-                dureePrevueEmprunt = cur.fetchone()
-		 return dureePrevue
+                        	(dureePrevue, self.idEmprunt))
+                return cursor.fetchone()
+		 
 
 	#Fonctions usuelles:
 
