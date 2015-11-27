@@ -130,10 +130,10 @@ class Adherent :
     def getDatePaiement(self,idAdherent) : 
       return self.getInfoAdh(idAdherent)[12]
       
-    def getEmpruntEnCours(self,idAdherent) : 
+    def getIdEmpruntAdherent(self,idAdherent) : 
       return self.getInfoAdh(idAdherent)[16]
       
-    def getReservEnCours(self,idAdherent) : 
+    def getIdReservAdherent(self,idAdherent) : 
       return self.getInfoAdh(idAdherent)[17]
       
     def getNbreRetards(self,idAdherent) : 
