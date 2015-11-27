@@ -64,5 +64,10 @@ class Reservation:
     cur.execute("""DELETE FROM Reservation Where idReservation = ?""",
                       (idReservation))
     conn.commit()
+    
+  def enAttente(self, idReservation):
+    return (datetime.now() > self.getDateReserv(idReservation))
+    
+  
    
   
