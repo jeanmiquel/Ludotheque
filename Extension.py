@@ -43,17 +43,23 @@ class Extension:
 
 ###GETTERS###
 
-     def getIdExtension(self,idExtension):
-        cur.execute("""SELECT idExtension = ? FROM Extension WHERE idExtension = ?""",
-                            (idExtension, self.idExtension))
+     def getIdExtension(self,nomExtension):
+        cur.execute("""SELECT idExtension  FROM Extension WHERE nomExtension = ?""",
+                            (nomExtension))
         return cur.fetchone()[0]
     
      def getNomExtension(self,idExtension):
-        cur.execute("""SELECT nomExtension = ? FROM Extension WHERE idExtension = ?""",
-                            (nomExtension, self.idExtension))
+        cur.execute("""SELECT nomExtension FROM Extension WHERE idExtension = ?""",
+                            (idExtension))
         return cur.fetchone()[0]
                 
-    def getNbreTotalExtension(self,idExtension, nbreTotalExtension) :
-        cur.execute("""SELECT nbreTotalExtension = ?  FROM Extension WHERE idExtension = ?""",
-                            (nbreTotalExtension, self.idExtension))
+    def getNbreTotalExtension(self,idExtension) :
+        cur.execute("""SELECT nbreTotalExtension  FROM Extension WHERE idExtension = ?""",
+                            (idExtension))
         return cur.fetchone()[0]
+        
+    def getidJeu(self,idExtension) :
+        cur.execute("""SELECT idJeu  FROM Extension WHERE idExtension = ?""",
+                            (idExtension))
+        return cur.fetchone()[0]
+    
