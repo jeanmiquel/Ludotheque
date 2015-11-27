@@ -9,36 +9,36 @@ conn.commit()
 cur = conn.cursor()
 
 cur.execute("""CREATE TABLE IF NOT EXISTS Extension (
- idExt str(6) NOT NULL, 
- idJeu str(6) NOT NULL, 
- nomExt varchar(20) NOT NULL, 
- nbreTotalExt int(3) NOT NULL
- PRIMARY KEY (idExt),
+ idExtension int(6) NOT NULL, 
+ idJeu int(6) NOT NULL, 
+ nomExtension varchar(20) NOT NULL, 
+ nbreTotalExtension int(3) NOT NULL
+ PRIMARY KEY (idExtension),
  FOREIGN KEY (idJeu))""")
 
 class Extension:
 
- def __init__(self, nomExt : str, nbreTotalExt : int, database = conn):
+ def __init__(self, nomExtension, nbreTotalExtension, database = conn):
       self.cursor = dataBase.cursor()
     		self.Table = "Extension"
 
     		self.cursor.execute("""INSERT INTO Extension(
-		idExt, idJeu, nomExt, nbreTotalExt)
+		idExtension, idJeu, nomExtension, nbreTotalExtension)
 		VALUES(?, ?, ?, ?)""",
-    (self.idExt, self.idJeu, self.nomExt, self.nbreTotalExt)
+    (self.idExtension, self.idJeu, self.nomExtension, self.nbreTotalExtension)
     
- def setIdExt(self, idExt : str) :       
-    		self.cursor.execute("""UPDATE Extension SET idExt = ? WHERE idExt = ?""",
-                        	(idExt, self.idExt))
-    		self.idExt = idExt
+ def setIdExtension(self, idExtension) :       
+    		self.cursor.execute("""UPDATE Extension SET idExtension = ? WHERE idExtension = ?""",
+                        	(idExtension, self.idExtension))
+    		self.idExtension = idExtension
     		return self
    	 
-	def setNomExt(self, nomExt : str) :       
-    		self.cursor.execute("""UPDATE Extension SET nomExt = ? WHERE idExt = ?""",
-                        	(nomExt, self.idExt))
+	def setNomExtension(self, nomExtension) :       
+    		self.cursor.execute("""UPDATE Extension SET nomExtension = ? WHERE idExtension = ?""",
+                        	(nomExtension, self.idExtension))
     		return self
 
-	def setNbreTotalExt(self, nbreTotalExt : str) :       
-    		self.cursor.execute("""UPDATE Extension SET nbreTotalExt = ? WHERE idExt = ?""",
-                        	(nbreTotalExt, self.idExt))
+	def setNbreTotalExtension(self, nbreTotalExtension) :       
+    		self.cursor.execute("""UPDATE Extension SET nbreTotalExtension = ? WHERE idExtension = ?""",
+                        	(nbreTotalExtension, self.idExtension))
     		return self
