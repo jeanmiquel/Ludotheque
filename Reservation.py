@@ -4,49 +4,49 @@ from Jeu import Jeu
 from Adherent import Adherent
 from Emprunt import Emprunt
 
-conn = sqlite3.connect("C:\Users\Jean\Desktop\LUDOTHEQUE\Ludotheque.db")
+conn = sqlite3.connect("/Users/david.ringayen/Desktop/Ludotheque-master\Ludotheque.db")
 conn.execute('pragma foreign_keys = on')
 conn.commit()
 cur = conn.cursor()
 
 cur.execute("""CREATE TABLE IF NOT EXISTS Reservation 
-  (idReserv str(6) NOT NULL, 
-  idAdh str(6) NOT NULL, 
+  (idReservation str(6) NOT NULL, 
+  idAdherent str(6) NOT NULL, 
   idJeu str(6) NOT NULL, 
-  idExt str(6) NOT NULL, 
-  dateReserv date NOT NULL, 
+  idExtension str(6) NOT NULL, 
+  dateReservation date NOT NULL, 
   dureeEmpruntPrevue int(3) NOT NULL, 
-  PRIMARY KEY (idReserv),
-  FOREIGN KEY(idExt), 
+  PRIMARY KEY (idReservation),
+  FOREIGN KEY(idExtension), 
   FOREIGN KEY (idJeu),
-  FOREIGN KEY (idAdh))""")
+  FOREIGN KEY (idAdherent))""")
 conn.commit()
 
 class Reservation:
 
-  def __init__(self, idJeu, idAdh, idExt, date dataBase = conn):
+  def __init__(self, dataBase = conn):
     		self.cursor = dataBase.cursor()
     		self.Table = "Reservation"
 
     		self.cursor.execute("""INSERT INTO Reservation(
-		idReserv, idJeu, idAdh, idExt, dateReserv, dureeEmpruntPrevue)
+		idReservation, idJeu, idAdherent, idExtension, dateReservation, dureeEmpruntPrevue)
 		VALUES(?, ?, ?, ?, ?, ?)""",
-    (idReserv, idJeu, idAdh, idExt, date, 14)) #14 jours
+    (self.idReservation, self.idJeu, self.idAdherent, self.idExtension, date, 14)) #14 jours
 
 	#setters ?
-	def setIdReserv(self, idReserv) :       
-    		self.cursor.execute("""UPDATE Reservation SET idReserv = ? WHERE idReserv = ?""",
-                        	(idReserv, self.idReserv))
-    		self.idReserv = idReserv
+	def setIdReserv(self, idReserv : str) :       
+    		self.cursor.execute("""UPDATE Reservation SET idReservation = ? WHERE idReservation = ?""",
+                        	(idReservation, self.idReservation))
+    		self.idReserv = idReservation
     		return self
    	 
-	def setDateReserv(self, dateReserv) :    
-    		self.cursor.execute("""UPDATE Reservation SET dateReserv = ? WHERE idReserv = ?""",
-                        	(dateReserv, self.idReserv))
+	def setDateReserv(self, dateReservation : date) :    
+    		self.cursor.execute("""UPDATE Reservation SET dateReservation = ? WHERE idReservation = ?""",
+                        	(dateReservation, self.idReservation))
     		return self
 
-	def setDureeEmpruntPrevue(self, dureeEmpruntPrevue) : 	
-    		self.cursor.execute("""UPDATE Reservation SET dureeEmpruntPrevue = ? WHERE idReserv = ?""",
+	def setDureeEmpruntPrevue(self, dureeEmpruntPrevue : int) : 	
+    		self.cursor.execute("""UPDATE Reservation SET dureeEmpruntPrevue = ? WHERE idReservation = ?""",
                         	(dureeEmpruntPrevue, self.idReserv))
     		return self
 
@@ -54,10 +54,12 @@ class Reservation:
 	#getters ?
 	
 	def getIdReserv(self):
-	  return self.idReserv
+	  return self.idReservation
 	  
 	def getDateReserv(self):
-	  return self.dateReserv
+          self.cursor.execute("""SELECT """,
+                        	(self.idReserv))
+	  return self.dateReservation
 	  
 	def getDureeEmpruntPrevue(self):
 	  return self.dureeEmpruntPrevue
@@ -65,7 +67,7 @@ class Reservation:
 	#Fonctions usuelles:
 	
 	def annulerReserv(self):
-	  self.cursor.execute("""DELETE FROM Reservation Where idReserv = ?""",
-	                    (self.idReserv))
+	  self.cursor.execute("""DELETE FROM Reservation Where idReservation = ?""",
+	                    (self.idReservation))
 	 
 	
