@@ -21,7 +21,7 @@ class Extension:
      def __init__(self, nomExtension):
                 cur.execute("""INSERT INTO Extension(idExtension, idJeu, nomExtension, nbreTotalExtension)
                 VALUES(?, ?, ?, ?)""",
-                (0, 0, self.nomExtension, 1))
+                (0, 0, nomExtension, 1))
                                     
 
 ###SETTERS###
@@ -46,9 +46,10 @@ class Extension:
      def getIdExtension(self,idExtension):
         cur.execute("""SELECT idExtension = ? FROM Extension WHERE idExtension = ?""",
                             (idExtension, self.idExtension))
-        return cur.fetchone()
+        return cur.fetchone()[0]
     
      def getNomExtension(self,idExtension):
         cur.execute("""SELECT nomExtension = ? FROM Extension WHERE idExtension = ?""",
                             (nomExtension, self.idExtension))
-        return cur.fetchone()
+        return cur.fetchone()[0]
+                
