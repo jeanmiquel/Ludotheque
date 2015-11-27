@@ -14,9 +14,9 @@ cur.execute("""CREATE TABLE IF NOT EXISTS `Emprunt` (
                                 `idExtension` int(6) NOT NULL,
                                 `dateDebutEmprunt` date NOT NULL,
                                 `dureePrevue` int(3) NOT NULL,
-                                KEY `fk_idAdherent` (`idAdherent`),
-                                KEY `fk_idExtension` (`idExtension`),
-                                KEY `fk_idJeu` (`idJeu`)
+                                PRIMARY KEY (`idAdherent`),
+                                FOREIGN KEY (`idExtension`),
+                                FOREIGN KEY (`idJeu`)
                                 )""")
 conn.commit()
 
