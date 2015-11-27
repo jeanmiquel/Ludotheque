@@ -32,6 +32,7 @@ conn.commit()
 class Adherent :
     
 
+
     def __init__(self, nomAdherent, prenomAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, dataBase = conn):
       self.cursor = dataBase.cursor()
       self.Table = "Adherent"
