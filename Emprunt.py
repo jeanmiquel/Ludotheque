@@ -58,9 +58,14 @@ class Emprunt :
 		 return self.idEmprunt
 	  
 	def getDateDebutEmprunt(self):
+		self.cursor.execute("""SELECT dateDebutEmprunt = ? FROM Emprunt WHERE idEmprunt = ?""",
+                        	(idEmprunt, self.idEmprunt))
+                cursor.flechone(
 		 return self.dateDebutEmprunt
 	  
 	def getDureePrevue(self):
+		self.cursor.execute("""SELECT dureePrevue = ? FROM Emprunt WHERE idEmprunt = ?""",
+                        	(idEmprunt, self.idEmprunt))
 		 return self.dureePrevue
 
 	#Fonctions usuelles:
