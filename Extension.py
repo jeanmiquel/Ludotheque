@@ -58,7 +58,7 @@ class Extension:
                             (idExtension))
         return cur.fetchone()[0]
         
-    def getidJeu(self,idExtension) :
+    def getIdJeu(self,idExtension) :
         cur.execute("""SELECT idJeu  FROM Extension WHERE idExtension = ?""",
                             (idExtension))
         return cur.fetchone()[0]
