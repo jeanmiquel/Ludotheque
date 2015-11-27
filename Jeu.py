@@ -23,7 +23,7 @@ PRIMARY KEY (`idJeu`)
 
 class Jeu :
     
-	def __init__(self, nomJeu : str, anneeJeu : int, dataBase = conn):
+	def __init__(self, nomJeu, anneeJeu, dataBase = conn):
     		self.cursor = dataBase.cursor()
     		self.Table = "Jeu"
     		self.idJeu = str(str(nomJeu) + str(anneeJeu))
@@ -85,7 +85,7 @@ class Jeu :
     		self.cursor.execute("""SELECT
 		idJeu, nomJeu, anneeJeu, nbJoueurJeu,
 		quantiteJeu, editeurJeu, estEmpruntableJeu, synopsisJeu
-		FROM Jeu Where idJeu = ?""",(self.idJeu,))
+		FROM Jeu Where idJeu = ?""",(self.idJeu))
     		return self.cursor.fetchone()
     
 	def getIdJeu(self) : 
