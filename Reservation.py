@@ -18,7 +18,7 @@ cur.execute("""CREATE TABLE IF NOT EXISTS Reservation
   dureeEmpruntPrevue int(3) NOT NULL, 
   FOREIGN KEY(idExt), 
   FOREIGN KEY (idJeu),
-  FOREIGN (idAdh))""")
+  FOREIGN KEY (idAdh))""")
 conn.commit()
 
 class Reservation:
