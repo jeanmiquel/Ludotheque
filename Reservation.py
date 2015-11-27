@@ -4,7 +4,7 @@ from Jeu import Jeu
 from Adherent import Adherent
 from Emprunt import Emprunt
 
-conn = sqlite3.connect("/Users/david.ringayen/Desktop/Ludotheque-master\Ludotheque.db")
+conn = sqlite3.connect("P:\Ludotheque-master\Ludotheque.db")
 conn.execute('pragma foreign_keys = on')
 conn.commit()
 cur = conn.cursor()
@@ -16,57 +16,53 @@ cur.execute("""CREATE TABLE IF NOT EXISTS Reservation
   idExtension int(6) NOT NULL, 
   dateReservation date NOT NULL, 
   dureeEmpruntPrevue int(3) NOT NULL, 
-  PRIMARY KEY (idReservation),
-  FOREIGN KEY (idExtension), 
-  FOREIGN KEY (idJeu),
-  FOREIGN KEY (idAdherent))""")
+  PRIMARY KEY (idReservation))""")
 conn.commit()
 
 class Reservation:
 
-  def __init__(self, dataBase = conn):
-    		self.cursor = dataBase.cursor()
-    		self.Table = "Reservation"
+  def __init__(self):
+        cur.execute("""INSERT INTO Reservation(
+    idReservation, idJeu, idAdherent, idExtension, dateReservation, dureeEmpruntPrevue)
+    VALUES(?, ?, ?, ?, ?, ?)""",
+        (0, 0, 0, 0, datetime.now(), 7)) #7 jours d'emprunts
 
-    		self.cursor.execute("""INSERT INTO Reservation(
-		idReservation, idJeu, idAdherent, idExtension, dateReservation, dureeEmpruntPrevue)
-		VALUES(?, ?, ?, ?, ?, ?)""",
-    		(self.idReservation, self.idJeu, self.idAdherent, self.idExtension, datetime.now(), 7)) #7 jours d'emprunts
+  #setters ?
+  def setIdReserv(self, idReservation, idAdherent) :                                                                                                                                                                                                                                                                                                                                                                    
+        cur.execute("""UPDATE Reservation SET idReservation = ? WHERE idAdherent = ?""",
+                          (idReservation, idAdherent))
+        conn.commit()
+     
+  def setDateReserv(self,idReservation, dateReservation) :    
+        cur.execute("""UPDATE Reservation SET dateReservation = ? WHERE idReservation = ?""",
+                          (dateReservation, idReservation))
+        conn.commit()
 
-	#setters ?
-	def setIdReserv(self, idReservation) :       
-    		self.cursor.execute("""UPDATE Reservation SET idReservation = ? WHERE idReservation = ?""",
-                        	(idReservation, self.idReservation))
-    		self.idReserv = idReservation
-    		return self
-   	 
-	def setDateReserv(self, dateReservation) :    
-    		self.cursor.execute("""UPDATE Reservation SET dateReservation = ? WHERE idReservation = ?""",
-                        	(dateReservation, self.idReservation))
-    		return self
-
-	def setDureeEmpruntPrevue(self, dureeEmpruntPrevue) : 	
-    		self.cursor.execute("""UPDATE Reservation SET dureeEmpruntPrevue = ? WHERE idReservation = ?""",
-                        	(dureeEmpruntPrevue, self.idReservation))
-    		return self
+  def setDureeEmpruntPrevue(self,idReservation, dureeEmpruntPrevue) :   
+        cur.execute("""UPDATE Reservation SET dureeEmpruntPrevue = ? WHERE idReservation = ?""",
+                          (dureeEmpruntPrevue, idReservation))
+        conn.commit()
 
 
-	#getters ?
-	
-	def getIdReserv(self):
-	  return self.idReservation
-	  
-	def getDateReserv(self):
-          self.cursor.execute("""SELECT """, (self.idReservation))
-	  return self.dateReservation
-	  
-	def getDureeEmpruntPrevue(self):
-	  return self.dureeEmpruntPrevue
-	  
-	#Fonctions usuelles:
-	
-	def annulerReserv(self):
-	  self.cursor.execute("""DELETE FROM Reservation Where idReservation = ?""",
-	                    (self.idReservation))
-	 
-	
+  #getters ?
+  
+  def getIdReserv(self):
+    cur.execute("""SELECT idReservation FROM Jeu WHERE idAdherent = ?""", (idAdherent))
+    return cur.fetchone()[0]
+    
+  def getDateReserv(self, idReservation):
+    cur.execute("""SELECT dateReservation FROM Reservation WHERE idReservation = ? """, (idReservation))
+    return cur.fetchone()[0]
+    
+  def getDureeEmpruntPrevue(idReservation):
+    cur.execute("""SELECT dureeEmpruntPrevue FROM Reservation WHERE idReservation =?""",(idReservation))
+    return cur.fetchone()[0]
+    
+  #Fonctions usuelles:
+  
+  def annulerReserv(self, idReservation):
+    cur.execute("""DELETE FROM Reservation Where idReservation = ?""",
+                      (idReservation))
+    conn.commit()
+   
+  
