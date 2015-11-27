@@ -14,7 +14,8 @@ cur.execute("""CREATE TABLE IF NOT EXISTS `Emprunt` (
                                 `idExtension` int(6) NOT NULL,
                                 `dateDebutEmprunt` date NOT NULL,
                                 `dureePrevue` int(3) NOT NULL,
-                                PRIMARY KEY (`idAdherent`),
+                                PRIMARY KEY (`idEmprunt`),
+                                FOREIGN KEY (`idAdherent`),
                                 FOREIGN KEY (`idExtension`),
                                 FOREIGN KEY (`idJeu`)
                                 )""")
