@@ -32,9 +32,9 @@ class Emprunt :
                 (0, 0, 0, 0, datetime.now(), 7)) #7 jours d'emprunt
 
         #setters ?
-        def setIdEmprunt(self, idEmprunt) :       
-                cur.execute("""UPDATE Emprunt SET idEmprunt = ? WHERE idEmprunt = ?""",
-                                (idEmprunt, idEmprunt))
+        def setIdEmprunt(self, idAdherent) :       
+                cur.execute("""UPDATE Emprunt SET idEmprunt = ? WHERE idAdherent = ?""",
+                                (idEmprunt, idAdherent))
                 conn.commit()
          
         def setDateDebutEmprunt(self,idEmprunt, dateDebutEmprunt) :    
@@ -50,6 +50,10 @@ class Emprunt :
 
         #getters ?
           
+        def getIdEmprunt(self, idAdherent):
+                cur.execute("""SELECT idEmprunt FROM Emprunt WHERE idAdherent =?""",(idAdherent))
+                return cur.fetchone()[0]
+          
         def getDateDebutEmprunt(self, idEmprunt):
                 cur.execute("""SELECT dateDebutEmprunt FROM Emprunt WHERE idEmprunt = ?""",
                                 (idEmprunt))
@@ -58,7 +62,19 @@ class Emprunt :
         def getDateFinEmprunt(self, idEmprunt):
                 dateFin = self.getDateDebutEmprunt(idEmprunt).day + self.getDureePrevue(idEmprunt))
                 return dateFin
-          
+                
+        def getIdJeuEmprunt(self, idEmprunt):
+                cur.execute("""SELECT idJeu FROM Emprunt WHERE idEmprunt = ?""",(idEmprunt))
+                return cur.fetchone()[0]
+                
+        def getIdAdherentEmprunt(self, idEmprunt):
+                cur.execute("""SELECT idAdherent FROM Emprunt WHERE idEmprunt =?""",(idEmprunt))
+                return cur.fetchone()[0]
+                
+        def getIdExtensionEmprunt(self, idEmprunt):
+                cur.execute("""SELECT idExtension FROM Emprunt WHERE idEmprunt = ?""",(idEmprunt))
+                return cur.fetchone()[0]
+                
         def getDureePrevue(self, idEmprunt):
                 cur.execute("""SELECT dureePrevueEmprunt FROM Emprunt WHERE idEmprunt = ?""",
                                 (idEmprunt))
