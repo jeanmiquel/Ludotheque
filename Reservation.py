@@ -50,6 +50,8 @@ class Reservation:
     cur.execute("""SELECT idReservation FROM Jeu WHERE idAdherent = ?""", (idAdherent))
     return cur.fetchone()[0]
     
+  def getIdJeuReserv(self, idReservation):
+    
   def getDateReserv(self, idReservation):
     cur.execute("""SELECT dateReservation FROM Reservation WHERE idReservation = ? """, (idReservation))
     return cur.fetchone()[0]
@@ -61,6 +63,7 @@ class Reservation:
   #Fonctions usuelles:
   
   def annulerReserv(self, idReservation):
+    Jeu.ajoutExemplaire(self.getIdJeuReserv(idReservation))
     cur.execute("""DELETE FROM Reservation Where idReservation = ?""",
                       (idReservation))
     conn.commit()
