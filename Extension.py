@@ -42,3 +42,13 @@ class Extension:
     		self.cursor.execute("""UPDATE Extension SET nbreTotalExtension = ? WHERE idExtension = ?""",
                         	(nbreTotalExtension, self.idExtension))
     		return self
+
+def getIdExtension(self):
+		self.cursor.execute("""SELECT idExtension = ? FROM Extension WHERE idExtension = ?""",
+                        	(idExtension, self.idExtension))
+                return cursor.fetchone()
+        def getNomExtension(self):
+		self.cursor.execute("""SELECT nomExtension = ? FROM Extension WHERE idExtension = ?""",
+                        	(nomExtension, self.idExtension))
+                return cursor.fetchone()
+                
