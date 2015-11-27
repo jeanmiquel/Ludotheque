@@ -22,8 +22,6 @@ cur.execute("""CREATE TABLE IF NOT EXISTS `Adherent` (
                     `nbreRetards` int(3) NOT NULL,
                     `nbreJourRetards` int(3) NOT NULL,
                     `nbreReservAnnulees` int(3) NOT NULL,
-                    `idEmprunt` int(11) NOT NULL,
-                    `idReserv` int(11) NOT NULL,
                     PRIMARY KEY (`idAdherent`)
                     )""")
 conn.commit()
