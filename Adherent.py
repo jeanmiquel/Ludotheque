@@ -6,22 +6,24 @@ conn.commit()
 cur = conn.cursor()
 
 cur.execute("""CREATE TABLE IF NOT EXISTS `Adherent` (
-                     `idAdh` str(6) NOT NULL,
-                    `nomAdh` varchar(25) NOT NULL,
-                    `prenomAdh` varchar(25) NOT NULL,
-                    `dateNaissance` date NOT NULL,
-                    `adresse` varchar(30) NOT NULL,
-                    `codePostal` varchar(10) NOT NULL,
-                    `ville` varchar(10) NOT NULL,
-                    `numTel` int(10) NOT NULL,
-                    `pseudo` varchar(20) NOT NULL,
-                    `password` varchar(26) NOT NULL,
-                    `mail` varchar(50) NOT NULL,
-                    `estAdmin` tinyint(1) NOT NULL,
-                    `dateAbonnement` date NOT NULL,
-                    `nbreRetards` int(3) NOT NULL,
-                    `nbreJourRetards` int(3) NOT NULL,
-                    `nbreReservAnnulees` int(3) NOT NULL,
+                     `idAdherent` int(6) NOT NULL,
+                    `nomAdherent` varchar(25) NOT NULL,
+                    `prenomAdherent` varchar(25) NOT NULL,
+                    `dateNaissanceAdherent` date NOT NULL,
+                    `adresseAdherent` varchar(30) NOT NULL,
+                    `codePostalAdherent` varchar(10) NOT NULL,
+                    `villeAdherent` varchar(10) NOT NULL,
+                    `numeroTelAdherent` int(10) NOT NULL,
+                    `pseudoAdherent` varchar(20) NOT NULL,
+                    `motDePasseAdherent` varchar(26) NOT NULL,
+                    `adressMailAdherent` varchar(50) NOT NULL,
+                    `estAdminAdherent` tinyint(1) NOT NULL,
+                    `datePaiementAdherent` date NOT NULL,
+                    `nombreRetardAdherent` int(3) NOT NULL,
+                    `nombreJourRetardAdherent` int(3) NOT NULL,
+                    `reservationAnnuleAdherent` int(3) NOT NULL,
+                    `idEmprunt` int(11) NOT NULL,
+                    `idReservation int(11) NOT NULL,
                     PRIMARY KEY (`idAdherent`)
                     )""")
 conn.commit()
@@ -29,89 +31,88 @@ conn.commit()
 class Adherent :
     
 
-    def __init__(self, nomAdh : str, pseudoAdh : str, password : str, numTel : str, mail : str, adresse : str, dataBase = conn):
+    def __init__(self, nomAdherent, prenomAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, dataBase = conn):
       self.cursor = dataBase.cursor()
       self.Table = "Adherent"
-      self.idAdherent = str(mail)
       self.cursor.execute("""INSERT INTO Adherent(
-      idAdherent, nomAdh, pseudoAdh, password, numTel, mail, adresse, dateAbonnement, empruntEnCours, reservEnCours, nbreRetards, nbreJoursRetards, estAdmin, nbreReservAnnulees)
+      idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent, nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation)
       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-      (self.idAdherent, nomAdh, pseudoAdh, password, numTel, mail, adresse, "", None, None, 0, 0, False, 0))
+      (self.idAdherent, nomAdherent, prenomAdherent, "", "", 0, "", 0,  pseudoAdherent, motDePasseAdherent, adresseMailAdherent, False, datetime.now(), 0, 0, 0,0))
 
 
 #setters ?
 
-    def setIdAdh(self, idAdh : str) : 
-      self.cursor.execute("""UPDATE Adherent SET idAdh = ? WHERE idAdh = ?""",
-      (idAdh, self.idAdh))
-      self.idAdh = idAdh
+    def setIdAdh(self, idAdh) : 
+      self.cursor.execute("""UPDATE Adherent SET idAdherent = ? WHERE idAdherent = ?""",
+      (idAdherent, self.idAdherent))
+      self.idAdherent = idAdherent
       return self
 
-    def setNomAdh(self, nomAdh : str) : 
-      self.cursor.execute("""UPDATE Adherent SET nomAdh = ? WHERE idAdh = ?""",
-      (nomAdh, self.idAdh))
+    def setNomAdherent(self, nomAdherent) : 
+      self.cursor.execute("""UPDATE Adherent SET nomAdherent= ? WHERE idAdherent = ?""",
+      (nomAdherent, self.idAdherent))
       return self
 
-    def setPseudo(self, pseudoAdh : str) :
-      self.cursor.execute("""UPDATE Adherent SET pseudoAdh = ? WHERE idAdh = ?""",
-      (pseudoAdh, self.idAdh))
+    def setPseudo(self, pseudoAdh) :
+      self.cursor.execute("""UPDATE Adherent SET pseudoAdherent = ? WHERE idAdherent = ?""",
+      (pseudoAdherent, self.idAdherent))
       return self
 
-    def setPassword(self, password : str):
-      self.cursor.execute(""" UPDATE Adherent SET password = ? WHERE idAdh = ?""",(password,self.idAdh))
+    def setMotDePasse(self, motDePasseAdherent):
+      self.cursor.execute(""" UPDATE Adherent SET motDePasseAdherent = ? WHERE idAdherent = ?""",(motDePasseAdherent,self.idAdherent))
       return self
 
-    def setNumTel(self, numTel : str):
-      self.cursor.execute(""" UPDATE Adherent SET numTel = ? WHERE idAdh = ?""",(numTel,self.idAdh))
+    def setNumeroTel(self, numeroTelAdherent):
+      self.cursor.execute(""" UPDATE Adherent SET numeroTelAdherent = ? WHERE idAdherent = ?""",(numeroTelAdherent,self.idAdherent))
       return self
 
-    def setMail(self, mail : str):
-      self.cursor.execute(""" UPDATE Adherent SET mail = ? WHERE idAdh = ?""",(mail,self.idAdh))
+    def setMail(self, adressMailAdherent):
+      self.cursor.execute(""" UPDATE Adherent SET adresseMailAdherent = ? WHERE idAdherent = ?""",(adresseMailAdherent,self.idAdherent))
       return self
       
-    def setAdresse(self, adresse : str):
-      self.cursor.execute(""" UPDATE Adherent SET adresse = ? WHERE idAdh = ?""",(adresse,self.idAdh))
+    def setAdresse(self, adresseAdherent):
+      self.cursor.execute(""" UPDATE Adherent SET adresseAdherent = ? WHERE idAdherent = ?""",(adresseAdherent,self.idAdherent))
       return self
 
-    def setDateAbonnement(self, dateAbonnement : Date):
-      self.cursor.execute(""" UPDATE Adherent SET dateAbonnement = ? WHERE idAdh = ?""",(dateAbonnement,self.idAdh))
+    def setDatePaiement(self, datePaiementAdherent):
+      self.cursor.execute(""" UPDATE Adherent SET datePaiementAdherent= ? WHERE idAdherent = ?""",(datePaiementAdherent,self.idAdherent))
       return self
 
-    def setEmpruntEnCours(self, empruntEnCours : Emprunt):
-      self.cursor.execute(""" UPDATE Adherent SET empruntEnCours = ? WHERE idAdh = ?""",(empruntEnCours,self.idAdh))
+    def setEmpruntEnCours(self, idEmprunt):
+      self.cursor.execute(""" UPDATE Adherent SET idEmprunt = ? WHERE idAdherent = ?""",(idEmprunt,self.idAdherent))
       return self
 
-    def setReservEnCours(self, reservEnCours : Reservation):
-      self.cursor.execute(""" UPDATE Adherent SET reservEnCours = ? WHERE idAdh = ?""",(reservEnCours,self.idAdh))
+    def setReservEnCours(self, idReservation):
+      self.cursor.execute(""" UPDATE Adherent SET idReservation = ? WHERE idAdherent = ?""",(idReservation,self.idAdherent))
       return self
 
-    def setNbreRetards(self, nbreRetards : int):
-      self.cursor.execute(""" UPDATE Adherent SET nbreRetards = ? WHERE idAdh = ?""",(nbreRetards,self.idAdh))
+    def setNbreRetards(self, nombreRetardAdherent):
+      self.cursor.execute(""" UPDATE Adherent SET nombreRetardAdherent = ? WHERE idAdherent = ?""",(nombreRetardAdherent,self.idAdherent))
       return self
       
-    def setNbreJoursRetards(self, nbreJoursRetards : int):
-      self.cursor.execute(""" UPDATE Adherent SET nbreJoursRetards = ? WHERE idAdh = ?""",(nbreJoursRetards,self.idAdh))
+    def setNbreJoursRetards(self, nombreJourRetardAdherent):
+      self.cursor.execute(""" UPDATE Adherent SET nombreJourRetardAdherent = ? WHERE idAdherent = ?""",(nombreJourRetardAdherent,self.idAdherent))
       return self
 
-    def setAdmin(self, estAdmin : bool):
-      self.cursor.execute(""" UPDATE Adherent SET estAdmin = ? WHERE idAdh = ?""",(estAdmin,self.idAdh))
+    def setAdmin(self, estAdminAdherent):
+      self.cursor.execute(""" UPDATE Adherent SET estAdminAdherent = ? WHERE idAdherent = ?""",(estAdminAdherent,self.idAdherent))
       return self
 
-    def setNbreReservAnnulees(self, nbreReservAnnulees : int):
-      self.cursor.execute(""" UPDATE Adherent SET nbreReservAnnulees = ? WHERE idAdh = ?""",(nbreReservAnnulees,self.idAdh))
+    def setNbreReservAnnulees(self, reservationAnnuleAdherent):
+      self.cursor.execute(""" UPDATE Adherent SET reservationAnnuleAdherent = ? WHERE idAdherent = ?""",(reservationAnnuleAdherent,self.idAdherent))
       return self
 
 #getters ?
 
     def getInfoAdh(self) : #Saisir tout d'un coup
-      """0 Id, 1 Nom, 2 Pseudo, 3 Mot de passe, 4 Numero de telephone, 5 Mail, 6 Adresse, 7 Date d'abonnement, 8 Emprunt en cours, 9 Reservation en cours, 10 Nombre de retards, 11 Nombre de jours de retards, 12 Statut admin, 13 Nombre Reservations annulees"""
+      """0 Id, 1 Nom, 2 Prenom, 3 Date de naissance, 4 Adresse, 5 Code postal, 6 Ville, 7 Numero de telephone, 8 Pseudo, 9 Mot de passe, 10 Adresse Mail, 11 Statut admin, 12 Date de paiement, 13 Nombre de retards, 14 Nombre de jours de retards cumules, 15 Nombre de reservations annulees, 16 Emprunt en cours, 17 Reservation en cours"""
       self.cursor.execute("""SELECT
-      idAdherent, nomAdh, pseudoAdh, password, numTel, mail, adresse, dateAbonnement, empruntEnCours, reservEnCours, nbreRetards, nbreJoursRetards, estAdmin, NbreReservAnnulees
-      FROM Adherent Where idAdh = ?""",(self.idAdh,))
+      idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent, nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation
+      FROM Adherent Where idAdherent = ?""",(self.idAdherent))
       return self.cursor.fetchone()
 
     def getIdAdh(self) :
-      return str(self.idAdh) #L'id est accessible dans les attributs
+      return self.idAdherent #L'id est accessible dans les attributs
 
     def getNomAdh(self) : 
       return self.getInfoAdh()[1]
@@ -156,5 +157,5 @@ class Adherent :
 
 
     def retirerAdh(self):
-      cursor.execute("""DELETE FROM Adherent WHERE idAdh""",(self.idAdh,))
+      cursor.execute("""DELETE FROM Adherent WHERE idAdherent""",(self.idAdherent))
       return self
