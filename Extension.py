@@ -46,10 +46,9 @@ class Extension:
      def getIdExtension(self,idExtension):
         cur.execute("""SELECT idExtension = ? FROM Extension WHERE idExtension = ?""",
                             (idExtension, self.idExtension))
-        return cursor.fetchone()
+        return cur.fetchone()
     
      def getNomExtension(self,idExtension):
         cur.execute("""SELECT nomExtension = ? FROM Extension WHERE idExtension = ?""",
                             (nomExtension, self.idExtension))
-        return cursor.fetchone()
-                
+        return cur.fetchone()
