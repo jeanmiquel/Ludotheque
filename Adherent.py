@@ -31,12 +31,7 @@ conn.commit()
 
 class Adherent :
     
-    def __init__(self, idAdherent, nomAdherent, prenomAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, dataBase = conn):
-      cur.execute("""INSERT INTO Adherent(
-      idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent, nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation)
-      VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-      (idAdherent, nomAdherent, prenomAdherent, "", "", 0, "", 0,  pseudoAdherent, motDePasseAdherent, adresseMailAdherent, False, datetime.now(), 0, 0, 0,0))
-
+    def __init__(self):
 
 #setters ?
 
@@ -159,3 +154,11 @@ class Adherent :
     def retirerAdh(self,idAdherent):
       cursor.execute("""DELETE FROM Adherent WHERE idAdherent""",(idAdherent))
       return self
+
+    def ajoutAdherent(self, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, motDePasseAdherent, adresseMailAdherent):
+      cur.execute("""SELECT MAX(idAdherent) FROM Adherent
+      cur.execute("""INSERT INTO Adherent(
+      idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent, nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation)
+      VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+      (idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, motDePasseAdherent, adresseMailAdherent, False, datetime.now(), 0, 0, 0,0))
+    
