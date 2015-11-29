@@ -82,7 +82,7 @@ class Emprunt :
         
         @staticmethod
         def ajout(idJeu, idAdherent, idExtension):
-          cur.execute("""SELECT MAX(idExtension) FROM Extension""")
+          cur.execute("""SELECT MAX(idEmprunt) FROM Emprunt""")
           f = cur.fetchone()[0]
           if (f==None):
             idEmprunt = 1
@@ -91,7 +91,7 @@ class Emprunt :
             cur.execute("""INSERT INTO Emprunt(
                   idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dureePrevueEmprunt)
                   VALUES(?, ?, ?, ?, ?, ?)""",
-                  (idEmprunt, idJeu, idAdherent, idExtension, datetime.now(), 7)) #7 jours d'emprunt
+                  (idEmprunt, idJeu, idAdherent, idExtension, datetime.now(), 7)) #7 jours d'emprunt : a faire
         
         @staticmethod
         def rendre(idEmprunt):
