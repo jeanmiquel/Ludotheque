@@ -18,48 +18,54 @@ conn.commit()
     
 class Extension:
 
-     def __init__(self, nomExtension):
-                cur.execute("""INSERT INTO Extension(idExtension, idJeu, nomExtension, nbreTotalExtension)
-                VALUES(?, ?, ?, ?)""",
-                (0, 0, nomExtension, 1))
-                                    
-
 ###SETTERS###
-    
-     def setIdExtension(self, idExtension):       
-            cur.execute("""UPDATE Extension SET idExtension = ? WHERE idExtension = ?""",
-                            (idExtension, self.idExtension))
-            conn.commit()
- 
-     def setNomExtension(self,idExtension, nomExtension) :       
-            cur.execute("""UPDATE Extension SET nomExtension = ? WHERE idExtension = ?""",
-                            (nomExtension, self.idExtension))
-            conn.commit()
 
-     def setNbreTotalExtension(self,idExtension, nbreTotalExtension) :       
+    @staticmethod
+    def setNomExtension(idExtension, nomExtension) :       
+            cur.execute("""UPDATE Extension SET nomExtension = ? WHERE idExtension = ?""",
+                            (nomExtension, idExtension))
+            conn.commit()
+    
+    @staticmethod
+    def setNbreTotalExtension(idExtension, nbreTotalExtension) :       
             cur.execute("""UPDATE Extension SET nbreTotalExtension = ? WHERE idExtension = ?""",
-                            (nbreTotalExtension, self.idExtension))
+                            (nbreTotalExtension, idExtension))
             conn.commit()
 
 ###GETTERS###
 
-     def getIdExtension(self,nomExtension):
+    @staticmethod
+    def getIdExtension(nomExtension):
         cur.execute("""SELECT idExtension  FROM Extension WHERE nomExtension = ?""",
                             (nomExtension))
         return cur.fetchone()[0]
     
-     def getNomExtension(self,idExtension):
+    @staticmethod
+    def getNomExtension(idExtension):
         cur.execute("""SELECT nomExtension FROM Extension WHERE idExtension = ?""",
                             (idExtension))
         return cur.fetchone()[0]
-                
-    def getNbreTotalExtension(self,idExtension) :
+    
+    @staticmethod         
+    def getNbreTotalExtension(idExtension) :
         cur.execute("""SELECT nbreTotalExtension  FROM Extension WHERE idExtension = ?""",
                             (idExtension))
         return cur.fetchone()[0]
-        
-    def getIdJeu(self,idExtension) :
+    
+    @staticmethod    
+    def getIdJeu(idExtension) :
         cur.execute("""SELECT idJeu  FROM Extension WHERE idExtension = ?""",
                             (idExtension))
         return cur.fetchone()[0]
-    
+
+#Fonctions usuelles:
+    def ajout(idJeu, nomExtension, nbreTotalExtension):
+        cur.execute("""SELECT MAX(idExtension) FROM Extension""")
+        f = cur.fetchone()[0]
+        if (f==None):
+            idExtension = 1
+        else:
+            idExtension =f+1
+        cur.execute("""INSERT INTO Extension(idExtension, idJeu, nomExtension, nbreTotalExtension)
+                    VALUES(?, ?, ?, ?)""",
+                    (idExtension, idJeu, nomExtension, nbreTotalExtension))
