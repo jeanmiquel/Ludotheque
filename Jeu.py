@@ -23,56 +23,50 @@ conn.commit()
 
 
 class Jeu :
-    
-        def __init__(self, nomJeu, anneeJeu, ageJeu):
-                cur.execute("""INSERT INTO Jeu(
-                idJeu, nomJeu, anneeJeu, nbJoueurJeu, ageJeu,
-                quantiteJeu, editeurJeu, estEmpruntableJeu, synopsisJeu)
-                VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-                                (1000, nomJeu, anneeJeu,
-                                " ", 0, ageJeu, " ", False, " "))
 
         #setters ?
-        def setIdJeu(self, idJeu) :            
-                cur.execute("""UPDATE Jeu SET idJeu = ? WHERE idJeu = ?""",
-                                (idJeu, idJeu))
-                idJeu = idJeu
-                conn.commit()
-         
-        def setNomJeu(self, idJeu, nomJeu) :          
+        
+        @staticmethod
+        def setNomJeu(idJeu, nomJeu) :          
                 anneeJeu = self.getAnneeJeu()
                 cur.execute("""UPDATE Jeu SET nomJeu = ? WHERE idJeu = ?""",
                                 (nomJeu, idJeu))
                 conn.commit()
-
-        def setAnneeJeu(self, idJeu,anneeJeu) :
+        
+        @staticmethod
+        def setAnneeJeu(idJeu,anneeJeu) :
                 cur.execute("""UPDATE Jeu SET anneeJeu = ? WHERE idJeu = ?""",
                                 (anneeJeu, idJeu))
                 conn.commit()
-
-        def setAgeJeu(self, idJeu, ageJeu):
+        
+        @staticmethod
+        def setAgeJeu(idJeu, ageJeu):
                 cur.execute("""UPDATE Jeu SET AgeJEu =? WHERE idJeu =?""",
                                     (ageJeu, idJeu))
                 conn.commit()
                 
-
-        def setNbJoueurJeu(self, idJeu,nbJoueurJeu):
+        @staticmethod
+        def setNbJoueurJeu(idJeu,nbJoueurJeu):
                 cur.execute(""" UPDATE Jeu SET nbJoueurJeu = ? WHERE idJeu = ?""",(nbJoueurJeu,idJeu))
                 conn.commit()
 
-        def setQuantiteJeu(self, idJeu,quantiteJeu) :
+        @staticmethod
+        def setQuantiteJeu(idJeu,quantiteJeu) :
                 cur.execute("""UPDATE Jeu SET quantiteJeu = ? WHERE idJeu = ?""",(quantiteJeu, idJeu))
                 conn.commit()
-
-        def setEditeurJeu(self, idJeu,editeurJeu) :
+        
+        @staticmethod
+        def setEditeurJeu(idJeu,editeurJeu) :
                 cur.execute("""UPDATE Jeu SET editeurJeu = ? WHERE idJeu = ?""",(editeurJeu, idJeu))
                 conn.commit()
-
-        def setEmpruntable(self,idJeu, booleen):
+        
+        @staticmethod
+        def setEmpruntable(idJeu, booleen):
                 cur.execute("""UPDATE Jeu SET estEmpruntableJeu = ? WHERE idJeu = ?""",(booleen, idJeu))
                 conn.commit()
-
-        def setSynopsisJeu(self,idJeu, synopsisJeu):
+        
+        @staticmethod
+        def setSynopsisJeu(idJeu, synopsisJeu):
                 cur.execute("""UPDATE Jeu SET synopsisJeu = ? WHERE idJeu = ?""",(synopsisJeu, idJeu))
                 conn.commit()
  
@@ -80,63 +74,89 @@ class Jeu :
 
         #getter
         
-        def getInfoJeu(self,idJeu) :                         
+        @staticmethod
+        def getInfoJeu(idJeu) :                         
                 """0 Id, 1 Nom, 2 Annee, 3 NbJoueur, 4 Quantite, 5 Editeur, 6 Empruntable, 7 Synospis"""
                 cur.execute("""SELECT
                 idJeu, nomJeu, anneeJeu, nbJoueurJeu,
                 quantiteJeu, editeurJeu, estEmpruntableJeu, synopsisJeu
                 FROM Jeu Where idJeu = ?""",(idJeu))
                 return cur.fetchone()[0]
-    
-        def getIdJeu(self,nomJeu) : 
+
+        @staticmethod
+        def getIdJeu(nomJeu) : 
                 cur.execute("""SELECT idJeu FROM Jeu WHERE nomJeu = ?""",(nomJeu))
                 return cur.fetchone()[0]
 
-        def getNomJeu(self,idJeu) :
+        @staticmethod
+        def getNomJeu(idJeu) :
 
                 cur.execute("""SELECT nomJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
                 return cur.fetchone()[0]
 
-        def getAnneeJeu(self,idJeu) :        
+        @staticmethod
+        def getAnneeJeu(idJeu) :        
                 cur.execute("""SELECT anneeJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
                 return cur.fetchone()[0]
         
-        def getNbJoueurJeu(self,idJeu) :
+        @staticmethod
+        def getNbJoueurJeu(idJeu) :
                 cur.execute("""SELECT nbJoueurJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
                 return cur.fetchone()[0]
 
-        def getQuantiteJeu(self,idJeu):
+        @staticmethod
+        def getQuantiteJeu(idJeu):
                 cur.execute("""SELECT quantiteJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
                 return cur.fetchone()[0]
-
-        def getEditeurJeu(self,idJeu):
+        
+        @staticmethod
+        def getEditeurJeu(idJeu):
                 cur.execute("""SELECT editeurJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
                 return cur.fetchone()[0]
-
-        def estEmpruntable(self,idJeu):
+        
+        @staticmethod
+        def estEmpruntable(idJeu):
                 cur.execute("""SELECT estEmpruntableJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
                 return cur.fetchone()[0]
-
-        def getSynopsisJeu(self,idJeu):
+        
+        @staticmethod
+        def getSynopsisJeu(idJeu):
                 cur.execute("""SELECT synopsisJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
                 return cur.fetchone()[0]
 
         #Fonctions usuelles:
-
-        def ajoutExemplaire(self,idJeu):
-                self.setQuantiteJeu(self.getQuantiteJeu(idJeu)+1,idJeu)
+        @staticmethod
+        def ajoutJeu():
+            cur.execute("""SELECT MAX(idJeu) FROM Jeu""")
+            f = cur.fetchone()[0]
+            if (f==None):
+                idJeu = 1
+            else:
+                idJeu =f+1
+            cur.execute("""INSERT INTO Jeu(
+                    idJeu, nomJeu, anneeJeu, nbJoueurJeu, ageJeu,
+                    quantiteJeu, editeurJeu, estEmpruntableJeu, synopsisJeu)
+                    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                                    (idJeu, nomJeu, anneeJeu,nbJoueurJeu, ageJeu,
+                    quantiteJeu, editeurJeu, estEmpruntableJeu, synopsisJeu))
+                                
+        @staticmethod
+        def ajoutExemplaire(idJeu):
+                Jeu.setQuantiteJeu(idJeu,Jeu.getQuantiteJeu(idJeu)+1)
                 conn.commit()
                 
-
-        def retraitExemplaire(self,idJeu):
-                self.setQuantiteJeu(max(self.getQuantiteJeu(idJeu)-1,0),idJeu)
+        @staticmethod
+        def retraitExemplaire(idJeu):
+                Jeu.setQuantiteJeu(idJeu,max(Jeu.getQuantiteJeu(idJeu)-1,0))
                 conn.commit()
-
-        def changeEmpruntable(self,idJeu):
-                self.setEmpruntable(not self.estEmpruntable(idJeu),idJeu)
+        
+        @staticmethod
+        def changeEmpruntable(idJeu):
+                Jeu.setEmpruntable(idJeu,not Jeu.estEmpruntable(idJeu))
                 conn.commit()
-    
-        def supprimerJeu(self,idJeu):
+        
+        @staticmethod
+        def supprimerJeu(idJeu):
                 cur.execute("""DELETE FROM Jeu WHERE idJeu""",(idJeu))
                 conn.commit()
 
