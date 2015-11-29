@@ -20,66 +20,79 @@ cur.execute("""CREATE TABLE IF NOT EXISTS Reservation
 conn.commit()
 
 class Reservation:
-
-  def __init__(self):
-        cur.execute("""INSERT INTO Reservation(
-    idReservation, idJeu, idAdherent, idExtension, dateReservation, dureeEmpruntPrevue)
-    VALUES(?, ?, ?, ?, ?, ?)""",
-        (0, 0, 0, 0, datetime.now(), 7)) #7 jours d'emprunts
-
-  #setters ?
-  def setIdReserv(self, idReservation, idAdherent) :                                                                                                                                                                                                                                                                                                                                                                    
-        cur.execute("""UPDATE Reservation SET idReservation = ? WHERE idAdherent = ?""",
-                          (idReservation, idAdherent))
-        conn.commit()
-     
-  def setDateReserv(self,idReservation, dateReservation) :    
+  
+  #setters
+  
+  @staticmethod
+  def setDateReserv(idReservation, dateReservation) :    
         cur.execute("""UPDATE Reservation SET dateReservation = ? WHERE idReservation = ?""",
                           (dateReservation, idReservation))
         conn.commit()
-
-  def setDureeEmpruntPrevue(self,idReservation, dureeEmpruntPrevue) :   
+  
+  @staticmethod
+  def setDureeEmpruntPrevue(idReservation, dureeEmpruntPrevue) :   
         cur.execute("""UPDATE Reservation SET dureeEmpruntPrevue = ? WHERE idReservation = ?""",
                           (dureeEmpruntPrevue, idReservation))
         conn.commit()
 
 
-  #getters ?
+  #getters
   
-  def getIdReserv(self, idAdherent):
+  @staticmethod
+  def getIdReserv(idAdherent):
     cur.execute("""SELECT idReservation FROM Reservation WHERE idAdherent = ?""", (idAdherent))
     return cur.fetchone()[0]
-    
-  def getIdJeuReserv(self, idReservation):
+  
+  @staticmethod
+  def getIdJeuReserv(idReservation):
     cur.execute("""SELECT idJeu FROM Reservation WHERE idReservation = ?""",(idReservation))
     return cur.fetchone()[0]
-    
-  def getIdAdhReserv(self, idReservation):
+  
+  @staticmethod
+  def getIdAdhReserv(idReservation):
     cur.execute("""SELECT idAdherent FROM Reservation WHERE idReservation = ?""",(idReservation))
     return cur.fetchone()[0]
-    
-  def getIdExtensionReserv(self, idReservation):
+  
+  @staticmethod
+  def getIdExtensionReserv(idReservation):
     cur.execute("""SELECT idExtension FROM Reservation WHERE idReservation = ?""",(idReservation))
     return cur.fetchone()[0]
-    
-  def getDateReserv(self, idReservation):
+  
+  @staticmethod
+  def getDateReserv(idReservation):
     cur.execute("""SELECT dateReservation FROM Reservation WHERE idReservation = ? """, (idReservation))
     return cur.fetchone()[0]
-    
+  
+  @staticmethod
   def getDureeEmpruntPrevue(idReservation):
     cur.execute("""SELECT dureeEmpruntPrevue FROM Reservation WHERE idReservation =?""",(idReservation))
     return cur.fetchone()[0]
     
   #Fonctions usuelles:
   
-  def annulerReserv(self, idReservation):
-    Jeu.ajoutExemplaire(self.getIdJeuReserv(idReservation))
+  @staticmethod
+  def ajout():
+    cur.execute("""SELECT MAX(idReservation) FROM Reservation""")
+        f = cur.fetchone()[0]
+        if (f==None):
+            idReservation = 1
+        else:
+            idReservation =f+1
+          cur.execute("""INSERT INTO Reservation(
+          idReservation, idJeu, idAdherent, idExtension, dateReservation, dureeEmpruntPrevue)
+          VALUES(?, ?, ?, ?, ?, ?)""",
+              (idReservation, idJeu, idAdherent, idExtension, datetime.now(), 7)) #7 jours d'emprunts : a faire
+  
+  @staticmethod
+  def annulerReserv(idReservation):
+    Jeu.ajoutExemplaire(Reservation.getIdJeuReserv(idReservation))
     cur.execute("""DELETE FROM Reservation Where idReservation = ?""",
                       (idReservation))
     conn.commit()
-    
-  def enAttente(self, idReservation):
-    return (datetime.now() > self.getDateReserv(idReservation))
+  
+  @staticmethod 
+  def enAttente(idReservation):
+    return (datetime.now() > Jeu.getDateReserv(idReservation))
     
   
    
