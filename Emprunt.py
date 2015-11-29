@@ -24,69 +24,82 @@ conn.commit()
 
 
 class Emprunt :
-    
-        def __init__(self):
-                cur.execute("""INSERT INTO Emprunt(
-                idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dureePrevueEmprunt)
-                VALUES(?, ?, ?, ?, ?, ?)""",
-                (0, 0, 0, 0, datetime.now(), 7)) #7 jours d'emprunt
 
         #setters ?
-        def setIdEmprunt(self, idAdherent) :       
-                cur.execute("""UPDATE Emprunt SET idEmprunt = ? WHERE idAdherent = ?""",
-                                (idEmprunt, idAdherent))
-                conn.commit()
-         
-        def setDateDebutEmprunt(self,idEmprunt, dateDebutEmprunt) :    
+        @staticmethod
+        def setDateDebutEmprunt(idEmprunt, dateDebutEmprunt) :    
                 cur.execute("""UPDATE Emprunt SET dateDebutEmprunt = ? WHERE idEmprunt = ?""",
                                 (dateDebutEmprunt, idEmprunt))
                 conn.commit()
-
-        def setDureePrevue(self,idEmprunt, dureePrevueEmprunt) :  
+        
+        @staticmethod
+        def setDureePrevue(idEmprunt, dureePrevueEmprunt) :  
                 cur.execute("""UPDATE Emprunt SET dureePrevueEmprunt = ? WHERE idEmprunt = ?""",
                                 (dureePrevue, idEmprunt))
                 conn.commit()
 
 
         #getters ?
-          
-        def getIdEmprunt(self, idAdherent):
+        
+        @staticmethod 
+        def getIdEmprunt(idAdherent):
                 cur.execute("""SELECT idEmprunt FROM Emprunt WHERE idAdherent =?""",(idAdherent))
                 return cur.fetchone()[0]
-          
-        def getDateDebutEmprunt(self, idEmprunt):
+        
+        @staticmethod 
+        def getDateDebutEmprunt(idEmprunt):
                 cur.execute("""SELECT dateDebutEmprunt FROM Emprunt WHERE idEmprunt = ?""",
                                 (idEmprunt))
                 return cur.fetchone()[0]
-                
-        def getDateFinEmprunt(self, idEmprunt):
-                dateFin = self.getDateDebutEmprunt(idEmprunt).day + self.getDureePrevue(idEmprunt))
+        
+        @staticmethod  
+        def getDateFinEmprunt(idEmprunt):
+                dateFin = Emprunt.getDateDebutEmprunt(idEmprunt).day + Emprunt.getDureePrevue(idEmprunt))
                 return dateFin
-                
-        def getIdJeuEmprunt(self, idEmprunt):
+        
+        @staticmethod 
+        def getIdJeuEmprunt(idEmprunt):
                 cur.execute("""SELECT idJeu FROM Emprunt WHERE idEmprunt = ?""",(idEmprunt))
                 return cur.fetchone()[0]
-                
-        def getIdAdherentEmprunt(self, idEmprunt):
+        
+        @staticmethod
+        def getIdAdherentEmprunt(idEmprunt):
                 cur.execute("""SELECT idAdherent FROM Emprunt WHERE idEmprunt =?""",(idEmprunt))
                 return cur.fetchone()[0]
-                
-        def getIdExtensionEmprunt(self, idEmprunt):
+        
+        @staticmethod
+        def getIdExtensionEmprunt(idEmprunt):
                 cur.execute("""SELECT idExtension FROM Emprunt WHERE idEmprunt = ?""",(idEmprunt))
                 return cur.fetchone()[0]
-                
-        def getDureePrevue(self, idEmprunt):
+        
+        @staticmethod
+        def getDureePrevue(idEmprunt):
                 cur.execute("""SELECT dureePrevueEmprunt FROM Emprunt WHERE idEmprunt = ?""",
                                 (idEmprunt))
                 return cur.fetchone()[0]
 
         #Fonctions usuelles:
-
-        def rendre(self, idEmprunt):
+        
+        @staticmethod
+        def ajout(idJeu, idAdherent, idExtension):
+          cur.execute("""SELECT MAX(idAdherent) FROM Adherent""")
+          f = cur.fetchone()[0]
+          if (f==None):
+            idEmprunt = 1
+          else:
+            idEmprunt =f+1
+            cur.execute("""INSERT INTO Emprunt(
+                  idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dureePrevueEmprunt)
+                  VALUES(?, ?, ?, ?, ?, ?)""",
+                  (idEmprunt, idJeu, idAdherent, idExtension, datetime.now(), 7)) #7 jours d'emprunt
+        
+        @staticmethod
+        def rendre(idEmprunt):
                 cur.execute("""DELETE FROM Emprunt WHERE idEmprunt = ?""",
                         (idEmprunt))
                 conn.commit()
-                
-        def estEnRetard(self, idEmprunt):
-                return(datetime.now() > self.getDateFinEmprunt(idEmprunt))
+        
+        @staticmethod
+        def estEnRetard(idEmprunt):
+                return(datetime.now() > Emprunt.getDateFinEmprunt(idEmprunt))
                         
