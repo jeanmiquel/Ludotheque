@@ -82,7 +82,7 @@ class Emprunt :
         
         @staticmethod
         def ajout(idJeu, idAdherent, idExtension):
-          cur.execute("""SELECT MAX(idAdherent) FROM Adherent""")
+          cur.execute("""SELECT MAX(idExtension) FROM Extension""")
           f = cur.fetchone()[0]
           if (f==None):
             idEmprunt = 1
