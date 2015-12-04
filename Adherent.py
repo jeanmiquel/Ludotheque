@@ -25,7 +25,9 @@ cur.execute("""CREATE TABLE IF NOT EXISTS `Adherent` (
                     `reservationAnnuleAdherent` int(3) NOT NULL,
                     `idEmprunt` int(11) NOT NULL,
                     `idReservation` int(11) NOT NULL,
-                    PRIMARY KEY (`idAdherent`))""")
+                    PRIMARY KEY (`idAdherent`)
+                    FOREIGN KEY (`idEmprunt`) REFERENCES Emprunt(`idEmprunt`),
+                    FOREIGN KEY (`idReservation`) REFERENCES Reservation(`idReservation`))""")
 conn.commit()
 
 
