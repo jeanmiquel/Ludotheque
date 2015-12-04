@@ -13,7 +13,8 @@ cur.execute("""CREATE TABLE IF NOT EXISTS `Extension`
      `idJeu` int(6) NOT NULL, 
      `nomExtension` varchar(20) NOT NULL, 
      `nbreTotalExtension` int(3) NOT NULL,
-     PRIMARY KEY (`idExtension`))""")
+     PRIMARY KEY (`idExtension`)
+     FOREIGN KEY (`idJeu`) REFERENCES Jeu(`idJeu`))""")
 conn.commit()
     
 class Extension:
