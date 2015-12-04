@@ -15,6 +15,8 @@ cur.execute("""CREATE TABLE IF NOT EXISTS `Jeu` (
 `ageJeu` int(2) NOT NULL,
 `nbJoueurJeu` varchar(5) NOT NULL,
 `quantiteJeu` int(3) NOT NULL,
+`auteurJeu` varchar(20) NOT NULL,
+`illustrateurJeu` varchar(20) NOT NULL,
 `editeurJeu` varchar(20) NOT NULL,
 `estEmpruntableJeu` tinyint(1) NOT NULL,
 `synopsisJeu` varchar(200) NOT NULL,
@@ -54,6 +56,16 @@ class Jeu :
         def setQuantiteJeu(idJeu,quantiteJeu) :
                 cur.execute("""UPDATE Jeu SET quantiteJeu = ? WHERE idJeu = ?""",(quantiteJeu, idJeu))
                 conn.commit()
+                
+        @staticmethod
+        def setAuteurJeu(idJeu,auteurJeu) :
+                cur.execute("""UPDATE Jeu SET auteurJeu = ? WHERE idJeu = ?""",(auteurJeu, idJeu))
+                conn.commit()
+                
+        @staticmethod
+        def setIllustrateurJeu(idJeu,illustrateurJeu) :
+                cur.execute("""UPDATE Jeu SET illustrateurJeu = ? WHERE idJeu = ?""",(illustrateurJeu, idJeu))
+                conn.commit()
         
         @staticmethod
         def setEditeurJeu(idJeu,editeurJeu) :
@@ -76,10 +88,10 @@ class Jeu :
         
         @staticmethod
         def getInfoJeu(idJeu) :                         
-                """0 Id, 1 Nom, 2 Annee, 3 NbJoueur, 4 Quantite, 5 Editeur, 6 Empruntable, 7 Synospis"""
+                """0 Id, 1 Nom, 2 Annee, 3 NbJoueur, 4 Quantite, 5 Auteur, 6 Illustrateur, 7 Editeur, 8 Empruntable, 9 Synospis"""
                 cur.execute("""SELECT
                 idJeu, nomJeu, anneeJeu, nbJoueurJeu,
-                quantiteJeu, editeurJeu, estEmpruntableJeu, synopsisJeu
+                quantiteJeu, auteurJeu, illustrateurJeu, editeurJeu, estEmpruntableJeu, synopsisJeu
                 FROM Jeu Where idJeu = ?""",(idJeu))
                 return cur.fetchone()[0]
 
@@ -108,6 +120,16 @@ class Jeu :
         def getQuantiteJeu(idJeu):
                 cur.execute("""SELECT quantiteJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
                 return cur.fetchone()[0]
+                
+        @staticmethod
+        def getAuteurJeu(idJeu):
+                cur.execute("""SELECT auteurJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
+                return cur.fetchone()[0]
+                
+        @staticmethod
+        def getIllustrateurJeu(idJeu):
+                cur.execute("""SELECT illustrateurJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
+                return cur.fetchone()[0]
         
         @staticmethod
         def getEditeurJeu(idJeu):
@@ -135,10 +157,10 @@ class Jeu :
                 idJeu =f+1
             cur.execute("""INSERT INTO Jeu(
                     idJeu, nomJeu, anneeJeu, nbJoueurJeu, ageJeu,
-                    quantiteJeu, editeurJeu, estEmpruntableJeu, synopsisJeu)
+                    quantiteJeu, auteurJeu, illustrateurJeu, editeurJeu, estEmpruntableJeu, synopsisJeu)
                     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                                     (idJeu, nomJeu, anneeJeu,nbJoueurJeu, ageJeu,
-                    quantiteJeu, editeurJeu, estEmpruntableJeu, synopsisJeu))
+                    quantiteJeu, auteurJeu, illustrateurJeu, editeurJeu, estEmpruntableJeu, synopsisJeu))
                                 
         @staticmethod
         def ajoutExemplaire(idJeu):
