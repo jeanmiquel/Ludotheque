@@ -13,6 +13,15 @@ PRIMARY KEY (`idCategorie`),
 )""")
 conn.commit()
 
+cur.execute("""CREATE TABLE IF NOT EXISTS `Jeu/Categorie` (
+`idCategorie` int(6) NOT NULL,
+`idJeu` int(6) NOT NULL,
+PRIMARY KEY (`idCategorie`),
+PRIMARY KEY (`idJeu`),
+FOREIGN KEY (`idCategorie`) REFERENCES Categorie(`idCategorie`),
+FOREIGN KEY (`idJeu`) REFERENCES Jeu(`idJeu`)
+)""")
+conn.commit()
 
 class Categorie :
   
