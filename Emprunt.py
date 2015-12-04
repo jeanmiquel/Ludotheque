@@ -13,6 +13,7 @@ cur.execute("""CREATE TABLE IF NOT EXISTS `Emprunt` (
                                 `idJeu` int(6) NOT NULL,
                                 `idExtension` int(6) NOT NULL,
                                 `dateDebutEmprunt` date NOT NULL,
+                                `dateRenduEmprunt` date NOT NULL,
                                 `dureePrevueEmprunt` int(3) NOT NULL,
                                 PRIMARY KEY (`idEmprunt`),
                                 FOREIGN KEY (`idAdherent`),
@@ -30,6 +31,12 @@ class Emprunt :
         def setDateDebutEmprunt(idEmprunt, dateDebutEmprunt) :    
                 cur.execute("""UPDATE Emprunt SET dateDebutEmprunt = ? WHERE idEmprunt = ?""",
                                 (dateDebutEmprunt, idEmprunt))
+                conn.commit()
+                
+        @staticmethod
+        def setDateRenduEmprunt(idEmprunt, dateRenduEmprunt) :    
+                cur.execute("""UPDATE Emprunt SET dateRenduEmprunt = ? WHERE idEmprunt = ?""",
+                                (dateRenduEmprunt, idEmprunt))
                 conn.commit()
         
         @staticmethod
@@ -49,6 +56,12 @@ class Emprunt :
         @staticmethod 
         def getDateDebutEmprunt(idEmprunt):
                 cur.execute("""SELECT dateDebutEmprunt FROM Emprunt WHERE idEmprunt = ?""",
+                                (idEmprunt))
+                return cur.fetchone()[0]
+                
+        @staticmethod 
+        def getDateRenduEmprunt(idEmprunt):
+                cur.execute("""SELECT dateRenduEmprunt FROM Emprunt WHERE idEmprunt = ?""",
                                 (idEmprunt))
                 return cur.fetchone()[0]
         
@@ -81,7 +94,7 @@ class Emprunt :
         #Fonctions usuelles:
         
         @staticmethod
-        def ajout(idJeu, idAdherent, idExtension):
+        def ajoutEmprunt(idJeu, idAdherent, idExtension, dateDebutEmprunt, dureePrevueEmprunt = 7):
           cur.execute("""SELECT MAX(idEmprunt) FROM Emprunt""")
           f = cur.fetchone()[0]
           if (f==None):
@@ -89,9 +102,9 @@ class Emprunt :
           else:
             idEmprunt =f+1
             cur.execute("""INSERT INTO Emprunt(
-                  idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dureePrevueEmprunt)
+                  idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dateRenduEmprunt, dureePrevueEmprunt)
                   VALUES(?, ?, ?, ?, ?, ?)""",
-                  (idEmprunt, idJeu, idAdherent, idExtension, datetime.now(), 7)) #7 jours d'emprunt : a faire
+                  (idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, None, dureePrevueEmprunt)) #7 jours d'emprunt
         
         @staticmethod
         def rendre(idEmprunt):
@@ -101,5 +114,5 @@ class Emprunt :
         
         @staticmethod
         def estEnRetard(idEmprunt):
-                return(datetime.now() > Emprunt.getDateFinEmprunt(idEmprunt))
+                return(self.getDateRenduEmprunt(idEmprunt) > self.getDateFinEmprunt(idEmprunt))
                         
