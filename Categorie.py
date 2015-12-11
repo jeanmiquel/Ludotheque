@@ -33,11 +33,11 @@ class Categorie :
   #getters
    @staticmethod
   def getIdCategorie(nomJeu) :
-    cur.execute("""SELECT idCategorie FROM Categorie WHERE nomCategorie = ?""",(nomCategorie))
+    cur.execute("""SELECT idCategorie FROM Categorie WHERE nomCategorie = ?""",(nomCategorie,))
     return cur.fetchone()[0]
     
   @staticmethod
   def getNomCategorie(idCategorie) :
-    cur.execute("""SELECT nomCategorie FROM Categorie WHERE idCategorie = ?""",(idCategorie))
+    cur.execute("""SELECT nomCategorie FROM Categorie WHERE idCategorie = ?""",(idCategorie,))
     return cur.fetchone()[0]
 
