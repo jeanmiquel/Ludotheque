@@ -74,7 +74,7 @@ class Reservation:
   #Fonctions usuelles:
   
   @staticmethod
-  def ajout():
+  def ajoutReservation():
     cur.execute("""SELECT MAX(idReservation) FROM Reservation""")
         f = cur.fetchone()[0]
         if (f==None):
@@ -89,13 +89,14 @@ class Reservation:
   @staticmethod
   def annulerReserv(idReservation):
     Jeu.ajoutExemplaire(Reservation.getIdJeuReserv(idReservation))
+    Adherent.ajoutReservAnnule(Reservation.getIdAdherent(idReservation))
     cur.execute("""DELETE FROM Reservation Where idReservation = ?""",
                       (idReservation,))
     conn.commit()
   
   @staticmethod 
   def enAttente(idReservation):
-    return (datetime.now() > Jeu.getDateReserv(idReservation))
+    return (datetime.date.today() > Jeu.getDateReserv(idReservation))
     
   
    
