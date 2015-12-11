@@ -89,11 +89,9 @@ class Jeu :
         @staticmethod
         def getInfoJeu(idJeu) :                         
                 """0 Id, 1 Nom, 2 Annee, 3 NbJoueur, 4 Quantite, 5 Auteur, 6 Illustrateur, 7 Editeur, 8 Empruntable, 9 Synospis"""
-                cur.execute("""SELECT
-                idJeu, nomJeu, anneeJeu, nbJoueurJeu,
-                quantiteJeu, auteurJeu, illustrateurJeu, editeurJeu, estEmpruntableJeu, synopsisJeu
+                cur.execute("""SELECT *
                 FROM Jeu Where idJeu = ?""",(idJeu,))
-                return cur.fetchone()[0]
+                return cur.fetchone()
 
         @staticmethod
         def getIdJeu(nomJeu) : 
