@@ -89,7 +89,7 @@ class Emprunt :
         @staticmethod
         def getDureePrevue(idEmprunt):
                 cur.execute("""SELECT dureePrevueEmprunt FROM Emprunt WHERE idEmprunt = ?""",
-                                (idEmprunt))
+                                (idEmprunt,))
                 return cur.fetchone()[0]
 
         #Fonctions usuelles:
@@ -108,14 +108,20 @@ class Emprunt :
                   (idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, None, dureePrevueEmprunt)) #7 jours d'emprunt
         
         @staticmethod
-        def rendre(idEmprunt):
-                
-                cur.execute("""DELETE FROM Emprunt WHERE idEmprunt = ?""",
-                        (idEmprunt,))
-                conn.commit()
-                
+        def getJourRetard(idEmprunt):
+                jourRetard = (Emprunt.getDateRenduEmprunt(idEmprunt) - Emprunt.getDateFinEmprunt(idEmprunt)).days
+                return jourRetard
         
         @staticmethod
         def estEnRetard(idEmprunt):
-                return(self.getDateRenduEmprunt(idEmprunt) > self.getDateFinEmprunt(idEmprunt))
+                return(Emprunt.getDateRenduEmprunt(idEmprunt) > Emprunt.getDateFinEmprunt(idEmprunt))
                         
+        @staticmethod
+        def rendre(idEmprunt):
+                if (estEnRetard(idEmprunt)):
+                        Adherent.ajoutRetard(Emprunt.getIdAdherentEmprunt(idEmprunt))
+                        Adherent.ajoutJourRetard(Emprunt.getIdAdherentEmprunt(idEmprunt),Emprunt.getJourRetard(idEmprunt))
+                        Jeu.ajoutExemplaire(Emprunt.getIdJeuEmprunt(idEmprunt))
+                cur.execute("""DELETE FROM Emprunt WHERE idEmprunt = ?""",
+                        (idEmprunt,))
+                conn.commit()
