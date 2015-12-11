@@ -43,32 +43,32 @@ class Reservation:
   
   @staticmethod
   def getIdReserv(idAdherent):
-    cur.execute("""SELECT idReservation FROM Reservation WHERE idAdherent = ?""", (idAdherent))
+    cur.execute("""SELECT idReservation FROM Reservation WHERE idAdherent = ?""", (idAdherent,))
     return cur.fetchone()[0]
   
   @staticmethod
   def getIdJeuReserv(idReservation):
-    cur.execute("""SELECT idJeu FROM Reservation WHERE idReservation = ?""",(idReservation))
+    cur.execute("""SELECT idJeu FROM Reservation WHERE idReservation = ?""",(idReservation,))
     return cur.fetchone()[0]
   
   @staticmethod
   def getIdAdhReserv(idReservation):
-    cur.execute("""SELECT idAdherent FROM Reservation WHERE idReservation = ?""",(idReservation))
+    cur.execute("""SELECT idAdherent FROM Reservation WHERE idReservation = ?""",(idReservation,))
     return cur.fetchone()[0]
   
   @staticmethod
   def getIdExtensionReserv(idReservation):
-    cur.execute("""SELECT idExtension FROM Reservation WHERE idReservation = ?""",(idReservation))
+    cur.execute("""SELECT idExtension FROM Reservation WHERE idReservation = ?""",(idReservation,))
     return cur.fetchone()[0]
   
   @staticmethod
   def getDateReserv(idReservation):
-    cur.execute("""SELECT dateReservation FROM Reservation WHERE idReservation = ? """, (idReservation))
+    cur.execute("""SELECT dateReservation FROM Reservation WHERE idReservation = ? """, (idReservation,))
     return cur.fetchone()[0]
   
   @staticmethod
   def getDureeEmpruntPrevue(idReservation):
-    cur.execute("""SELECT dureeEmpruntPrevue FROM Reservation WHERE idReservation =?""",(idReservation))
+    cur.execute("""SELECT dureeEmpruntPrevue FROM Reservation WHERE idReservation =?""",(idReservation,))
     return cur.fetchone()[0]
     
   #Fonctions usuelles:
@@ -90,7 +90,7 @@ class Reservation:
   def annulerReserv(idReservation):
     Jeu.ajoutExemplaire(Reservation.getIdJeuReserv(idReservation))
     cur.execute("""DELETE FROM Reservation Where idReservation = ?""",
-                      (idReservation))
+                      (idReservation,))
     conn.commit()
   
   @staticmethod 
