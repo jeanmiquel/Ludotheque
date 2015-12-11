@@ -190,6 +190,14 @@ class Adherent :
                         WHERE idAdherent = ?""",(Adherent.getNbJoursRetards(idAdherent)+joursRetards,
                                                  idAdherent))
         conn.commit()
+        
+    @staticmethod
+    def ajoutReservAnnule(idAdherent):
+        cur.execute("""UPDATE Adherent SET reservationAnnuleAdherent = ?
+                    WHERE idAdherent = ?""",(Adherent.getNbReservAnnulees(idAdherent),
+                                             idAdherent))
+        conn.commit()
+
 
     @staticmethod
     def retirerAdh(idAdherent):
