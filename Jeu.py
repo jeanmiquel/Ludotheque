@@ -92,58 +92,58 @@ class Jeu :
                 cur.execute("""SELECT
                 idJeu, nomJeu, anneeJeu, nbJoueurJeu,
                 quantiteJeu, auteurJeu, illustrateurJeu, editeurJeu, estEmpruntableJeu, synopsisJeu
-                FROM Jeu Where idJeu = ?""",(idJeu))
+                FROM Jeu Where idJeu = ?""",(idJeu,))
                 return cur.fetchone()[0]
 
         @staticmethod
         def getIdJeu(nomJeu) : 
-                cur.execute("""SELECT idJeu FROM Jeu WHERE nomJeu = ?""",(nomJeu))
+                cur.execute("""SELECT idJeu FROM Jeu WHERE nomJeu = ?""",(nomJeu,))
                 return cur.fetchone()[0]
 
         @staticmethod
         def getNomJeu(idJeu) :
 
-                cur.execute("""SELECT nomJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
+                cur.execute("""SELECT nomJeu FROM Jeu WHERE idJeu = ?""",(idJeu,))
                 return cur.fetchone()[0]
 
         @staticmethod
         def getAnneeJeu(idJeu) :        
-                cur.execute("""SELECT anneeJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
+                cur.execute("""SELECT anneeJeu FROM Jeu WHERE idJeu = ?""",(idJeu,))
                 return cur.fetchone()[0]
         
         @staticmethod
         def getNbJoueurJeu(idJeu) :
-                cur.execute("""SELECT nbJoueurJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
+                cur.execute("""SELECT nbJoueurJeu FROM Jeu WHERE idJeu = ?""",(idJeu,))
                 return cur.fetchone()[0]
 
         @staticmethod
         def getQuantiteJeu(idJeu):
-                cur.execute("""SELECT quantiteJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
+                cur.execute("""SELECT quantiteJeu FROM Jeu WHERE idJeu = ?""",(idJeu,))
                 return cur.fetchone()[0]
                 
         @staticmethod
         def getAuteurJeu(idJeu):
-                cur.execute("""SELECT auteurJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
+                cur.execute("""SELECT auteurJeu FROM Jeu WHERE idJeu = ?""",(idJeu,))
                 return cur.fetchone()[0]
                 
         @staticmethod
         def getIllustrateurJeu(idJeu):
-                cur.execute("""SELECT illustrateurJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
+                cur.execute("""SELECT illustrateurJeu FROM Jeu WHERE idJeu = ?""",(idJeu,))
                 return cur.fetchone()[0]
         
         @staticmethod
         def getEditeurJeu(idJeu):
-                cur.execute("""SELECT editeurJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
+                cur.execute("""SELECT editeurJeu FROM Jeu WHERE idJeu = ?""",(idJeu,))
                 return cur.fetchone()[0]
         
         @staticmethod
         def estEmpruntable(idJeu):
-                cur.execute("""SELECT estEmpruntableJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
+                cur.execute("""SELECT estEmpruntableJeu FROM Jeu WHERE idJeu = ?""",(idJeu,))
                 return cur.fetchone()[0]
         
         @staticmethod
         def getSynopsisJeu(idJeu):
-                cur.execute("""SELECT synopsisJeu FROM Jeu WHERE idJeu = ?""",(idJeu))
+                cur.execute("""SELECT synopsisJeu FROM Jeu WHERE idJeu = ?""",(idJeu,))
                 return cur.fetchone()[0]
 
         #Fonctions usuelles:
@@ -179,6 +179,6 @@ class Jeu :
         
         @staticmethod
         def supprimerJeu(idJeu):
-                cur.execute("""DELETE FROM Jeu WHERE idJeu""",(idJeu))
+                cur.execute("""DELETE FROM Jeu WHERE idJeu""",(idJeu,))
                 conn.commit()
 
