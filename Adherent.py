@@ -178,8 +178,22 @@ class Adherent :
 #Fonctions usuelles:
 
     @staticmethod
+    def ajoutRetard(idAdherent):
+        cur.execute("""UPDATE Adherent SET nombreRetardAdherent = ?
+                        WHERE idAdherent = ?""",(Adherent.getNbreRetards(idAdherent)+1,
+                                                 idAdherent))
+        conn.commit()
+
+    @staticmethod
+    def ajoutJourRetard(idAdherent, joursRetards):
+        cur.execute("""UPDATE Adherent SET nombreJourRetardAdherent = ?
+                        WHERE idAdherent = ?""",(Adherent.getNbJoursRetards(idAdherent)+joursRetards,
+                                                 idAdherent))
+        conn.commit()
+
+    @staticmethod
     def retirerAdh(idAdherent):
-        cursor.execute("""DELETE FROM Adherent WHERE idAdherent""",(idAdherent))
+        cursor.execute("""DELETE FROM Adherent WHERE idAdherent""",(idAdherent,))
         conn.commit()
 
     @staticmethod
