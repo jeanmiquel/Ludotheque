@@ -38,25 +38,25 @@ class Extension:
     @staticmethod
     def getIdExtension(nomExtension):
         cur.execute("""SELECT idExtension  FROM Extension WHERE nomExtension = ?""",
-                            (nomExtension))
+                            (nomExtension,))
         return cur.fetchone()[0]
     
     @staticmethod
     def getNomExtension(idExtension):
         cur.execute("""SELECT nomExtension FROM Extension WHERE idExtension = ?""",
-                            (idExtension))
+                            (idExtension,))
         return cur.fetchone()[0]
     
     @staticmethod         
     def getNbreTotalExtension(idExtension) :
         cur.execute("""SELECT nbreTotalExtension  FROM Extension WHERE idExtension = ?""",
-                            (idExtension))
+                            (idExtension,))
         return cur.fetchone()[0]
     
     @staticmethod    
     def getIdJeu(idExtension) :
         cur.execute("""SELECT idJeu  FROM Extension WHERE idExtension = ?""",
-                            (idExtension))
+                            (idExtension,))
         return cur.fetchone()[0]
 
 #Fonctions usuelles:
