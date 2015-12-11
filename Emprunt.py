@@ -1,5 +1,6 @@
 import sqlite3
 import datetime
+from Jeu import Jeu
 
 conn = sqlite3.connect("P:\Ludotheque-master\Ludotheque.db")
 conn.execute('pragma foreign_keys = on')
@@ -67,7 +68,7 @@ class Emprunt :
         
         @staticmethod  
         def getDateFinEmprunt(idEmprunt):
-                dateFin = Emprunt.getDateDebutEmprunt(idEmprunt).day + Emprunt.getDureePrevue(idEmprunt))
+                dateFin = Emprunt.getDateDebutEmprunt(idEmprunt).day + Emprunt.getDureePrevue(idEmprunt)
                 return dateFin
         
         @staticmethod 
@@ -108,9 +109,11 @@ class Emprunt :
         
         @staticmethod
         def rendre(idEmprunt):
+                
                 cur.execute("""DELETE FROM Emprunt WHERE idEmprunt = ?""",
                         (idEmprunt))
                 conn.commit()
+                
         
         @staticmethod
         def estEnRetard(idEmprunt):
