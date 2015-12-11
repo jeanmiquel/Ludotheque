@@ -9,15 +9,13 @@ cur = conn.cursor()
 cur.execute("""CREATE TABLE IF NOT EXISTS `Categorie` (
 `idCategorie` int(6) NOT NULL,
 `nomCategorie` varchar(25) NOT NULL,
-PRIMARY KEY (`idCategorie`),
-)""")
+PRIMARY KEY (`idCategorie`))""")
 conn.commit()
 
-cur.execute("""CREATE TABLE IF NOT EXISTS `Jeu/Categorie` (
+cur.execute("""CREATE TABLE IF NOT EXISTS `Appartient` (
 `idCategorie` int(6) NOT NULL,
 `idJeu` int(6) NOT NULL,
-PRIMARY KEY (`idCategorie`),
-PRIMARY KEY (`idJeu`),
+PRIMARY KEY (`idCategorie`,`idJeu`),
 FOREIGN KEY (`idCategorie`) REFERENCES Categorie(`idCategorie`),
 FOREIGN KEY (`idJeu`) REFERENCES Jeu(`idJeu`)
 )""")
