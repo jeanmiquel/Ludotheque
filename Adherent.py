@@ -1,7 +1,7 @@
 import datetime
 import sqlite3
 
-conn = sqlite3.connect("C:\Users\david.ringayen\Desktop\Ludotheque-master\ludotheque.db")
+conn = sqlite3.connect("ludotheque.db")
 conn.execute('pragma foreign_keys = on')
 conn.commit()
 cur = conn.cursor()
