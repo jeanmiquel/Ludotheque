@@ -1,8 +1,8 @@
 import datetime
 import sqlite3
-from Jeu import Jeu
-from Adherent import Adherent
-from Emprunt import Emprunt
+import Jeu
+import Adherent
+import Emprunt
 
 conn = sqlite3.connect("ludotheque.db")
 conn.execute('pragma foreign_keys = on')
