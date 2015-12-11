@@ -51,19 +51,19 @@ class Emprunt :
         
         @staticmethod 
         def getIdEmprunt(idAdherent):
-                cur.execute("""SELECT idEmprunt FROM Emprunt WHERE idAdherent =?""",(idAdherent))
+                cur.execute("""SELECT idEmprunt FROM Emprunt WHERE idAdherent =?""",(idAdherent,))
                 return cur.fetchone()[0]
         
         @staticmethod 
         def getDateDebutEmprunt(idEmprunt):
                 cur.execute("""SELECT dateDebutEmprunt FROM Emprunt WHERE idEmprunt = ?""",
-                                (idEmprunt))
+                                (idEmprunt,))
                 return cur.fetchone()[0]
                 
         @staticmethod 
         def getDateRenduEmprunt(idEmprunt):
                 cur.execute("""SELECT dateRenduEmprunt FROM Emprunt WHERE idEmprunt = ?""",
-                                (idEmprunt))
+                                (idEmprunt,))
                 return cur.fetchone()[0]
         
         @staticmethod  
@@ -73,17 +73,17 @@ class Emprunt :
         
         @staticmethod 
         def getIdJeuEmprunt(idEmprunt):
-                cur.execute("""SELECT idJeu FROM Emprunt WHERE idEmprunt = ?""",(idEmprunt))
+                cur.execute("""SELECT idJeu FROM Emprunt WHERE idEmprunt = ?""",(idEmprunt,))
                 return cur.fetchone()[0]
         
         @staticmethod
         def getIdAdherentEmprunt(idEmprunt):
-                cur.execute("""SELECT idAdherent FROM Emprunt WHERE idEmprunt =?""",(idEmprunt))
+                cur.execute("""SELECT idAdherent FROM Emprunt WHERE idEmprunt =?""",(idEmprunt,))
                 return cur.fetchone()[0]
         
         @staticmethod
         def getIdExtensionEmprunt(idEmprunt):
-                cur.execute("""SELECT idExtension FROM Emprunt WHERE idEmprunt = ?""",(idEmprunt))
+                cur.execute("""SELECT idExtension FROM Emprunt WHERE idEmprunt = ?""",(idEmprunt,))
                 return cur.fetchone()[0]
         
         @staticmethod
@@ -111,7 +111,7 @@ class Emprunt :
         def rendre(idEmprunt):
                 
                 cur.execute("""DELETE FROM Emprunt WHERE idEmprunt = ?""",
-                        (idEmprunt))
+                        (idEmprunt,))
                 conn.commit()
                 
         
