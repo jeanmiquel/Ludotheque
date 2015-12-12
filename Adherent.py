@@ -205,7 +205,7 @@ class Adherent :
 
 
     @staticmethod
-    def retirerAdh(idAdherent):
+    def supprimerAdherent(idAdherent):
         cursor.execute("""DELETE FROM Adherent WHERE idAdherent= ?""",(idAdherent,))
         conn.commit()
 
