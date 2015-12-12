@@ -51,14 +51,14 @@ class Categorie :
   @staticmethod
   def ajoutCategorie(nomCategorie):
     cur.execute("""SELECT MAX(idCategorie) FROM Categorie""")
-            f = cur.fetchone()[0]
-            if (f==None):
-                idJeu = 1
-            else:
-                idJeu =f+1
-            cur.execute("""INSERT INTO Categorie(idCategorie, nomCategorie)
+    f = cur.fetchone()[0]
+    if (f==None):
+        idJeu = 1
+    else:
+        idJeu =f+1
+    cur.execute("""INSERT INTO Categorie(idCategorie, nomCategorie)
                     VALUES(?, ?)""",(idCategorie, nomCategorie))
-            conn.commit()
+    conn.commit()
             
   @staticmethod
   def supprimerCategorie(idCategorie):
