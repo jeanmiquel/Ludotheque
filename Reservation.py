@@ -95,7 +95,7 @@ class Reservation:
   def annulerReserv(idReservation):
     Jeu.ajoutExemplaire(Reservation.getIdJeuReserv(idReservation))
     Adherent.ajoutReservAnnule(Reservation.getIdAdherent(idReservation))
-    cur.execute("""DELETE FROM Reservation Where idReservation = ?""",
+    cur.execute("""DELETE FROM Reservation WHERE idReservation = ?""",
                       (idReservation,))
     conn.commit()
   
