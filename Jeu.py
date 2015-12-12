@@ -87,10 +87,13 @@ class Jeu :
         #getter
         
         @staticmethod
+        def afficherTableJeu():
+                cur.execute("""SELECT * FROM Jeu""")
+                return cur.fetchall()
+        
+        @staticmethod
         def getInfoJeu(idJeu) :                         
-                """0 Id, 1 Nom, 2 Annee, 3 NbJoueur, 4 Quantite, 5 Auteur, 6 Illustrateur, 7 Editeur, 8 Empruntable, 9 Synospis"""
-                cur.execute("""SELECT *
-                FROM Jeu Where idJeu = ?""",(idJeu,))
+                cur.execute("""SELECT * FROM Jeu WHERE idJeu = ?""",(idJeu,))
                 return cur.fetchone()
 
         @staticmethod
@@ -177,6 +180,6 @@ class Jeu :
         
         @staticmethod
         def supprimerJeu(idJeu):
-                cur.execute("""DELETE FROM Jeu WHERE idJeu""",(idJeu,))
+                cur.execute("""DELETE FROM Jeu WHERE idJeu =?""",(idJeu,))
                 conn.commit()
 
