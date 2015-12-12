@@ -178,6 +178,11 @@ class Adherent :
 #Fonctions usuelles:
 
     @staticmethod
+    def afficherTableAdherent():
+      cur.execute("""SELECT * FROM Adherent""")
+      return cur.fetchall()
+
+    @staticmethod
     def ajoutRetard(idAdherent):
         cur.execute("""UPDATE Adherent SET nombreRetardAdherent = ?
                         WHERE idAdherent = ?""",(Adherent.getNbreRetards(idAdherent)+1,
@@ -201,7 +206,7 @@ class Adherent :
 
     @staticmethod
     def retirerAdh(idAdherent):
-        cursor.execute("""DELETE FROM Adherent WHERE idAdherent""",(idAdherent,))
+        cursor.execute("""DELETE FROM Adherent WHERE idAdherent= ?""",(idAdherent,))
         conn.commit()
 
     @staticmethod
