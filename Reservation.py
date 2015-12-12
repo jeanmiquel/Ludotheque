@@ -86,7 +86,7 @@ class Reservation:
             idReservation = 1
         else:
             idReservation =f+1
-          cur.execute("""INSERT INTO Reservation(
+        cur.execute("""INSERT INTO Reservation(
           idReservation, idJeu, idAdherent, idExtension, dateReservation, dureeEmpruntPrevue)
           VALUES(?, ?, ?, ?, ?, ?)""",
               (idReservation, idJeu, idAdherent, idExtension, datetime.now(), 7)) #7 jours d'emprunts : a faire
