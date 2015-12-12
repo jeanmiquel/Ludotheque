@@ -49,6 +49,7 @@ class Emprunt :
 
         #getters ?
         
+        
         @staticmethod 
         def getIdEmprunt(idAdherent):
                 cur.execute("""SELECT idEmprunt FROM Emprunt WHERE idAdherent =?""",(idAdherent,))
@@ -93,6 +94,11 @@ class Emprunt :
                 return cur.fetchone()[0]
 
         #Fonctions usuelles:
+        
+        @staticmethod
+        def afficherTableEmprunt():
+          cur.execute("""SELECT * FROM Emprunt""")
+          return cur.fetchall()
         
         @staticmethod
         def ajoutEmprunt(idJeu, idAdherent, idExtension, dateDebutEmprunt, dureePrevueEmprunt = 7):
