@@ -62,6 +62,6 @@ class Categorie :
             
   @staticmethod
   def supprimerCategorie(idCategorie):
-    cur.execute("""DELETE FROM Categorie WHERE idCategorie = ?""")
+    cur.execute("""DELETE FROM Categorie WHERE idCategorie = ?""",(idCategorie,))
     conn.commit()
 
