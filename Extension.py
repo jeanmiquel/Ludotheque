@@ -77,6 +77,7 @@ class Extension:
         cur.execute("""INSERT INTO Extension(idExtension, idJeu, nomExtension, nbreTotalExtension)
                     VALUES(?, ?, ?, ?)""",
                     (idExtension, idJeu, nomExtension, nbreTotalExtension))
+        conn.commit()
                     
     @staticmethod
     def supprimerExtension(idExtension):
