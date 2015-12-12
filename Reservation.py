@@ -74,6 +74,11 @@ class Reservation:
   #Fonctions usuelles:
   
   @staticmethod
+  def afficherTableReservation():
+    cur.execute("""SELECT * FROM Reservation""")
+    return cur.fetchall()
+  
+  @staticmethod
   def ajoutReservation():
     cur.execute("""SELECT MAX(idReservation) FROM Reservation""")
         f = cur.fetchone()[0]
