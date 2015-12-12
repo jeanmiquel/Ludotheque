@@ -162,6 +162,7 @@ class Jeu :
                     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                                     (idJeu, nomJeu, anneeJeu,nbJoueurJeu, ageJeu,
                     quantiteJeu, auteurJeu, illustrateurJeu, editeurJeu, estEmpruntableJeu, synopsisJeu))
+            conn.commit()
                                 
         @staticmethod
         def ajoutExemplaire(idJeu):
