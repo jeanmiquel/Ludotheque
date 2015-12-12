@@ -40,4 +40,28 @@ class Categorie :
   def getNomCategorie(idCategorie) :
     cur.execute("""SELECT nomCategorie FROM Categorie WHERE idCategorie = ?""",(idCategorie,))
     return cur.fetchone()[0]
+    
+  #Fonctions usuelles
+  
+  @staticmethod
+  def afficherTableCategorie():
+    cur.execute("""SELECT * FROM Categorie""")
+    return cur.fetchall()
+  
+  @staticmethod
+  def ajoutCategorie(nomCategorie):
+    cur.execute("""SELECT MAX(idCategorie) FROM Categorie""")
+            f = cur.fetchone()[0]
+            if (f==None):
+                idJeu = 1
+            else:
+                idJeu =f+1
+            cur.execute("""INSERT INTO Categorie(idCategorie, nomCategorie)
+                    VALUES(?, ?)""",(idCategorie, nomCategorie))
+            conn.commit()
+            
+  @staticmethod
+  def supprimerCategorie(idCategorie):
+    cur.execute("""DELETE FROM Categorie WHERE idCategorie = ?""")
+    conn.commit()
 
