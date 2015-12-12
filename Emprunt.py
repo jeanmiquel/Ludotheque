@@ -108,10 +108,11 @@ class Emprunt :
             idEmprunt = 1
           else:
             idEmprunt =f+1
-            cur.execute("""INSERT INTO Emprunt(
+          cur.execute("""INSERT INTO Emprunt(
                   idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dateRenduEmprunt, dureePrevueEmprunt)
                   VALUES(?, ?, ?, ?, ?, ?)""",
                   (idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, None, dureePrevueEmprunt)) #7 jours d'emprunt
+          conn.commit() 
         
         @staticmethod
         def getJourRetard(idEmprunt):
