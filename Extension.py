@@ -60,7 +60,14 @@ class Extension:
         return cur.fetchone()[0]
 
 #Fonctions usuelles:
-    def ajout(idJeu, nomExtension, nbreTotalExtension):
+
+    @staticmethod
+    def afficherTableExtension():
+        cur.execute("""SELECT * FROM Extension""")
+        return cur.fetchall()
+
+    @staticmethod
+    def ajoutExtension(idJeu, nomExtension, nbreTotalExtension):
         cur.execute("""SELECT MAX(idExtension) FROM Extension""")
         f = cur.fetchone()[0]
         if (f==None):
@@ -70,3 +77,8 @@ class Extension:
         cur.execute("""INSERT INTO Extension(idExtension, idJeu, nomExtension, nbreTotalExtension)
                     VALUES(?, ?, ?, ?)""",
                     (idExtension, idJeu, nomExtension, nbreTotalExtension))
+                    
+    @staticmethod
+    def supprimerExtension(idExtension):
+        cur.execute("""DELETE FROM Extension WHERE idExtension = ?""",(idExtension,))
+        conn.commit()
