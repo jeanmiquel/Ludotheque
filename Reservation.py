@@ -81,15 +81,16 @@ class Reservation:
   @staticmethod
   def ajoutReservation():
     cur.execute("""SELECT MAX(idReservation) FROM Reservation""")
-        f = cur.fetchone()[0]
-        if (f==None):
-            idReservation = 1
-        else:
-            idReservation =f+1
-        cur.execute("""INSERT INTO Reservation(
-          idReservation, idJeu, idAdherent, idExtension, dateReservation, dureeEmpruntPrevue)
-          VALUES(?, ?, ?, ?, ?, ?)""",
-              (idReservation, idJeu, idAdherent, idExtension, datetime.now(), 7)) #7 jours d'emprunts : a faire
+    f = cur.fetchone()[0]
+    if (f==None):
+      idReservation = 1
+    else:
+      idReservation =f+1
+    cur.execute("""INSERT INTO Reservation(
+                 idReservation, idJeu, idAdherent, idExtension, dateReservation, dureeEmpruntPrevue)
+                VALUES(?, ?, ?, ?, ?, ?)""",
+                (idReservation, idJeu, idAdherent, idExtension, datetime.now(), 7)) #7 jours d'emprunts : a faire
+    conn.commit()
   
   @staticmethod
   def annulerReserv(idReservation):
