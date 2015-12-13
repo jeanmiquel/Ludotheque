@@ -114,66 +114,82 @@ class Adherent :
     @staticmethod
     def getId(nomdAdherent) :
       cur.execute(""" SELECT idAdherent FROM Adherent WHERE nomJeu = ?""",(nomAdherent,))
+      return cur.fetchone()[0]
 
     @staticmethod
     def getNom(idAdherent) : 
-      return Adherent.getInfoAdh(idAdherent)[1]
+      cur.execute("""SELECT nomAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return cur.fetchone()[0]
 
     @staticmethod
     def getPrenom(idAdherent) : 
-      return Adherent.getInfoAdh(idAdherent)[2]
+      cur.execute("""SELECT prenomAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return cur.fetchone()[0]
 
     @staticmethod
     def getNaissance(idAdherent) : 
-      return Adherent.getInfoAdh(idAdherent)[3]
+      cur.execute("""SELECT dateNaissanceAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return cur.fetchone()[0]
 
     @staticmethod
     def getPseudo(idAdherent) : 
-      return Adherent.getInfoAdh(idAdherent)[8]
+      cur.execute("""SELECT pseudoAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return cur.fetchone()[0]
 
     @staticmethod
-    def getPassword(idAdherent) : 
-        return Adherent.getInfoAdh(idAdherent)[9]
+    def getMotDePasse(idAdherent) : 
+        cur.execute("""SELECT motDePasseAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+        return cur.fetchone()[0]
 
     @staticmethod
     def getNumTelephone(idAdherent) : 
-      return Adherent.getInfoAdh(idAdherent)[7]
+      cur.execute("""SELECT numeroTelAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return cur.fetchone()[0]
 
     @staticmethod
     def getMail(idAdherent) : 
-      return Adherent.getInfoAdh(idAdherent)[10]
+      cur.execute("""SELECT adresseMailAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return cur.fetchone()[0]
     
     @staticmethod
     def getAdresse(idAdherent) : 
-      return Adherent.getInfoAdh(idAdherent)[4]
+      cur.execute("""SELECT adresseAdherent, villeAdherent, codePostalAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return cur.fetchall()
 
     @staticmethod
     def getDatePaiement(idAdherent) : 
-      return Adherent.getInfoAdh(idAdherent)[12]
+      cur.execute("""SELECT datePaiementAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return cur.fetchone()[0]
     
     @staticmethod  
     def getEmpruntEnCours(idAdherent) : 
-      return Adherent.getInfoAdh(idAdherent)[16]
+      cur.execute("""SELECT idEmprunt FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return cur.fetchone()[0]
 
     @staticmethod 
     def getReservEnCours(idAdherent) : 
-      return Adherent.getInfoAdh(idAdherent)[17]
+      cur.execute("""SELECT idReservation FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return cur.fetchone()[0]
 
     @staticmethod  
     def getNbreRetards(idAdherent) : 
-      return Adherent.getInfoAdh(idAdherent)[13]
+      cur.execute("""SELECT nombreRetardAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return cur.fetchone()[0]
 
     @staticmethod  
     def getNbJoursRetards(idAdherent) : 
-      return Adherent.getInfoAdh(idAdherent)[14]
+      cur.execute("""SELECT nombreJourRetardAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return cur.fetchone()[0]
 
     @staticmethod  
     def getEstAdministrateur(idAdherent) : 
-      return Adherent.getInfoAdh(idAdherent)[11]
+      cur.execute("""SELECT estAdminAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return cur.fetchone()[0]
 
     @staticmethod
     def getNbReservAnnulees(idAdherent) : 
-      return Adherent.getInfoAdh(idAdherent)[15]
+      cur.execute("""SELECT reservationAnnuleAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return cur.fetchone()[0]
       
 #Fonctions usuelles:
 
