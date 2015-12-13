@@ -199,7 +199,7 @@ class Adherent :
     @staticmethod
     def ajoutReservAnnule(idAdherent):
         cur.execute("""UPDATE Adherent SET reservationAnnuleAdherent = ?
-                    WHERE idAdherent = ?""",(Adherent.getNbReservAnnulees(idAdherent),
+                    WHERE idAdherent = ?""",(Adherent.getNbReservAnnulees(idAdherent)+1,
                                              idAdherent))
         conn.commit()
 
