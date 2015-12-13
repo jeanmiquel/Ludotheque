@@ -86,10 +86,7 @@ class Jeu :
 
         #getter
         
-        @staticmethod
-        def afficherTableJeu():
-                cur.execute("""SELECT * FROM Jeu""")
-                return cur.fetchall()
+        
         
         @staticmethod
         def getInfoJeu(idJeu) :                         
@@ -148,6 +145,12 @@ class Jeu :
                 return cur.fetchone()[0]
 
         #Fonctions usuelles:
+        
+        @staticmethod
+        def afficherTableJeu():
+                cur.execute("""SELECT * FROM Jeu""")
+                return cur.fetchall()
+        
         @staticmethod
         def ajoutJeu():
             cur.execute("""SELECT MAX(idJeu) FROM Jeu""")
