@@ -41,7 +41,7 @@ class Categorie :
   #Fonctions usuelles
   
   @staticmethod
-  def afficherTableCategorie():
+  def getAllCategories():
     BDD.cur.execute("""SELECT * FROM Categorie""")
     return BDD.cur.fetchall()
   
