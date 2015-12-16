@@ -93,7 +93,7 @@ class Emprunt :
         #Fonctions usuelles:
         
         @staticmethod
-        def afficherTableEmprunt():
+        def getAllEmprunts():
           BDD.cur.execute("""SELECT * FROM Emprunt""")
           return BDD.cur.fetchall()
         
