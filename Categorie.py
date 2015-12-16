@@ -22,7 +22,7 @@ class Categorie :
   
   #setters
   @staticmethod
-  def setNomJeu(idCategorie, nomCategorie) :
+  def setNomCategorie(idCategorie, nomCategorie) :
     BDD.cur.execute("""UPDATE Categorie SET nomCategorie = ? WHERE idCategorie = ?""",
                 (nomCategorie, idCategorie))
     BDD.conn.commit()
