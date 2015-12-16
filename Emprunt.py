@@ -2,13 +2,10 @@ import sqlite3
 import datetime
 import Jeu
 
-conn = sqlite3.connect("ludotheque.db")
-conn.execute('pragma foreign_keys = on')
-conn.commit()
-cur = conn.cursor()
+import BDD
 
 
-cur.execute("""CREATE TABLE IF NOT EXISTS `Emprunt` (
+BDD.cur.execute("""CREATE TABLE IF NOT EXISTS `Emprunt` (
                                 `idEmprunt` int(6) NOT NULL,
                                 `idAdherent` int(6) NOT NULL,
                                 `idJeu` int(6) NOT NULL,
@@ -21,7 +18,7 @@ cur.execute("""CREATE TABLE IF NOT EXISTS `Emprunt` (
                                 FOREIGN KEY (`idExtension`) REFERENCES Extension(`idExtension`),
                                 FOREIGN KEY (`idJeu`) REFERENCES Jeu(`idJeu`)
                                 )""")
-conn.commit()
+BDD.conn.commit()
 
 
 
@@ -30,21 +27,21 @@ class Emprunt :
         #setters ?
         @staticmethod
         def setDateDebutEmprunt(idEmprunt, dateDebutEmprunt) :    
-                cur.execute("""UPDATE Emprunt SET dateDebutEmprunt = ? WHERE idEmprunt = ?""",
+                BDD.cur.execute("""UPDATE Emprunt SET dateDebutEmprunt = ? WHERE idEmprunt = ?""",
                                 (dateDebutEmprunt, idEmprunt))
-                conn.commit()
+                BDD.conn.commit()
                 
         @staticmethod
         def setDateRenduEmprunt(idEmprunt, dateRenduEmprunt) :    
-                cur.execute("""UPDATE Emprunt SET dateRenduEmprunt = ? WHERE idEmprunt = ?""",
+                BDD.cur.execute("""UPDATE Emprunt SET dateRenduEmprunt = ? WHERE idEmprunt = ?""",
                                 (dateRenduEmprunt, idEmprunt))
-                conn.commit()
+                BDD.conn.commit()
         
         @staticmethod
         def setDureePrevue(idEmprunt, dureePrevueEmprunt) :  
-                cur.execute("""UPDATE Emprunt SET dureePrevueEmprunt = ? WHERE idEmprunt = ?""",
+                BDD.cur.execute("""UPDATE Emprunt SET dureePrevueEmprunt = ? WHERE idEmprunt = ?""",
                                 (dureePrevue, idEmprunt))
-                conn.commit()
+                BDD.conn.commit()
 
 
         #getters ?
@@ -52,20 +49,20 @@ class Emprunt :
         
         @staticmethod 
         def getIdEmprunt(idAdherent):
-                cur.execute("""SELECT idEmprunt FROM Emprunt WHERE idAdherent =?""",(idAdherent,))
-                return cur.fetchone()[0]
+                BDD.cur.execute("""SELECT idEmprunt FROM Emprunt WHERE idAdherent =?""",(idAdherent,))
+                return BDD.cur.fetchone()[0]
         
         @staticmethod 
         def getDateDebutEmprunt(idEmprunt):
-                cur.execute("""SELECT dateDebutEmprunt FROM Emprunt WHERE idEmprunt = ?""",
+                BDD.cur.execute("""SELECT dateDebutEmprunt FROM Emprunt WHERE idEmprunt = ?""",
                                 (idEmprunt,))
-                return cur.fetchone()[0]
+                return BDD.cur.fetchone()[0]
                 
         @staticmethod 
         def getDateRenduEmprunt(idEmprunt):
-                cur.execute("""SELECT dateRenduEmprunt FROM Emprunt WHERE idEmprunt = ?""",
+                BDD.cur.execute("""SELECT dateRenduEmprunt FROM Emprunt WHERE idEmprunt = ?""",
                                 (idEmprunt,))
-                return cur.fetchone()[0]
+                return BDD.cur.fetchone()[0]
         
         @staticmethod  
         def getDateFinEmprunt(idEmprunt):
@@ -74,45 +71,45 @@ class Emprunt :
         
         @staticmethod 
         def getIdJeuEmprunt(idEmprunt):
-                cur.execute("""SELECT idJeu FROM Emprunt WHERE idEmprunt = ?""",(idEmprunt,))
-                return cur.fetchone()[0]
+                BDD.cur.execute("""SELECT idJeu FROM Emprunt WHERE idEmprunt = ?""",(idEmprunt,))
+                return BDD.cur.fetchone()[0]
         
         @staticmethod
         def getIdAdherentEmprunt(idEmprunt):
-                cur.execute("""SELECT idAdherent FROM Emprunt WHERE idEmprunt =?""",(idEmprunt,))
-                return cur.fetchone()[0]
+                BDD.cur.execute("""SELECT idAdherent FROM Emprunt WHERE idEmprunt =?""",(idEmprunt,))
+                return BDD.cur.fetchone()[0]
         
         @staticmethod
         def getIdExtensionEmprunt(idEmprunt):
-                cur.execute("""SELECT idExtension FROM Emprunt WHERE idEmprunt = ?""",(idEmprunt,))
-                return cur.fetchone()[0]
+                BDD.cur.execute("""SELECT idExtension FROM Emprunt WHERE idEmprunt = ?""",(idEmprunt,))
+                return BDD.cur.fetchone()[0]
         
         @staticmethod
         def getDureePrevue(idEmprunt):
-                cur.execute("""SELECT dureePrevueEmprunt FROM Emprunt WHERE idEmprunt = ?""",
+                BDD.cur.execute("""SELECT dureePrevueEmprunt FROM Emprunt WHERE idEmprunt = ?""",
                                 (idEmprunt,))
-                return cur.fetchone()[0]
+                return BDD.cur.fetchone()[0]
 
         #Fonctions usuelles:
         
         @staticmethod
         def afficherTableEmprunt():
-          cur.execute("""SELECT * FROM Emprunt""")
-          return cur.fetchall()
+          BDD.cur.execute("""SELECT * FROM Emprunt""")
+          return BDD.cur.fetchall()
         
         @staticmethod
         def ajoutEmprunt(idJeu, idAdherent, idExtension, dateDebutEmprunt, dureePrevueEmprunt = 7):
-          cur.execute("""SELECT MAX(idEmprunt) FROM Emprunt""")
-          f = cur.fetchone()[0]
+          BDD.cur.execute("""SELECT MAX(idEmprunt) FROM Emprunt""")
+          f = BDD.cur.fetchone()[0]
           if (f==None):
             idEmprunt = 1
           else:
             idEmprunt =f+1
-          cur.execute("""INSERT INTO Emprunt(
+          BDD.cur.execute("""INSERT INTO Emprunt(
                   idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dateRenduEmprunt, dureePrevueEmprunt)
                   VALUES(?, ?, ?, ?, ?, ?)""",
                   (idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, None, dureePrevueEmprunt)) #7 jours d'emprunt
-          conn.commit() 
+          BDD.conn.commit() 
         
         @staticmethod
         def getJourRetard(idEmprunt):
@@ -129,6 +126,6 @@ class Emprunt :
                         Adherent.ajoutRetard(Emprunt.getIdAdherentEmprunt(idEmprunt))
                         Adherent.ajoutJourRetard(Emprunt.getIdAdherentEmprunt(idEmprunt),Emprunt.getJourRetard(idEmprunt))
                         Jeu.ajoutExemplaire(Emprunt.getIdJeuEmprunt(idEmprunt))
-                cur.execute("""DELETE FROM Emprunt WHERE idEmprunt = ?""",
+                BDD.cur.execute("""DELETE FROM Emprunt WHERE idEmprunt = ?""",
                         (idEmprunt,))
-                conn.commit()
+                BDD.conn.commit()
