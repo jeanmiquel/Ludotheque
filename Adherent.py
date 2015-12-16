@@ -1,12 +1,9 @@
 import datetime
 import sqlite3
 
-conn = sqlite3.connect("ludotheque.db")
-conn.execute('pragma foreign_keys = on')
-conn.commit()
-cur = conn.cursor()
+import BDD
 
-cur.execute("""CREATE TABLE IF NOT EXISTS `Adherent` (
+BDD.cur.execute("""CREATE TABLE IF NOT EXISTS `Adherent` (
                     `idAdherent` int(6) NOT NULL,
                     `nomAdherent` varchar(25) NOT NULL,
                     `prenomAdherent` varchar(25) NOT NULL,
@@ -28,7 +25,7 @@ cur.execute("""CREATE TABLE IF NOT EXISTS `Adherent` (
                     PRIMARY KEY (`idAdherent`)
                     FOREIGN KEY (`idEmprunt`) REFERENCES Emprunt(`idEmprunt`),
                     FOREIGN KEY (`idReservation`) REFERENCES Reservation(`idReservation`))""")
-conn.commit()
+BDD.conn.commit()
 
 
 class Adherent :
@@ -37,208 +34,208 @@ class Adherent :
     #setters 
     @staticmethod
     def setNom(idAdherent, nomAdherent) : 
-      cur.execute("""UPDATE Adherent SET nomAdherent= ? WHERE idAdherent = ?""",
+      BDD.cur.execute("""UPDATE Adherent SET nomAdherent= ? WHERE idAdherent = ?""",
       (nomAdherent, idAdherent))
-      conn.commit()
+      BDD.conn.commit()
 
     @staticmethod
     def setPseudo(idAdherent, pseudoAdh) :
-      cur.execute("""UPDATE Adherent SET pseudoAdherent = ? WHERE idAdherent = ?""",
+      BDD.cur.execute("""UPDATE Adherent SET pseudoAdherent = ? WHERE idAdherent = ?""",
       (pseudoAdherent, idAdherent))
-      conn.commit()
+      BDD.conn.commit()
 
     @staticmethod
     def setMotDePasse(idAdherent, motDePasseAdherent):
-      cur.execute(""" UPDATE Adherent SET motDePasseAdherent = ? WHERE idAdherent = ?""",(motDePasseAdherent,idAdherent))
-      conn.commit()
+      BDD.cur.execute(""" UPDATE Adherent SET motDePasseAdherent = ? WHERE idAdherent = ?""",(motDePasseAdherent,idAdherent))
+      BDD.conn.commit()
 
     @staticmethod
     def setNumeroTelephone(idAdherent, numeroTelAdherent):
-      cur.execute(""" UPDATE Adherent SET numeroTelAdherent = ? WHERE idAdherent = ?""",(numeroTelAdherent,idAdherent))
-      conn.commit()
+      BDD.cur.execute(""" UPDATE Adherent SET numeroTelAdherent = ? WHERE idAdherent = ?""",(numeroTelAdherent,idAdherent))
+      BDD.conn.commit()
 
     @staticmethod
     def setMail(idAdherent, adressMailAdherent):
-      cur.execute(""" UPDATE Adherent SET adresseMailAdherent = ? WHERE idAdherent = ?""",(adresseMailAdherent,idAdherent))
-      conn.commit()
+      BDD.cur.execute(""" UPDATE Adherent SET adresseMailAdherent = ? WHERE idAdherent = ?""",(adresseMailAdherent,idAdherent))
+      BDD.conn.commit()
 
     @staticmethod    
     def setAdresse(idAdherent, adresseAdherent):
-      cur.execute(""" UPDATE Adherent SET adresseAdherent = ? WHERE idAdherent = ?""",(adresseAdherent,idAdherent))
-      conn.commit()
+      BDD.cur.execute(""" UPDATE Adherent SET adresseAdherent = ? WHERE idAdherent = ?""",(adresseAdherent,idAdherent))
+      BDD.conn.commit()
 
     @staticmethod
     def setDatePaiement(idAdherent, datePaiementAdherent):
-      cur.execute(""" UPDATE Adherent SET datePaiementAdherent= ? WHERE idAdherent = ?""",(datePaiementAdherent,idAdherent))
-      conn.commit()
+      BDD.cur.execute(""" UPDATE Adherent SET datePaiementAdherent= ? WHERE idAdherent = ?""",(datePaiementAdherent,idAdherent))
+      BDD.conn.commit()
 
     @staticmethod
     def setEmpruntEnCours(idAdherent, idEmprunt):
-      cur.execute(""" UPDATE Adherent SET idEmprunt = ? WHERE idAdherent = ?""",(idEmprunt,idAdherent))
-      conn.commit()
+      BDD.cur.execute(""" UPDATE Adherent SET idEmprunt = ? WHERE idAdherent = ?""",(idEmprunt,idAdherent))
+      BDD.conn.commit()
 
     @staticmethod
     def setReservEnCours(idAdherent, idReservation):
-      cur.execute(""" UPDATE Adherent SET idReservation = ? WHERE idAdherent = ?""",(idReservation,idAdherent))
-      conn.commit()
+      BDD.cur.execute(""" UPDATE Adherent SET idReservation = ? WHERE idAdherent = ?""",(idReservation,idAdherent))
+      BDD.conn.commit()
 
     @staticmethod
     def setNbreRetards(idAdherent, nombreRetardAdherent):
-      cur.execute(""" UPDATE Adherent SET nombreRetardAdherent = ? WHERE idAdherent = ?""",(nombreRetardAdherent,idAdherent))
-      conn.commit()
+      BDD.cur.execute(""" UPDATE Adherent SET nombreRetardAdherent = ? WHERE idAdherent = ?""",(nombreRetardAdherent,idAdherent))
+      BDD.conn.commit()
 
     @staticmethod   
     def setNbreJoursRetards(idAdherent, nombreJourRetardAdherent):
-      cur.execute(""" UPDATE Adherent SET nombreJourRetardAdherent = ? WHERE idAdherent = ?""",(nombreJourRetardAdherent,idAdherent))
-      conn.commit()
+      BDD.cur.execute(""" UPDATE Adherent SET nombreJourRetardAdherent = ? WHERE idAdherent = ?""",(nombreJourRetardAdherent,idAdherent))
+      BDD.conn.commit()
 
     @staticmethod
     def setAdministrateur( idAdherent,estAdminAdherent):
-      cur.execute(""" UPDATE Adherent SET estAdminAdherent = ? WHERE idAdherent = ?""",(estAdminAdherent,idAdherent))
-      conn.commit()
+      BDD.cur.execute(""" UPDATE Adherent SET estAdminAdherent = ? WHERE idAdherent = ?""",(estAdminAdherent,idAdherent))
+      BDD.conn.commit()
 
     @staticmethod
     def setNbReservAnnulees(idAdherent, reservationAnnuleAdherent):
-      cur.execute(""" UPDATE Adherent SET reservationAnnuleAdherent = ? WHERE idAdherent = ?""",(reservationAnnuleAdherent,idAdherent))
-      conn.commit()
+      BDD.cur.execute(""" UPDATE Adherent SET reservationAnnuleAdherent = ? WHERE idAdherent = ?""",(reservationAnnuleAdherent,idAdherent))
+      BDD.conn.commit()
 
   #getters 
     @staticmethod
     def getInfo(idAdherent) : #Saisir tout d'un coup
       """0 Id, 1 Nom, 2 Prenom, 3 Date de naissance, 4 Adresse, 5 Code postal, 6 Ville, 7 Numero de telephone, 8 Pseudo, 9 Mot de passe, 10 Adresse Mail, 11 Statut admin, 12 Date de paiement, 13 Nombre de retards, 14 Nombre de jours de retards cumules, 15 Nombre de reservations annulees, 16 Emprunt en cours, 17 Reservation en cours"""
-      cur.execute("""SELECT
+      BDD.cur.execute("""SELECT
       idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent, nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation
       FROM Adherent Where idAdherent = ?""",(idAdherent,))
-      return cur.fetchone()
+      return BDD.cur.fetchone()
 
     @staticmethod
     def getId(nomdAdherent) :
-      cur.execute(""" SELECT idAdherent FROM Adherent WHERE nomJeu = ?""",(nomAdherent,))
-      return cur.fetchone()[0]
+      BDD.cur.execute(""" SELECT idAdherent FROM Adherent WHERE nomJeu = ?""",(nomAdherent,))
+      return BDD.cur.fetchone()[0]
 
     @staticmethod
     def getNom(idAdherent) : 
-      cur.execute("""SELECT nomAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
-      return cur.fetchone()[0]
+      BDD.cur.execute("""SELECT nomAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return BDD.cur.fetchone()[0]
 
     @staticmethod
     def getPrenom(idAdherent) : 
-      cur.execute("""SELECT prenomAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
-      return cur.fetchone()[0]
+      BDD.cur.execute("""SELECT prenomAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return BDD.cur.fetchone()[0]
 
     @staticmethod
     def getNaissance(idAdherent) : 
-      cur.execute("""SELECT dateNaissanceAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
-      return cur.fetchone()[0]
+      BDD.cur.execute("""SELECT dateNaissanceAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return BDD.cur.fetchone()[0]
 
     @staticmethod
     def getPseudo(idAdherent) : 
-      cur.execute("""SELECT pseudoAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
-      return cur.fetchone()[0]
+      BDD.cur.execute("""SELECT pseudoAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return BDD.cur.fetchone()[0]
 
     @staticmethod
     def getMotDePasse(idAdherent) : 
-        cur.execute("""SELECT motDePasseAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
-        return cur.fetchone()[0]
+        BDD.cur.execute("""SELECT motDePasseAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+        return BDD.cur.fetchone()[0]
 
     @staticmethod
     def getNumTelephone(idAdherent) : 
-      cur.execute("""SELECT numeroTelAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
-      return cur.fetchone()[0]
+      BDD.cur.execute("""SELECT numeroTelAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return BDD.cur.fetchone()[0]
 
     @staticmethod
     def getMail(idAdherent) : 
-      cur.execute("""SELECT adresseMailAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
-      return cur.fetchone()[0]
+      BDD.cur.execute("""SELECT adresseMailAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return BDD.cur.fetchone()[0]
     
     @staticmethod
     def getAdresse(idAdherent) : 
-      cur.execute("""SELECT adresseAdherent, villeAdherent, codePostalAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
-      return cur.fetchall()
+      BDD.cur.execute("""SELECT adresseAdherent, villeAdherent, codePostalAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return BDD.cur.fetchall()
 
     @staticmethod
     def getDatePaiement(idAdherent) : 
-      cur.execute("""SELECT datePaiementAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
-      return cur.fetchone()[0]
+      BDD.cur.execute("""SELECT datePaiementAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return BDD.cur.fetchone()[0]
     
     @staticmethod  
     def getEmpruntEnCours(idAdherent) : 
-      cur.execute("""SELECT idEmprunt FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
-      return cur.fetchone()[0]
+      BDD.cur.execute("""SELECT idEmprunt FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return BDD.cur.fetchone()[0]
 
     @staticmethod 
     def getReservEnCours(idAdherent) : 
-      cur.execute("""SELECT idReservation FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
-      return cur.fetchone()[0]
+      BDD.cur.execute("""SELECT idReservation FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return BDD.cur.fetchone()[0]
 
     @staticmethod  
     def getNbreRetards(idAdherent) : 
-      cur.execute("""SELECT nombreRetardAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
-      return cur.fetchone()[0]
+      BDD.cur.execute("""SELECT nombreRetardAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return BDD.cur.fetchone()[0]
 
     @staticmethod  
     def getNbJoursRetards(idAdherent) : 
-      cur.execute("""SELECT nombreJourRetardAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
-      return cur.fetchone()[0]
+      BDD.cur.execute("""SELECT nombreJourRetardAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return BDD.cur.fetchone()[0]
 
     @staticmethod  
     def getEstAdministrateur(idAdherent) : 
-      cur.execute("""SELECT estAdminAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
-      return cur.fetchone()[0]
+      BDD.cur.execute("""SELECT estAdminAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return BDD.cur.fetchone()[0]
 
     @staticmethod
     def getNbReservAnnulees(idAdherent) : 
-      cur.execute("""SELECT reservationAnnuleAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
-      return cur.fetchone()[0]
+      BDD.cur.execute("""SELECT reservationAnnuleAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return BDD.cur.fetchone()[0]
       
 #Fonctions usuelles:
 
     @staticmethod
     def afficherTableAdherent():
-      cur.execute("""SELECT * FROM Adherent""")
-      return cur.fetchall()
+      BDD.cur.execute("""SELECT * FROM Adherent""")
+      return BDD.cur.fetchall()
 
     @staticmethod
     def ajoutRetard(idAdherent):
-        cur.execute("""UPDATE Adherent SET nombreRetardAdherent = ?
+        BDD.cur.execute("""UPDATE Adherent SET nombreRetardAdherent = ?
                         WHERE idAdherent = ?""",(Adherent.getNbreRetards(idAdherent)+1,
                                                  idAdherent))
-        conn.commit()
+        BDD.conn.commit()
 
     @staticmethod
     def ajoutJourRetard(idAdherent, joursRetards):
-        cur.execute("""UPDATE Adherent SET nombreJourRetardAdherent = ?
+        BDD.cur.execute("""UPDATE Adherent SET nombreJourRetardAdherent = ?
                         WHERE idAdherent = ?""",(Adherent.getNbJoursRetards(idAdherent)+joursRetards,
                                                  idAdherent))
-        conn.commit()
+        BDD.conn.commit()
         
     @staticmethod
     def ajoutReservAnnule(idAdherent):
-        cur.execute("""UPDATE Adherent SET reservationAnnuleAdherent = ?
+        BDD.cur.execute("""UPDATE Adherent SET reservationAnnuleAdherent = ?
                     WHERE idAdherent = ?""",(Adherent.getNbReservAnnulees(idAdherent)+1,
                                              idAdherent))
-        conn.commit()
+        BDD.conn.commit()
 
 
     @staticmethod
     def supprimerAdherent(idAdherent):
-        cursor.execute("""DELETE FROM Adherent WHERE idAdherent= ?""",(idAdherent,))
-        conn.commit()
+        BDD.cursor.execute("""DELETE FROM Adherent WHERE idAdherent= ?""",(idAdherent,))
+        BDD.conn.commit()
 
     @staticmethod
     def ajoutAdherent(nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, adresseMailAdherent):
-        cur.execute("""SELECT MAX(idAdherent) FROM Adherent""")
-        f = cur.fetchone()[0]
+        BDD.cur.execute("""SELECT MAX(idAdherent) FROM Adherent""")
+        f = BDD.cur.fetchone()[0]
         if (f==None):
             idAdherent = 1
         else:
             idAdherent =f+1
-        cur.execute("""INSERT INTO Adherent(idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent,
+        BDD.cur.execute("""INSERT INTO Adherent(idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent,
             villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent, nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
           (idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, prenomAdherent+"."+nomAdherent, adresseMailAdherent, False, datetime.datetime.now(), 0,0, 0, 0,0))
-        conn.commit()
+        BDD.conn.commit()
             
     @staticmethod
     def reinitialiserMDPAdherent(idAdherent):
-        cur.execute("""UPDATE Adherent SET motDePasseAdherent = ? WHERE idAdherent = ?""",(Adherent.getPrenomAdh(idAdherent)+"."+Adherent.getNomAdh(idAdherent),idAdherent))
-        conn.commit()
+        BDD.cur.execute("""UPDATE Adherent SET motDePasseAdherent = ? WHERE idAdherent = ?""",(Adherent.getPrenomAdh(idAdherent)+"."+Adherent.getNomAdh(idAdherent),idAdherent))
+        BDD.conn.commit()
