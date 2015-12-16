@@ -90,7 +90,7 @@ class Reservation:
     BDD.conn.commit()
   
   @staticmethod
-  def annulerReserv(idReservation):
+  def annulerReservApresDateButoire(idReservation):
     Jeu.ajoutExemplaire(Reservation.getIdJeuReserv(idReservation))
     Adherent.ajoutReservAnnule(Reservation.getIdAdherent(idReservation))
     BDD.cur.execute("""DELETE FROM Reservation WHERE idReservation = ?""",
