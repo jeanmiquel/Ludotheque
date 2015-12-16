@@ -71,7 +71,7 @@ class Reservation:
   #Fonctions usuelles:
   
   @staticmethod
-  def afficherTableReservation():
+  def getAllReservations():
     BDD.cur.execute("""SELECT * FROM Reservation""")
     return BDD.cur.fetchall()
   
