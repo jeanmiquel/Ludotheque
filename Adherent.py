@@ -37,6 +37,18 @@ class Adherent :
       BDD.cur.execute("""UPDATE Adherent SET nomAdherent= ? WHERE idAdherent = ?""",
       (nomAdherent, idAdherent))
       BDD.conn.commit()
+      
+    @staticmethod
+    def setPrenom(idAdherent, prenomAdherent) : 
+      BDD.cur.execute("""UPDATE Adherent SET prenomAdherent= ? WHERE idAdherent = ?""",
+      (prenomAdherent, idAdherent))
+      BDD.conn.commit()
+      
+    @staticmethod
+    def setNaissance(idAdherent, dateNaissance):
+      BDD.cur.execute("""UPDATE Adherent SET dateNaissance= ? WHERE idAdherent = ?""",
+      (dateNaissance, idAdherent))
+      BDD.conn.commit()
 
     @staticmethod
     def setPseudo(idAdherent, pseudoAdh) :
@@ -60,8 +72,9 @@ class Adherent :
       BDD.conn.commit()
 
     @staticmethod    
-    def setAdresse(idAdherent, adresseAdherent):
-      BDD.cur.execute(""" UPDATE Adherent SET adresseAdherent = ? WHERE idAdherent = ?""",(adresseAdherent,idAdherent))
+    def setAdresse(idAdherent, adresseAdherent, codePostalAdherent, villeAdherent):
+      BDD.cur.execute(""" UPDATE Adherent SET adresseAdherent = ?, codePostalAdherent = ?, villeAdherent = ? WHERE idAdherent = ?""",
+      (adresseAdherent, codePostalAdherent, villeAdherent ,idAdherent))
       BDD.conn.commit()
 
     @staticmethod
@@ -188,11 +201,45 @@ class Adherent :
       BDD.cur.execute("""SELECT reservationAnnuleAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
       return BDD.cur.fetchone()[0]
       
+    @staticmethod
+    def getAge(idAdherent):
+      return ((datetime.date.today() - Adherent.getNaissance(idAdherent)).year)
+      
 #Fonctions usuelles:
 
     @staticmethod
-    def afficherTableAdherent():
+    def aUnEmpruntEnCours(idAdherent):
+      return(Adherent.getEmpruntEnCours(idAdherent) != None)
+      
+    @staticmethod
+    def aUneReservationEnCours(idAdherent):
+      return(Adherent.getReservEnCours(idAdherent) != None)
+
+    @staticmethod
+    def estAJour(idAdherent):
+      annee = datetime.timedelta(days=365)
+      dateFinAbonnement = Adherent.getDatePaiement(idAdherent) + annee
+      return(datetime.date.today() < dateFinAbonnement)
+
+    @staticmethod
+    def getAllAdherent():
       BDD.cur.execute("""SELECT * FROM Adherent""")
+      return BDD.cur.fetchall()
+      
+    @staticmethod
+    def getAdherentByName(nomAdherent):
+      nomAdherents = nomAdherent + "%"
+      BDD.cur.execute("""SELECT * FROM Adherent WHERE nomAdherent LIKE nomAdherents""")
+      return BDD.cur.fetchall()
+      
+    @staticmethod
+    def getAllEmpruntAdherent(idAdherent):
+      BDD.cur.execute("""SELECT * FROM Emprunt WHERE idAdherent =?""",(idAdherent,))
+      return BDD.cur.fetchall()
+      
+    @staticmethod
+    def getAllReservationAdherent(idAdherent):
+      BDD.cur.execute("""SELECT * FROM Reservation WHERE idAdherent =?""",(idAdherent,))
       return BDD.cur.fetchall()
 
     @staticmethod
@@ -215,6 +262,11 @@ class Adherent :
                     WHERE idAdherent = ?""",(Adherent.getNbReservAnnulees(idAdherent)+1,
                                              idAdherent))
         BDD.conn.commit()
+        
+    @staticmethod
+    def retardEnPlus(idAdherent, joursRetards):
+      Adherent.ajoutJourRetard(idAdherent, joursRetards)
+      Adherent.ajoutRetard(idAdherent)
 
 
     @staticmethod
@@ -236,6 +288,16 @@ class Adherent :
         BDD.conn.commit()
             
     @staticmethod
+    def compareMDP(idAdherent, motDePasse):
+      return(motDePasse == Adherent.getMotDePasse(idAdherent))
+    
+    @staticmethod
     def reinitialiserMDPAdherent(idAdherent):
         BDD.cur.execute("""UPDATE Adherent SET motDePasseAdherent = ? WHERE idAdherent = ?""",(Adherent.getPrenomAdh(idAdherent)+"."+Adherent.getNomAdh(idAdherent),idAdherent))
         BDD.conn.commit()
+        
+    @staticmethod
+    def pseudoExisteDeja(pseudo):
+      BDD.cur.execute("""SELECT pseudoAdherent FROM Adherent""")
+      pseudosExistants = BDD.cur.fetchall()
+      return(pseudo in pseudosExistants)
