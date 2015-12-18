@@ -41,6 +41,11 @@ class Categorie :
   #Fonctions usuelles
   
   @staticmethod
+  def getJeux(idCategorie):
+    BDD.cur.execute("""SELECT idJeu FROM Categorie WHERE idCategorie = ?""",(idCategorie,))
+    BDD.cur.fetchall()
+  
+  @staticmethod
   def getAllCategories():
     BDD.cur.execute("""SELECT * FROM Categorie""")
     return BDD.cur.fetchall()
