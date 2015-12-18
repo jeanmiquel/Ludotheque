@@ -180,10 +180,15 @@ class Jeu :
         def getQteEmprunt(idJeu):
                 BDD.cur.execute("""SELECT COUNT(idEmprunt) FROM Emprunt WHERE idJeu = ? AND dateRenduEmprunt = ?""",(idJeu, None))
                 return BDD.cur.fetchone()[0]
+                
+        @staticmethod
+        def getQteReserv(idJeu):
+                BDD.cur.execute("""SELECT COUNT(idReservation) FROM Reservation WHERE idJeu = ?""",(idJeu,))
+                return BDD.cur.fetchone()[0]
         
         @staticmethod
         def getQteDisponible(idJeu):
-                return(Jeu.getQuantiteJeu(idJeu) - Jeu.getQuantiteEmprunte(idJeu))
+                return(Jeu.getQuantiteJeu(idJeu) - Jeu.getQteEmprunt(idJeu) - Jeu.getQteReserv(idJeu))
                 
         @staticmethod
         def getProchaineDateDisponible(idJeu):
