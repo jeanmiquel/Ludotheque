@@ -57,10 +57,40 @@ class Extension:
 
 #Fonctions usuelles:
 
+    
+
     @staticmethod
-    def afficherTableExtension():
+    def verifieDisponibilite(idExtension, date):
+        #idem que dans la classe Jeu
+
+    @staticmethod
+    def getQuantiteEmprunte(idExtension):
+        BDD.cur.execute("""SELECT COUNT(idExtension) FROM Emprunt WHERE idExtension = ? AND dateRenduEmprunt = ?""",(idExtension,None))
+        BDD.cur.fetchone()[0]
+        
+    @staticmethod
+    def getQuantiteDisponible(idExtension):
+        return (Extension.getNbreTotalExtension(idExtension) - Extension.getQuantiteEmprunte(idExtension))
+        
+    @staticmethod
+    def incrementeNbExtension(idExtension):
+        Extension.setNbreTotalExtension(idExtension,Extension.getNbreTotalExtension(idExtension)+1)
+        BDD.conn.commit()
+   
+    @staticmethod
+    def decrementeNbExtension(idExtension):
+        Extension.setNbreTotalExtension(idExtension,Extension.getNbreTotalExtension(idExtension)-1)
+        BDD.conn.commit()
+
+    @staticmethod
+    def getAllExtension():
         BDD.cur.execute("""SELECT * FROM Extension""")
         return BDD.cur.fetchall()
+        
+    @staticmethod
+    def getExtensionByNom(nomExtension):
+        nomExtensions = nomExtension + "%"
+        BDD.cur.execute("""SELECT * FROM Extension WHERE nomExtension LIKE ?""",(nomExtensions,))
 
     @staticmethod
     def ajoutExtension(idJeu, nomExtension, nbreTotalExtension):
