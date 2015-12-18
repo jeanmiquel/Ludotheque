@@ -134,8 +134,13 @@ class Reservation:
     BDD.cur.commit()
   
   @staticmethod
-  def annulerReserv(idReservation):
+  def annulerReservApresDateButoire(idReservation):
     Adherent.ajoutReservAnnule(Reservation.getIdAdhReserv(idReservation))     #on incrément son nombre d'annulation
+    Adherent.setReservEnCours(Reservation.getIdAdhReserv(idReservation), None) #on annule l'id Reservation chez l'adhérent
+    Reservation.supprimerReserv(idReservation)
+    
+  @staticmethod
+  def annulerReservAvantDateButoire(idReservation):
     Adherent.setReservEnCours(Reservation.getIdAdhReserv(idReservation), None) #on annule l'id Reservation chez l'adhérent
     Reservation.supprimerReserv(idReservation)
     
