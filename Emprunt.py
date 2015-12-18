@@ -165,7 +165,3 @@ class Emprunt :
                 if (estEnRetard(idEmprunt)):
                         Adherent.ajoutRetard(Emprunt.getIdAdherentEmprunt(idEmprunt))
                         Adherent.ajoutJourRetard(Emprunt.getIdAdherentEmprunt(idEmprunt),Emprunt.getJourRetard(idEmprunt))
-                        Jeu.ajoutExemplaire(Emprunt.getIdJeuEmprunt(idEmprunt))
-                BDD.cur.execute("""DELETE FROM Emprunt WHERE idEmprunt = ?""",
-                        (idEmprunt,))
-                BDD.conn.commit()
