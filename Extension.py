@@ -91,6 +91,7 @@ class Extension:
     def getExtensionByNom(nomExtension):
         nomExtensions = nomExtension + "%"
         BDD.cur.execute("""SELECT * FROM Extension WHERE nomExtension LIKE ?""",(nomExtensions,))
+        return BDD.cur.fetchall()
 
     @staticmethod
     def ajoutExtension(idJeu, nomExtension, nbreTotalExtension):
