@@ -104,6 +104,11 @@ class Jeu :
         def getAnneeJeu(idJeu) :        
                 BDD.cur.execute("""SELECT anneeJeu FROM Jeu WHERE idJeu = ?""",(idJeu,))
                 return BDD.cur.fetchone()[0]
+                
+        @staticmethod
+        def getAgeJeu(idJeu) :        
+                BDD.cur.execute("""SELECT ageJeu FROM Jeu WHERE idJeu = ?""",(idJeu,))
+                return BDD.cur.fetchone()[0]
         
         @staticmethod
         def getNbJoueurJeu(idJeu) :
@@ -143,12 +148,35 @@ class Jeu :
         #Fonctions usuelles:
         
         @staticmethod
+        def getQteEmprunt(idJeu):
+                BDD.cur.execute("""SELECT COUNT(idEmprunt) FROM Emprunt WHERE idJeu = ? AND dateRenduEmprunt = ?""",(idJeu, None))
+                return BDD.cur.fetchone()[0]
+        
+        @staticmethod
+        def getQteDisponible(idJeu):
+                return(Jeu.getQuantiteJeu(idJeu) - Jeu.getQuantiteEmprunte(idJeu))
+                
+        @staticmethod
+        def getProchaineDateDisponible(idJeu):
+                if (Jeu.getQteDisponible > 0):
+                        return datetime.date.today()
+                else:
+                        BDD.cur.execute("""SELECT idEmprunt FROM Emprunt WHERE idJeu = ? AND dateRenduEmprunt = ?""",(idJeu, None))
+                        idEmprunt = BDD.cur.fetchone()[0]
+                        mindate = Emprunt.getDateFinEmprunt(idEmprunt)
+                        while (idEmprunt <> None):
+                                if (Emprunt.getDateFinEmprunt(idEmprunt) < mindate)
+                                        mindate= Emprunt.getDateFinEmprunt(idEmprunt)
+                                idEmprunt = BDD.cur.fetchone()[0]
+                        
+        
+        @staticmethod
         def getAllJeu():
                 BDD.cur.execute("""SELECT * FROM Jeu""")
                 return BDD.cur.fetchall()
         
         @staticmethod
-        def ajoutJeu():
+        def ajoutJeu(nomJeu, anneejeu, editeurJeu):
             BDD.cur.execute("""SELECT MAX(idJeu) FROM Jeu""")
             f = BDD.cur.fetchone()[0]
             if (f==None):
@@ -159,8 +187,8 @@ class Jeu :
                     idJeu, nomJeu, anneeJeu, nbJoueurJeu, ageJeu,
                     quantiteJeu, auteurJeu, illustrateurJeu, editeurJeu, estEmpruntableJeu, synopsisJeu)
                     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-                                    (idJeu, nomJeu, anneeJeu,nbJoueurJeu, ageJeu,
-                    quantiteJeu, auteurJeu, illustrateurJeu, editeurJeu, estEmpruntableJeu, synopsisJeu))
+                                    (idJeu, nomJeu, anneeJeu,2, 5,
+                    1, "inconuu", "inconnu", editeurJeu, True, "a remplir"))
             BDD.conn.commit()
                                 
         @staticmethod
