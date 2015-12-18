@@ -123,7 +123,7 @@ class Emprunt :
           BDD.conn.commit() 
           
         @staticmethod
-        def emprunteExtensionAvecJeu(idJeu, idExtension, dateDebutEmprunt):
+        def emprunteExtensionAvecJeu(idAdherent, idExtension, dateDebutEmprunt):
         idJeuExt = Extension.getIdJeu(idExtension) #on récupère l'id du jeu correspondant à l'extension
         BDD.cur.execute("""SELECT MAX(idEmprunt) FROM Emprunt""")
         f = BDD.cur.fetchone()[0]
@@ -138,7 +138,7 @@ class Emprunt :
         BDD.conn.commit() 
         
         @staticmethod
-        def emprunteExtensionSansJeu(idJeu, idExtension, dateDebutEmprunt):
+        def emprunteExtensionSansJeu(idAdherent, idExtension, dateDebutEmprunt):
         BDD.cur.execute("""SELECT MAX(idEmprunt) FROM Emprunt""")
         f = BDD.cur.fetchone()[0]
         if (f==None):
@@ -161,7 +161,8 @@ class Emprunt :
                 return(Emprunt.getDateRenduEmprunt(idEmprunt) > Emprunt.getDateFinEmprunt(idEmprunt))
                         
         @staticmethod
-        def rendre(idEmprunt):
+        def rendre(idEmprunt, date):
+                Emprunt.setDateRenduEmprunt(idEmprunt, date)
                 if (estEnRetard(idEmprunt)):
                         Adherent.ajoutRetard(Emprunt.getIdAdherentEmprunt(idEmprunt))
                         Adherent.ajoutJourRetard(Emprunt.getIdAdherentEmprunt(idEmprunt),Emprunt.getJourRetard(idEmprunt))
