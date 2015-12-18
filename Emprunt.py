@@ -96,7 +96,7 @@ class Emprunt :
         
         @staticmethod
         def aUneExtension(idEmprunt):
-          return(Emprunt.getIdExtensionEmprunt(idEmprunt) <> None)
+          return(Emprunt.getIdExtensionEmprunt(idEmprunt) != None)
           
         @staticmethod
         def empruntsEnCours():
@@ -109,7 +109,7 @@ class Emprunt :
           return BDD.cur.fetchall()
         
         @staticmethod
-        def emprunteJeu(idJeu, idAdherent, dateDebutEmprunt):
+        def emprunterJeu(idJeu, idAdherent, dateDebutEmprunt):
           BDD.cur.execute("""SELECT MAX(idEmprunt) FROM Emprunt""")
           f = BDD.cur.fetchone()[0]
           if (f==None):
@@ -123,7 +123,7 @@ class Emprunt :
           BDD.conn.commit() 
           
         @staticmethod
-        def emprunteExtensionAvecJeu(idAdherent, idExtension, dateDebutEmprunt):
+        def emprunterExtensionAvecJeu(idAdherent, idExtension, dateDebutEmprunt):
         idJeuExt = Extension.getIdJeu(idExtension) #on récupère l'id du jeu correspondant à l'extension
         BDD.cur.execute("""SELECT MAX(idEmprunt) FROM Emprunt""")
         f = BDD.cur.fetchone()[0]
@@ -138,7 +138,7 @@ class Emprunt :
         BDD.conn.commit() 
         
         @staticmethod
-        def emprunteExtensionSansJeu(idAdherent, idExtension, dateDebutEmprunt):
+        def emprunterExtensionSansJeu(idAdherent, idExtension, dateDebutEmprunt):
         BDD.cur.execute("""SELECT MAX(idEmprunt) FROM Emprunt""")
         f = BDD.cur.fetchone()[0]
         if (f==None):
