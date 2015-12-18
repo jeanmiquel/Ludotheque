@@ -148,6 +148,35 @@ class Jeu :
         #Fonctions usuelles:
         
         @staticmethod
+        def getAdherentEmprunteur(idJeu):
+                BDD.cur.execute("""SELECT idAherent FROM Emprunt WHERE idJeu =?""",(idJeu,))
+                return BDD.cur.fetchall()
+       
+       @staticmethod         
+        def getEmprunts(idJeu):
+                BDD.cur.execute("""SELECT idEmprunt FROM Emprunt WHERE idJeu=?""",(idJeu,))
+                return BDD.cur.fetchall()
+                
+        @staticmethod
+        def getReservations(idJeu):
+                BDD.cur.execute("""SELECT idReservation FROM Reservation WHERE idJeu =?""",(idJeu,))
+                return BDD.cur.fetchall()
+        
+        @staticmethod
+        def getExtensions(idJeu):
+                BDD.cur.execute("""SELECT idExtension FROM Extension WHERE idJeu =?""",(idJeu,))
+                return BDD.cur.fetchall()
+        
+        @staticmethod
+        def aDesExtensions(idJeu):
+                return(Jeu.getExtension == None)
+                
+        @staticmethod
+        def getCategories(idJeu):
+                BDD.cur.execute("""SELECT idCategorie FROM Appartient WHERE idJeu =?""",(idJeu,))
+                return BDD.cur.fetchall()
+                
+        @staticmethod
         def getQteEmprunt(idJeu):
                 BDD.cur.execute("""SELECT COUNT(idEmprunt) FROM Emprunt WHERE idJeu = ? AND dateRenduEmprunt = ?""",(idJeu, None))
                 return BDD.cur.fetchone()[0]
@@ -165,15 +194,27 @@ class Jeu :
                         idEmprunt = BDD.cur.fetchone()[0]
                         mindate = Emprunt.getDateFinEmprunt(idEmprunt)
                         while (idEmprunt <> None):
-                                if (Emprunt.getDateFinEmprunt(idEmprunt) < mindate)
-                                        mindate= Emprunt.getDateFinEmprunt(idEmprunt)
+                                date = Emprunt.getDateFinEmprunt(idEmprunt)
+                                if (date < mindate)
+                                        mindate = date
                                 idEmprunt = BDD.cur.fetchone()[0]
                         
         
         @staticmethod
+        def verifieDisponibilite(idJeu, date):
+                #Vérifier qu'il existe au moins une date de rendu prévue des emprunts en cours qui est inférieure à la date demandée 
+                #Vérifier les réservations
+                
+        @staticmethod
         def getAllJeu():
                 BDD.cur.execute("""SELECT * FROM Jeu""")
                 return BDD.cur.fetchall()
+         
+        @staticmethod
+        def getJeuByNom(nomJeu):
+                nomJeux = nomJeu + "%" 
+                BDD.cur.execute("""SELECT * FROM Jeu WHERE nomJeu LIKE ? """,(nomJeux,))
+                return BDD.cur.fetchall()      
         
         @staticmethod
         def ajoutJeu(nomJeu, anneejeu, editeurJeu):
