@@ -72,10 +72,23 @@ class Adherent :
       BDD.conn.commit()
 
     @staticmethod    
-    def setAdresse(idAdherent, adresseAdherent, codePostalAdherent, villeAdherent):
-      BDD.cur.execute(""" UPDATE Adherent SET adresseAdherent = ?, codePostalAdherent = ?, villeAdherent = ? WHERE idAdherent = ?""",
-      (adresseAdherent, codePostalAdherent, villeAdherent ,idAdherent))
+    def setAdresse(idAdherent, adresseAdherent):
+      BDD.cur.execute(""" UPDATE Adherent SET adresseAdherent = ? WHERE idAdherent = ?""",
+      (adresseAdherent, idAdherent))
       BDD.conn.commit()
+    
+    @staticmethod    
+    def setAdresse(idAdherent, codePostalAdherent):
+      BDD.cur.execute(""" UPDATE Adherent SET codePostalAdherent = ? WHERE idAdherent = ?""",
+      (codePostalAdherent, idAdherent))
+      BDD.conn.commit()
+      
+    @staticmethod    
+    def setAdresse(idAdherent, villeAdherent):
+      BDD.cur.execute(""" UPDATE Adherent SET villeAdherent = ? WHERE idAdherent = ?""",
+      (villeAdherent, idAdherent))
+      BDD.conn.commit()
+      
 
     @staticmethod
     def setDatePaiement(idAdherent, datePaiementAdherent):
@@ -163,8 +176,18 @@ class Adherent :
     
     @staticmethod
     def getAdresse(idAdherent) : 
-      BDD.cur.execute("""SELECT adresseAdherent, villeAdherent, codePostalAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
-      return BDD.cur.fetchall()
+      BDD.cur.execute("""SELECT adresseAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return BDD.cur.fetchone()[0]
+      
+    @staticmethod
+    def getCodePostal(idAdherent) : 
+      BDD.cur.execute("""SELECT codePostalAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return BDD.cur.fetchone()[0]
+      
+    @staticmethod
+    def getVille(idAdherent) : 
+      BDD.cur.execute("""SELECT villeAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
+      return BDD.cur.fetchone()[0]
 
     @staticmethod
     def getDatePaiement(idAdherent) : 
