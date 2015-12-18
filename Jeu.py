@@ -169,7 +169,7 @@ class Jeu :
         
         @staticmethod
         def aDesExtensions(idJeu):
-                return(Jeu.getExtension == None)
+                return(Jeu.getExtension <> None)
                 
         @staticmethod
         def getCategories(idJeu):
