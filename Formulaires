@@ -11,14 +11,19 @@ def formulaireJeu(nomJ="Nom du jeu", anneeJ=1960, ageJ=0, nbJoueurJ="00-00", qua
     editeurJeu, estEmpruntableJeu, synopsisJeu)"""
     FJ = Tk()
     FJ.wm_attributes("-topmost" , -1) #Mets la fenetre au premier plan dès son apparition.
+    Confirmer = BooleanVar()            #Les variables declarée comme ceci semble être utilisable pour les fonctions imbriqué de Tkinter
+    Confirmer.set(False)
+    DonneesJeu = (nomJ, anneeJ, ageJ, nbJoueurJ, quantiteJ, auteurJ, illustrateurJ,editeurJ, estEmpruntableJ, synopsisJ) #Valeur par défaut
     def submit(): #Fonction de confirmation DANS la fonction de fenetre.
         if askyesno("Confirmation", "Enregister le jeu ?"):
-            return FJ.quit() #Ferme si "oui"
+            FJ.quit()
+            Confirmer.set(True)
+            return #Ferme si "oui"
         else : return
 
     def cancel(): #Ferme la fenetre
         if askyesno("Quitter", "Annuler le formulaire ?"):
-            return #un truc a renvoyer pour ne  pas faire d'erreur?
+            return FJ.quit() #Ferme la fenetre sans valider Confirmer.
         else : return
     T1 = LabelFrame(FJ, text="Formulaire de jeu :")
     NJ = Label(FJ, text="Nom du jeu :")
@@ -104,8 +109,9 @@ def formulaireJeu(nomJ="Nom du jeu", anneeJ=1960, ageJ=0, nbJoueurJ="00-00", qua
     #Lancement de la fenetre
     FJ.mainloop()
     #Recuperation des données
-    DonneesJeu = (nomJeu.get(), anneeJeu.get(), ageJeu.get(),nbJoueurJeu.get(),
-                  quantiteJeu.get(),auteurJeu.get(),illustrateurJeu.get(),editeurJeu.get(), Empbool.get(), synopsisJeu.get())
+    if Confirmer.get() :
+        DonneesJeu = (nomJeu.get(), anneeJeu.get(), ageJeu.get(),nbJoueurJeu.get(),
+                      quantiteJeu.get(),auteurJeu.get(),illustrateurJeu.get(),editeurJeu.get(), Empbool.get(), synopsisJeu.get())
     #Enfin on detruit la fenetre
     FJ.destroy()
     return DonneesJeu
