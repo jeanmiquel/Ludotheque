@@ -14,7 +14,7 @@ BDD.cur.execute("""CREATE TABLE IF NOT EXISTS `Adherent` (
                     `numeroTelAdherent` int(10) NOT NULL,
                     `pseudoAdherent` varchar(20) NOT NULL,
                     `motDePasseAdherent` varchar(26) NOT NULL,
-                    `adressMailAdherent` varchar(50) NOT NULL,
+                    `adresseMailAdherent` varchar(50) NOT NULL,
                     `estAdminAdherent` tinyint(1) NOT NULL,
                     `datePaiementAdherent` date NOT NULL,
                     `nombreRetardAdherent` int(3) NOT NULL,
@@ -22,9 +22,7 @@ BDD.cur.execute("""CREATE TABLE IF NOT EXISTS `Adherent` (
                     `reservationAnnuleAdherent` int(3) NOT NULL,
                     `idEmprunt` int(11) NOT NULL,
                     `idReservation` int(11) NOT NULL,
-                    PRIMARY KEY (`idAdherent`)
-                    FOREIGN KEY (`idEmprunt`) REFERENCES Emprunt(`idEmprunt`),
-                    FOREIGN KEY (`idReservation`) REFERENCES Reservation(`idReservation`))""")
+                    PRIMARY KEY (`idAdherent`))""")
 BDD.conn.commit()
 
 
@@ -309,6 +307,11 @@ class Adherent :
             villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent, nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
           (idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, prenomAdherent+"."+nomAdherent, adresseMailAdherent, False, datetime.datetime.now(), 0,0, 0, 0,0))
         BDD.conn.commit()
+        
+        #cur.execute("""INSERT INTO Adherent(idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent,
+        #villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent, nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        #(0, "Istrateur", "Admin", datetime.date(1,1,1), "", 34000, "Montpellier", "0000000000",  "Admin", "Admin", "", True, datetime.date.today(), 0, 0, 0, 0, 0))
+        
             
     @staticmethod
     def compareMDP(idAdherent, motDePasse):
