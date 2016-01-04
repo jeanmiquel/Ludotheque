@@ -169,7 +169,7 @@ class Jeu :
         
         @staticmethod
         def aDesExtensions(idJeu):
-                return(Jeu.getExtension <> None)
+                return(Jeu.getExtension != None)
                 
         @staticmethod
         def getCategories(idJeu):
@@ -198,17 +198,17 @@ class Jeu :
                         BDD.cur.execute("""SELECT idEmprunt FROM Emprunt WHERE idJeu = ? AND dateRenduEmprunt = ?""",(idJeu, None))
                         idEmprunt = BDD.cur.fetchone()[0]
                         mindate = Emprunt.getDateFinEmprunt(idEmprunt)
-                        while (idEmprunt <> None):
+                        while (idEmprunt != None):
                                 date = Emprunt.getDateFinEmprunt(idEmprunt)
-                                if (date < mindate)
+                                if (date < mindate):
                                         mindate = date
                                 idEmprunt = BDD.cur.fetchone()[0]
                         
         
-        @staticmethod
-        def verifieDisponibilite(idJeu, date):
-                #Vérifier qu'il existe au moins une date de rendu prévue des emprunts en cours qui est inférieure à la date demandée 
-                #Vérifier les réservations
+        #@staticmethod
+        #def verifieDisponibilite(idJeu, date):
+        #Vérifier qu'il existe au moins une date de rendu prévue des emprunts en cours qui est inférieure à la date demandée 
+        #Vérifier les réservations
                 
         @staticmethod
         def getAllJeu():
