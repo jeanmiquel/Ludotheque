@@ -13,86 +13,115 @@ from Adherent import Adherent
 
 #FORMULAIRE DE JEU
 
-def formulaireJeu():
-    """Retourne un tuple tirer d'un formulaire.
-    (nomJeu, anneeJeu, ageJeu, nbJoueurJeu, quantiteJeu, auteurJeu, illustrateurJeu,
+def formulaireJeu(nomJ="Nom du jeu", anneeJ=1960, ageJ=0, nbJoueurJ="00-00", quantiteJ=0, auteurJ="Auteur du jeu", illustrateurJ="Illustrateur du jeu",
+    editeurJ="Editeur du jeu", estEmpruntableJ=False, synopsisJ="Description sommaire du jeu."): #Par securite, remplir tout ou rien.
+    """Prend les données d'un jeu ou des données par défaut, 
+    Retourne un tuple du genre A tirer d'un formulaire.
+    A =(nomJeu, anneeJeu, ageJeu, nbJoueurJeu, quantiteJeu, auteurJeu, illustrateurJeu,
     editeurJeu, estEmpruntableJeu, synopsisJeu)"""
     FJ = Tk()
-    def CallBackFJ(): #Fonction de confirmation DANS la fonction de fenetre.
+    FJ.wm_attributes("-topmost" , -1) #Mets la fenetre au premier plan dès son apparition.
+    Confirmer = BooleanVar()            #Les variables declarée comme ceci semble être utilisable pour les fonctions imbriqué de Tkinter
+    Confirmer.set(False)
+    DonneesJeu = (nomJ, anneeJ, ageJ, nbJoueurJ, quantiteJ, auteurJ, illustrateurJ,editeurJ, estEmpruntableJ, synopsisJ) #Valeur par défaut
+    def submit(): #Fonction de confirmation DANS la fonction de fenetre.
         if askyesno("Confirmation", "Enregister le jeu ?"):
-            return FJ.quit() #Ferme si "oui"
+            FJ.quit()
+            Confirmer.set(True)
+            return #Ferme si "oui"
+        else : return
+
+    def cancel(): #Ferme la fenetre
+        if askyesno("Quitter", "Annuler le formulaire ?"):
+            return FJ.quit() #Ferme la fenetre sans valider Confirmer.
         else : return
     T1 = LabelFrame(FJ, text="Formulaire de jeu :")
     NJ = Label(FJ, text="Nom du jeu :")
-    AnJ = Label(FJ, text="AnnÃ©e de sortie du jeu :")
+    AnJ = Label(FJ, text="Année de sortie du jeu :")
     AgJ = Label(FJ, text="Ages du public du jeu :")
     NbJ = Label(FJ, text="Nombre de joueur pour ce jeu($$-$$) :")
     QJ = Label(FJ, text="Nombre d'exemplaire total du jeu :")
     AJ = Label(FJ, text="Auteur du jeu :")
     IJ = Label(FJ, text="Illustrateur du jeu :")
     EJ = Label(FJ, text="Editeur du jeu :")
-    Emp = Label(FJ, text="Ce jeu peut-etre EmpruntÃ© :")
-    SJ =Label(FJ, text="Description du jeu (200caractÃ¨res) :")
+    Emp = Label(FJ, text="Ce jeu peut-etre Emprunté :")
+    SJ =Label(FJ, text="Description du jeu (200caractères) :")
     AddJ = Label(FJ, text="Ajouter le jeu :")
     #Titre
     T1.pack()
-    #Nom du jeu (champs Ã  remplir)
+    #Nom du jeu (champs à remplir)
     NJ.pack()
     nomJeu = StringVar()
-    nomJeu.set("Nom du jeu")
+    nomJeu.set(nomJ)
     NJI = Entry(FJ,textvariable=nomJeu,width=40)
     NJI.pack()
     #Annee Jeu (graduation)
     AnJ.pack()
-    AnJI = Spinbox(FJ, from_=1960, to = date.today().year)
+    anneeJeu = IntVar()
+    anneeJeu.set(anneeJ)
+    AnJI = Spinbox(FJ, from_=1960, to = date.today().year, textvariable=anneeJeu)
     AnJI.pack()
-    #Age joueurs(Champs Ã  remplir)
+    #Age joueurs(Champs à remplir)
     AgJ.pack()
-    AgJI = Spinbox(FJ, from_=0, to = 20)
+    ageJeu=IntVar()
+    ageJeu.set(ageJ)
+    AgJI = Spinbox(FJ, from_=0, to = 20, textvariable=ageJeu)
     AgJI.pack()
     #Nombre de joueurs (graduation)
     NbJ.pack()
-    nbJoueurJeu="00-00"
+    nbJoueurJeu=StringVar()
+    nbJoueurJeu.set(nbJoueurJ)
     NbJI = Entry(FJ, textvariable=nbJoueurJeu, width=45)
     NbJI.pack()
     #Quantite d'exemplaire du jeu (gradutation)
     QJ.pack()
-    QJI = Spinbox(FJ, from_=0, to=999)
+    quantiteJeu = IntVar()
+    quantiteJeu.set(quantiteJ)
+    QJI = Spinbox(FJ, from_=0, to=999, textvariable=quantiteJeu)
     QJI.pack()
-    #Auteur du jeu (champs Ã  remplir)
+    #Auteur du jeu (champs à remplir)
     AJ.pack()
-    auteurJeu="Auteur du jeu"
+    auteurJeu=StringVar()
+    auteurJeu.set(auteurJ)
     AJI = Entry(FJ, textvariable=auteurJeu, width = 45)
     AJI.pack()
-    #Illustrateur du jeu (champs Ã  remplir)
+    #Illustrateur du jeu (champs à remplir)
     IJ.pack()
-    illustrateurJeu="Illustrateur du jeu"
+    illustrateurJeu=StringVar()
+    illustrateurJeu.set(illustrateurJ)
     IJI = Entry(FJ, textvariable=illustrateurJeu, width = 45)
     IJI.pack()
-    #Editeur du jeu (champs Ã  remplir)
+    #Editeur du jeu (champs à remplir)
     EJ.pack()
-    editeurJeu="Editeur du jeu"
+    editeurJeu=StringVar()
+    editeurJeu.set(editeurJ)
     EJI = Entry(FJ, textvariable=editeurJeu, width = 45)
     EJI.pack()
-    #Empruntable ou non ? (case Ã  cocher)
+    #Empruntable ou non ? (case à cocher)
     Emp.pack()
-    Empbool = IntVar()
+    Empbool = BooleanVar()
+    Empbool.set(estEmpruntableJ)
     EmpI = Checkbutton(FJ, text="Est-il empruntable?", variable = Empbool)
     EmpI.pack()
-    #Synospis du jeu (Champs Ã  remplir)
+    #Synospis du jeu (Champs à remplir)
     SJ.pack()
-    synopsisJeu = "Description sommaire du jeu."
+    synopsisJeu = StringVar()
+    synopsisJeu.set(synopsisJ)
     SJI = Entry(FJ, textvariable=synopsisJeu, width = 45)
     SJI.pack()
-    #Fin : Confirmation de l'ajout du jeu
+    #Fin : Confirmation de l'ajout/modification du jeu, appel de la fonction submit (sans parenthèses)
     AddJ.pack()
-    AddJI = Button(FJ, text="Confirmer", command = CallBackFJ)
+    AddJI = Button(FJ, text="Confirmer", command = submit)
     AddJI.pack()
+    #Fin : Annulation.(marche pas encore)
+    Cancel = Button(FJ, text="Annuler", command = cancel)
+    Cancel.pack()
     #Lancement de la fenetre
     FJ.mainloop()
-    #On recupere les donnÃ©es de chaque entrÃ©e.
-    DonneesJeu = (NJI.get(), AnJI.get(), AgJI.get(),NbJI.get(),
-                  QJI.get(),AJI.get(),IJI.get(),EJI.get(), bool(Empbool.get()), SJI.get())
+    #Recuperation des données
+    if Confirmer.get() :
+        DonneesJeu = (nomJeu.get(), anneeJeu.get(), ageJeu.get(),nbJoueurJeu.get(),
+                      quantiteJeu.get(),auteurJeu.get(),illustrateurJeu.get(),editeurJeu.get(), Empbool.get(), synopsisJeu.get())
     #Enfin on detruit la fenetre
     FJ.destroy()
     return DonneesJeu
