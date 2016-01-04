@@ -59,9 +59,9 @@ class Extension:
 
     
 
-    @staticmethod
-    def verifieDisponibilite(idExtension, date):
-        #idem que dans la classe Jeu
+    #@staticmethod
+    #def verifieDisponibilite(idExtension, date):
+    #idem que dans la classe Jeu
 
     @staticmethod
     def getQuantiteEmprunte(idExtension):
