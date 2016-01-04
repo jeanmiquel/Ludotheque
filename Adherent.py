@@ -133,9 +133,13 @@ class Adherent :
       return BDD.cur.fetchone()
 
     @staticmethod
-    def getId(nomdAdherent) :
-      BDD.cur.execute(""" SELECT idAdherent FROM Adherent WHERE nomJeu = ?""",(nomAdherent,))
-      return BDD.cur.fetchone()[0]
+    def getId(nomAdherent) :
+        BDD.cur.execute(""" SELECT idAdherent FROM Adherent WHERE nomAdherent = ?""",(nomAdherent,))
+        a= BDD.cur.fetchone()
+        if a<>None:
+            return a[0]
+        else:
+            return a
 
     @staticmethod
     def getNom(idAdherent) : 
