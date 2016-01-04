@@ -136,7 +136,7 @@ class Adherent :
     def getId(nomAdherent) :
         BDD.cur.execute(""" SELECT idAdherent FROM Adherent WHERE nomAdherent = ?""",(nomAdherent,))
         a= BDD.cur.fetchone()
-        if a<>None:
+        if a!=None:
             return a[0]
         else:
             return a
