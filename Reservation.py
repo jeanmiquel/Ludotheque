@@ -9,8 +9,8 @@ import BDD
 BDD.cur.execute("""CREATE TABLE IF NOT EXISTS Reservation 
   (idReservation int(6) NOT NULL, 
   idAdherent int(6) NOT NULL, 
-  idJeu int(6) NOT NULL, 
-  idExtension int(6) NOT NULL, 
+  idJeu int(6), 
+  idExtension int(6), 
   dateReservation date NOT NULL, 
   dureeEmpruntPrevue int(3) NOT NULL, 
   PRIMARY KEY (idReservation),
