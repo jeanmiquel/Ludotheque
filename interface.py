@@ -230,8 +230,8 @@ def menu(numAdh=0): #numIdAdhérent
     
     pt = PanedWindow(fmenu,orient=HORIZONTAL, height=350, width=600)
     pt.grid(row=3)
-    pt.add(Button(pt, text="Mes emprunts et réservation", command = rien, bg="green", width=38,activebackground="green", borderwidth=10))
-    pt.add(Button(pt, text="Bonus", command = rien,bg="blue", width=38,activebackground="blue", borderwidth=10))
+    pt.add(Button(pt, text="Mes emprunts", command = rien, bg="green", width=38,activebackground="green", borderwidth=10))
+    pt.add(Button(pt, text="Réservation", command = rien,bg="cyan", width=38,activebackground="cyan", borderwidth=10))
     
     fmenu.mainloop()
 
@@ -260,7 +260,9 @@ def panneauAdmin(numAdh=0): #numIdAdhérent
         fpanneauadmin.destroy()
         return menu(numAdh) 
         
-        
+    if (not(Adherent.getEstAdministrateur(numAdh)<>None and Adherent.getEstAdministrateur(numAdh))):
+        return menu(numAdh)
+    
     fpanneauadmin = Tk()
     fpanneauadmin.title("Panneau d'aministration")
     
@@ -284,7 +286,7 @@ def panneauAdmin(numAdh=0): #numIdAdhérent
     pt = PanedWindow(fpanneauadmin,orient=HORIZONTAL, height=350, width=600)
     pt.grid(row=3)
     pt.add(Button(pt, text="Gestion des Emprunts", command = rien, bg="green", width=38,activebackground="green", borderwidth=10))
-    pt.add(Button(pt, text="Gestion des réservations", command = rien,bg="blue", width=38,activebackground="blue", borderwidth=10))
+    pt.add(Button(pt, text="Gestion des réservations", command = rien,bg="cyan", width=38,activebackground="cyan", borderwidth=10))
 
     fpanneauadmin.mainloop()
 
@@ -314,7 +316,7 @@ def test(): #tuple de jeu + numIdAdhérent
     
     def lancerEmprunt(i):
         fcatalogue.destroy()
-        return emprunter(i)
+        return formulaireEmprunt(i)
     
     fcatalogue = Tk()
     fcatalogue.title("Les jeux de la ludothèque")
@@ -442,7 +444,7 @@ def test(): #tuple de jeu + numIdAdhérent
 #CATALOGUE DES JEUX
 
 
-def catalogue(numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdherent
+def catalogue(numAdherent=0, Jeux=Jeu.getAllJeu(), modeAdmin=False): #idAdherent
     def maj():
         # on arrive ici toutes les 1000 ms
         t=datetime.datetime.today()
@@ -455,11 +457,17 @@ def catalogue(numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdherent
 
     def afficheFicheJeu(i):
         fcatalogue.destroy()
-        return ficheJeu(i)
+        return ficheJeu(numAdherent, i)
     
     def lancerEmprunt(i):
         fcatalogue.destroy()
-        return emprunter(i)
+        return formulaireEmprunt(i)
+
+    def lanceCatalogue(n, ma):
+        r = entryRecherche.get()
+        fcatalogue.destroy()
+        
+        return catalogue(n, Jeu.getJeuByNom(r), ma)
 
     def afficheJeu(n, Jeux, k=0):
         n[0]=n[0]+k
@@ -480,10 +488,17 @@ def catalogue(numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdherent
             Label(fcatalogue, text=str(Jeux[i][6]), bg="orange", width = 15).grid(row=j, column=6)
             Label(fcatalogue, text=str(Jeux[i][7]), bg="orange", width = 15).grid(row=j, column=7)
             Label(fcatalogue, text=str(Jeux[i][8]), bg="orange", width = 15).grid(row=j, column=8)
-            Button(fcatalogue, text="Détail", command = partial(afficheFicheJeu,Jeux[i][0]) ,bg="blue", width=13,activebackground="blue").grid(row=j, column=9)
-            Button(fcatalogue, text="Extensions", command = rien,bg="red", width=13,activebackground="red").grid(row=j, column=10)
+            if (modeAdmin):
+                Button(fcatalogue, text="Modifier", command = rien,bg="blue", width=13,activebackground="blue").grid(row=j, column=9) #partial(formulaireJeu,Jeux[i][0])
+            else:
+                Button(fcatalogue, text="Détail", command = partial(afficheFicheJeu,Jeux[i][0]) ,bg="blue", width=13,activebackground="blue").grid(row=j, column=9)
+                
+            if (Jeu.aDesExtensions(Jeux[i][0])):
+                Button(fcatalogue, text="Extensions", command = rien,bg="red", width=13,activebackground="red").grid(row=j, column=10)
             Button(fcatalogue, text="Emprunt", command = partial(lancerEmprunt, i),bg="green", width=13,activebackground="green").grid(row=j, column=11)
             Button(fcatalogue, text="Reserv", command = rien,bg="red", width=13,activebackground="red").grid(row=j, column=12)
+            if (modeAdmin):
+                Button(fcatalogue, text="Supprimer", command = rien,bg="yellow", width=13,activebackground="red").grid(row=j, column=13)
             j=j+1
 
     
@@ -492,33 +507,42 @@ def catalogue(numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdherent
     fcatalogue.grid_columnconfigure(0,weight=1)
     fcatalogue.grid_rowconfigure(20,weight=21)
     
-    p = PanedWindow(fcatalogue, orient = HORIZONTAL, height=100, width=800)
+    p = PanedWindow(fcatalogue, orient = HORIZONTAL, height=100, width=1000)
     p.grid(row=1, column=1, columnspan=11)
      
     heure = StringVar()
     p.add(Label(p, textvariable=heure, bg="red", anchor=CENTER,width=30))
     maj()
+
+    rech=StringVar()
+    rech.set("Faites une recherche ici !")
+
+    entryRecherche = Entry(p, textvariable=rech, width = 30)
+    p.add(entryRecherche)
+    p.add(Button(p, text="Recherchez !", bg="orange", activebackground="orange", borderwidth=10, width=10, command= partial(lanceCatalogue,numAdherent,modeAdmin)))
     
-    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(numAdherent), bg="white", anchor=CENTER, width=30))
-    p.add(Button(p, text="Retour au menu principal", bg="orange", activebackground="orange", borderwidth=10, width=30, command= retourMenu ))
+    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(numAdherent), bg="white", anchor=CENTER, width=10))
+    if (modeAdmin):
+        p.add(Button(p, text="Ajouter un jeu", bg="cyan", activebackground="cyan", borderwidth=10, width=10, command= rien))#partial(formulaireJeu,numAdh)))
+    p.add(Button(p, text="Retour au menu principal", bg="orange", activebackground="orange", borderwidth=10, width=10, command= retourMenu ))
     p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fcatalogue.destroy ))
 
-    Label(fcatalogue, text="Nom", bg="green", width = 25).grid(row=2, column=1)
-    Label(fcatalogue, text="Année", bg="green", width = 10).grid(row=2, column=2)
-    Label(fcatalogue, text="Age Min.", bg="green", width = 10).grid(row=2, column=3)
-    Label(fcatalogue, text="Nb Joueur", bg="green", width = 10).grid(row=2, column=4)
-    Label(fcatalogue, text="Disponibilité", bg="green", width = 15).grid(row=2, column=5)
-    Label(fcatalogue, text="Auteur", bg="green", width = 15).grid(row=2, column=6)
+    Label(fcatalogue, text="Nom", bg="green", width = 23).grid(row=2, column=1)
+    Label(fcatalogue, text="Année", bg="green", width = 8).grid(row=2, column=2)
+    Label(fcatalogue, text="Age Min.", bg="green", width = 8).grid(row=2, column=3)
+    Label(fcatalogue, text="Nb Joueur", bg="green", width = 8).grid(row=2, column=4)
+    Label(fcatalogue, text="Disponibilité", bg="green", width = 13).grid(row=2, column=5)
+    Label(fcatalogue, text="Auteur", bg="green", width = 13).grid(row=2, column=6)
     Label(fcatalogue, text="Illustrateur", bg="green", width = 15).grid(row=2, column=7)
-    Label(fcatalogue, text="Editeur", bg="green", width = 15).grid(row=2, column=8)
-    Label(fcatalogue, text="Action", bg="green", width = 15).grid(row=2, column=9)
-    Label(fcatalogue, text="Action", bg="green", width = 15).grid(row=2, column=10)
-    Label(fcatalogue, text="Action", bg="green", width = 15).grid(row=2, column=11)
-    Label(fcatalogue, text="Action", bg="green", width = 15).grid(row=2, column=12)
+    Label(fcatalogue, text="Editeur", bg="green", width = 13).grid(row=2, column=8)
+    if (modeAdmin):
+        Label(fcatalogue, text="Que faire ?", bg="green", width = 73).grid(row=2, column=9, columnspan=5)
+    else:
+        Label(fcatalogue, text="Que faire ?", bg="green", width = 73).grid(row=2, column=9, columnspan=4)
 
     numJeu=[0,0,len(Jeux)]
-    flecheH = Button(fcatalogue, text="^", command = partial(afficheJeu, numJeu, Jeux, -20), bg="blue", width=5,activebackground="blue").grid(row=3, column=13)
-    flecheB = Button(fcatalogue, text="v", command = partial(afficheJeu, numJeu, Jeux, 20), bg="blue", width=5,activebackground="blue").grid(row=22, column=13)
+    flecheH = Button(fcatalogue, text="^", command = partial(afficheJeu, numJeu, Jeux, -20), bg="blue", width=5,activebackground="blue").grid(row=3, column=14)
+    flecheB = Button(fcatalogue, text="v", command = partial(afficheJeu, numJeu, Jeux, 20), bg="blue", width=5,activebackground="blue").grid(row=22, column=14)
     afficheJeu(numJeu, Jeux)
     
         
@@ -536,7 +560,7 @@ def afficheExtensions(idJeu):
 
     def lancerEmprunt(i):
         fextension.destroy()
-        return emprunter(i)
+        return formulaireEmprunt(i)
     
     fextension=Tk()
     fextension.title("Extension(s) du jeu ")
@@ -573,15 +597,15 @@ def afficheExtensions(idJeu):
 
 #AFFICHAGE JEU COTE UTILISATEUR
 
-def ficheJeu(numJeu): #idAdherent + idJeu
+def ficheJeu(numAdherent, numJeu): #idAdherent + idJeu
     
     def retourCatalogue():
         fficheJeu.destroy()
-        return catalogue()
+        return catalogue(numAdherent)
 
     def lancerEmprunt(i):
         fficheJeu.destroy()
-        return emprunter(i)
+        return formulaireEmprunt(i)
     
     fficheJeu = Tk()
     fficheJeu.title(str(Jeu.getNomJeu(numJeu)))
@@ -651,7 +675,7 @@ def ficheJeu(numJeu): #idAdherent + idJeu
 
 #INTERFACE D'EMPRUNT D'UN JEU
 
-def emprunter(numAdh=0, numJeu=0): #idJeu/extension + idAdherent + booléen + booléen
+def formulaireEmprunt(numAdh=0, numJeu=0): #idJeu/extension + idAdherent + booléen + booléen
     def CallBackEmprunt(): #Fonction de confirmation DANS la fonction de fenetre.
         if askyesno("Confirmation", "Êtes-vous sûr de vouloir emprunt ce jeu ?"):
             return fEmprunt.quit() #Ferme si "oui"
@@ -659,7 +683,7 @@ def emprunter(numAdh=0, numJeu=0): #idJeu/extension + idAdherent + booléen + bo
 
     def retourJeu(numJeu):
         fEmprunt.destroy()
-        return ficheJeu(numJeu)
+        return ficheJeu(numAdh, numJeu)
 
     def retourCatalogue():
         fEmprunt.destroy()
@@ -726,7 +750,7 @@ def emprunter(numAdh=0, numJeu=0): #idJeu/extension + idAdherent + booléen + bo
 #INTERFACE DE RESERVATION D'UN JEU
 
 
-def reserver(numJeu): #idJeu/extension + idAdherent + booléenJeu (Vrai si l'id en param est un Jeu, Faux si c'est une extension
+def reserver(numAdh, numJeu): #idJeu/extension + idAdherent + booléenJeu (Vrai si l'id en param est un Jeu, Faux si c'est une extension
     # + booléenExtension (Par défaut à faux, vrai si on ne réserve qu'UNE extension)
     def CallBackEmprunt(): #Fonction de confirmation DANS la fonction de fenetre.
         if askyesno("Confirmation", "Êtes-vous sûr de vouloir emprunt ce jeu ?"):
@@ -735,7 +759,7 @@ def reserver(numJeu): #idJeu/extension + idAdherent + booléenJeu (Vrai si l'id 
 
     def retourJeu(numJeu):
         fResa.destroy()
-        return ficheJeu(numJeu)
+        return ficheJeu(numAdh, numJeu)
 
     def retourCatalogue():
         fResa.destroy()
@@ -971,3 +995,4 @@ def connexion2():
     Bouton.pack(side = "right", padx = 5, pady = 5)
 
     fenetre.mainloop()
+
