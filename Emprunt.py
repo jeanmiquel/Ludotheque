@@ -10,8 +10,8 @@ import BDD
 BDD.cur.execute("""CREATE TABLE IF NOT EXISTS `Emprunt` (
                                 `idEmprunt` int(6) NOT NULL,
                                 `idAdherent` int(6) NOT NULL,
-                                `idJeu` int(6) NOT NULL,
-                                `idExtension` int(6) NOT NULL,
+                                `idJeu` int(6),
+                                `idExtension` int(6),
                                 `dateDebutEmprunt` date NOT NULL,
                                 `dateRenduEmprunt` date NOT NULL,
                                 `dureePrevueEmprunt` int(3) NOT NULL,
