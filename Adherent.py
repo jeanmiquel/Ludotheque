@@ -136,11 +136,22 @@ class Adherent :
     def getId(nomAdherent) :
         BDD.cur.execute(""" SELECT idAdherent FROM Adherent WHERE nomAdherent = ?""",(nomAdherent,))
         a= BDD.cur.fetchone()
-        if a!=None:
+        if a<>None:
             return a[0]
         else:
             return a
-
+            
+            
+    @staticmethod
+    def getIdByPseudo(pseudoAdherent) :
+      BDD.cur.execute(""" SELECT idAdherent FROM Adherent WHERE pseudoAdherent = ?""",(pseudoAdherent,))
+      idAd = BDD.cur.fetchone()
+      if idAd != None:
+          return idAd[0]
+      else:
+          return None
+          
+          
     @staticmethod
     def getNom(idAdherent) : 
       BDD.cur.execute("""SELECT nomAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
@@ -311,11 +322,10 @@ class Adherent :
             villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent, nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
           (idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, prenomAdherent+"."+nomAdherent, adresseMailAdherent, False, datetime.datetime.now(), 0,0, 0, 0,0))
         BDD.conn.commit()
-        
+
         #cur.execute("""INSERT INTO Adherent(idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent,
         #villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent, nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         #(0, "Istrateur", "Admin", datetime.date(1,1,1), "", 34000, "Montpellier", "0000000000",  "Admin", "Admin", "", True, datetime.date.today(), 0, 0, 0, 0, 0))
-        
             
     @staticmethod
     def compareMDP(idAdherent, motDePasse):
