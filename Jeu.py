@@ -212,9 +212,9 @@ class Jeu :
          
         @staticmethod
         def getJeuByNom(nomJeu):
-                nomJeux = nomJeu + "%" 
+                nomJeux = "%" + nomJeu + "%" 
                 BDD.cur.execute("""SELECT * FROM Jeu WHERE nomJeu LIKE ? """,(nomJeux,))
-                return BDD.cur.fetchall()      
+                return BDD.cur.fetchall()     
         
         @staticmethod
         def ajoutJeu(nomJeu, anneejeu, editeurJeu):
