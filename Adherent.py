@@ -20,9 +20,12 @@ BDD.cur.execute("""CREATE TABLE IF NOT EXISTS `Adherent` (
                     `nombreRetardAdherent` int(3) NOT NULL,
                     `nombreJourRetardAdherent` int(3) NOT NULL,
                     `reservationAnnuleAdherent` int(3) NOT NULL,
-                    `idEmprunt` int(11) NOT NULL,
-                    `idReservation` int(11) NOT NULL,
-                    PRIMARY KEY (`idAdherent`))""")
+                    `idEmprunt` int(11),
+                    `idReservation` int(11),
+                    PRIMARY KEY (`idAdherent`)
+                    FOREIGN KEY (`idEmprunt`) REFERENCES Emprunt(`idEmprunt`),
+                    FOREIGN KEY (`idReservation`) REFERENCES Reservation(`idReservation`))""")
+                    
 BDD.conn.commit()
 
 
