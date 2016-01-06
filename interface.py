@@ -540,7 +540,7 @@ def test(): #tuple de jeu + numIdAdhérent
 #CATALOGUE DES JEUX
 
 
-def catalogue(numAdherent=0, Jeux=Jeu.getAllJeu(), modeAdmin=False): #idAdherent
+def catalogue( modeAdmin=False, numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdherent
     def maj():
         # on arrive ici toutes les 1000 ms
         t=datetime.datetime.today()
@@ -659,9 +659,9 @@ def catalogue(numAdherent=0, Jeux=Jeu.getAllJeu(), modeAdmin=False): #idAdherent
 #EXTENSIONS A PARTIR DU BOUTON "EXTENSION" SUR JEU
 def afficheExtensions(idJeu, modeAdmin):
     
-    def retourCatalogue():
+    def retourCatalogue(mode):
         fextension.destroy()
-        return catalogue()
+        return catalogue(mode)
 
     def lancerEmprunt(i):
         fextension.destroy()
@@ -679,7 +679,7 @@ def afficheExtensions(idJeu, modeAdmin):
     p = PanedWindow(fextension, orient = HORIZONTAL, height=100, width=600)
     p.grid(row=1, column=1, columnspan=4)
     p.add(Label(p, text="Bonjour pseudo", bg="white", anchor=CENTER, width=20))
-    p.add(Button(p, text="Retour au catalogue", bg="orange", activebackground="orange", borderwidth=10, width=20, command= retourCatalogue ))
+    p.add(Button(p, text="Retour au catalogue", bg="orange", activebackground="orange", borderwidth=10, width=20, command=partial(retourCatalogue,modeAdmin))
     if (modeAdmin):
         p.add(Button(p, text="Ajouter Extension", bg="cyan", activebackground="cyan", borderwidth=10, width=20, command=rien))
     p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fextension.destroy ))
