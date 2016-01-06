@@ -468,21 +468,7 @@ def afficheExtensions(idJeu):
             
     fextension.mainloop()
 
-
-
-
-from Tkinter import *
-from tkMessageBox import *
-from datetime import *
-import datetime
-from functools import partial
-from Jeu import Jeu
-from Adherent import Adherent
-from Extension import Extension
-from Emprunt import Emprunt
-
-
-def catalogue(numAdherent=0, Emprunt=Emprunt.getAllEmprunts(), modeAdmin=False): #idAdherent
+def catalogueEmprunt(numAdherent=0, Emprunt=Emprunt.getAllEmprunts(), modeAdmin=False): #idAdherent
     def maj():
         # on arrive ici toutes les 1000 ms
         t=datetime.datetime.today()
