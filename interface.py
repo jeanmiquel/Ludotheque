@@ -6,7 +6,7 @@ from functools import partial
 from Jeu import Jeu
 from Adherent import Adherent
 from Extension import Extension
-
+from Emprunt import Emprunt
 
 
 
@@ -679,7 +679,7 @@ def afficheExtensions(idJeu, modeAdmin):
     p = PanedWindow(fextension, orient = HORIZONTAL, height=100, width=600)
     p.grid(row=1, column=1, columnspan=4)
     p.add(Label(p, text="Bonjour pseudo", bg="white", anchor=CENTER, width=20))
-    p.add(Button(p, text="Retour au catalogue", bg="orange", activebackground="orange", borderwidth=10, width=20, command=partial(retourCatalogue,modeAdmin))
+    p.add(Button(p, text="Retour au catalogue", bg="orange", activebackground="orange", borderwidth=10, width=20, command=partial(retourCatalogue,modeAdmin)))
     if (modeAdmin):
         p.add(Button(p, text="Ajouter Extension", bg="cyan", activebackground="cyan", borderwidth=10, width=20, command=rien))
     p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fextension.destroy ))
