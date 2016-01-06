@@ -3,21 +3,6 @@ import datetime
 
 import BDD
 
-BDD.cur.execute("""CREATE TABLE IF NOT EXISTS `Categorie` (
-`idCategorie` int(6) NOT NULL,
-`nomCategorie` varchar(25) NOT NULL,
-PRIMARY KEY (`idCategorie`))""")
-BDD.conn.commit()
-
-BDD.cur.execute("""CREATE TABLE IF NOT EXISTS `Appartient` (
-`idCategorie` int(6) NOT NULL,
-`idJeu` int(6) NOT NULL,
-PRIMARY KEY (`idCategorie`,`idJeu`),
-FOREIGN KEY (`idCategorie`) REFERENCES Categorie(`idCategorie`),
-FOREIGN KEY (`idJeu`) REFERENCES Jeu(`idJeu`)
-)""")
-BDD.conn.commit()
-
 class Categorie :
   
   #setters
