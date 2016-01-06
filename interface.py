@@ -153,6 +153,78 @@ def formulaireJeu(idJeu = -1): #Par défaut, -1 = creation
     #Lancement de la fenetre
     FJ.mainloop()
 
+#FormulaireExt
+from Tkinter import *
+from tkMessageBox import *
+from datetime import *
+from Jeu import Jeu
+from Extension import Extension
+
+
+def formulaireExt(idExt = -1): #Par défaut, -1 = creation
+    """Prend l'id d'une extension pour la modifier, ou -1 pour en creer une nouvelle"""
+    
+    FE = Tk()
+    FE.wm_attributes("-topmost" , -1) #Mets la fenetre au premier plan dès son apparition.
+    idE = IntVar()
+    idE.set(idExt)
+    Creation = BooleanVar()            #Les variables declarée comme ceci semble être utilisable pour les fonctions imbriqué de Tkinter
+    Creation.set(False)
+    if idE.get() < 0 : #Cas de creation du Ext, valeur par defaut
+        nomE="Nom de l'extension"
+        quantiteE=0
+        Creation.set(True)
+    else : #Extension existant, recuperation, des infos
+        nomE=Extension.getNomExt(idE.get())
+        quantiteE=Ext.getQuantiteExt(idE.get())
+    
+    def submit(): #Fonction de confirmation DANS la fonction de fenetre.
+        if askyesno("Confirmation", "Enregister L'extension ?"):
+            FE.quit()
+            if Creation.get():
+                Extension.ajoutExtension(0,nomExt.get(),quantiteExt.get())
+            else :
+                Extension.setNomExt(0,idE.get(),nomExt.get())
+                Ext.setQuantiteExt(idE.get(),quantiteExt.get())
+            return FE.destroy() #Ferme après avoir enregistre.
+        else : return
+
+    def cancel(): #Ferme la fenetre
+        if askyesno("Quitter", "Annuler le formulaire ?"):
+            FE.quit() #Ferme la fenetre
+            return FE.destroy() #N'enregistre rien
+        else : return
+    T1 = LabelFrame(FE, text="Formulaire de l'extension :")
+    NJE = Label(FE, text="Nom du jeu de l'extension :")
+    NE = Label(FE, text="Nom de l'extension :")
+    QE = Label(FE, text="Nombre d'exemplaire total de l'extension :")
+    AddE = Label(FE, text="Ajouter l'extension :")
+    #Titre
+    T1.pack()
+    #Nom du jeu (recupère l'id du jeu dans la liste)
+    
+    #Nom de l'extension (champs à remplir)
+    NE.pack()
+    nomExt = StringVar()
+    nomExt.set(nomE)
+    NEI = Entry(FE,textvariable=nomExt,width=40)
+    NEI.pack()
+    #Quantite d'exemplaire de l'extension (gradutation)
+    QE.pack()
+    quantiteExt = IntVar()
+    quantiteExt.set(quantiteE)
+    QEI = Spinbox(FE, from_=0, to=999, textvariable=quantiteExt)
+    QEI.pack()
+    #Fin : Confirmation de l'ajout/modification du extension, appel de la fonction submit (sans parenthèses)
+    AddE.pack()
+    AddEI = Button(FE, text="Confirmer", command = submit)
+    AddEI.pack()
+    #Fin : Annulation.(marche pas encore)
+    Cancel = Button(FE, text="Annuler", command = cancel)
+    Cancel.pack()
+    #Lancement de la fenetre
+    FE.mainloop()
+
 
 
 
