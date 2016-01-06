@@ -231,6 +231,7 @@ class Jeu :
                                     (idJeu, nomJeu, anneeJeu,2, 5,
                     1, "inconuu", "inconnu", editeurJeu, True, "a remplir"))
             BDD.conn.commit()
+            return idJeu
                                 
         @staticmethod
         def ajoutExemplaire(idJeu):
