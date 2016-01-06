@@ -118,37 +118,37 @@ class Emprunt :
             idEmprunt =f+1
           BDD.cur.execute("""INSERT INTO Emprunt(
                   idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dateRenduEmprunt, dureePrevueEmprunt)
-                  VALUES(?, ?, ?, ?, ?, ?)""",
-                  (idEmprunt, idJeu, idAdherent, None, dateDebutEmprunt, None, dureePrevueEmprunt)) 
+                  VALUES(?, ?, ?, ?, ?, ?, ?)""",
+                  (idEmprunt, idJeu, idAdherent, 0, dateDebutEmprunt, 0, dureePrevueEmprunt)) 
           BDD.conn.commit() 
           
         @staticmethod
         def emprunterExtensionAvecJeu(idAdherent, idExtension, dateDebutEmprunt, dureePrevueEmprunt):
-        idJeuExt = Extension.getIdJeu(idExtension) #on récupère l'id du jeu correspondant à l'extension
-        BDD.cur.execute("""SELECT MAX(idEmprunt) FROM Emprunt""")
-        f = BDD.cur.fetchone()[0]
-        if (f==None):
-          idEmprunt = 1
-        else:
-          idEmprunt =f+1
-        BDD.cur.execute("""INSERT INTO Emprunt(
-                  idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dateRenduEmprunt, dureePrevueEmprunt)
-                  VALUES(?, ?, ?, ?, ?, ?)""",
-                  (idEmprunt, idJeuExt, idAdherent, idExtension, dateDebutEmprunt, None, dureePrevueEmprunt)) 
-        BDD.conn.commit() 
+                idJeuExt = Extension.getIdJeu(idExtension) #on rcupre l'id du jeu correspondant l'extension
+                BDD.cur.execute("""SELECT MAX(idEmprunt) FROM Emprunt""")
+                f = BDD.cur.fetchone()[0]
+                if (f==None):
+                  idEmprunt = 1
+                else:
+                  idEmprunt =f+1
+                BDD.cur.execute("""INSERT INTO Emprunt(
+                          idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dateRenduEmprunt, dureePrevueEmprunt)
+                          VALUES(?, ?, ?, ?, ?, ?, ?)""",
+                          (idEmprunt, idJeuExt, idAdherent, idExtension, dateDebutEmprunt, None, dureePrevueEmprunt)) 
+                BDD.conn.commit() 
         
         @staticmethod
         def emprunterExtensionSansJeu(idAdherent, idExtension, dateDebutEmprunt, dureePrevueEmprunt):
-        BDD.cur.execute("""SELECT MAX(idEmprunt) FROM Emprunt""")
-        f = BDD.cur.fetchone()[0]
-        if (f==None):
-          idEmprunt = 1
-        else:
-          idEmprunt =f+1
-        BDD.cur.execute("""INSERT INTO Emprunt(
-                  idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dateRenduEmprunt, dureePrevueEmprunt)
-                  VALUES(?, ?, ?, ?, ?, ?)""",
-                  (idEmprunt, None, idAdherent, idExtension, dateDebutEmprunt, None,dureePrevueEmprunt
+                BDD.cur.execute("""SELECT MAX(idEmprunt) FROM Emprunt""")
+                f = BDD.cur.fetchone()[0]
+                if (f==None):
+                  idEmprunt = 1
+                else:
+                  idEmprunt =f+1
+                BDD.cur.execute("""INSERT INTO Emprunt(
+                          idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dateRenduEmprunt, dureePrevueEmprunt)
+                          VALUES(?, ?, ?, ?, ?, ?, ?)""",
+                          (idEmprunt, None, idAdherent, idExtension, dateDebutEmprunt, None,dureePrevueEmprunt))
         
         @staticmethod
         def getJourRetard(idEmprunt):

@@ -3,31 +3,7 @@ import sqlite3
 
 import BDD
 
-BDD.cur.execute("""CREATE TABLE IF NOT EXISTS `Adherent` (
-                    `idAdherent` int(6) NOT NULL,
-                    `nomAdherent` varchar(25) NOT NULL,
-                    `prenomAdherent` varchar(25) NOT NULL,
-                    `dateNaissanceAdherent` date NOT NULL,
-                    `adresseAdherent` varchar(30) NOT NULL,
-                    `codePostalAdherent` varchar(10) NOT NULL,
-                    `villeAdherent` varchar(10) NOT NULL,
-                    `numeroTelAdherent` int(10) NOT NULL,
-                    `pseudoAdherent` varchar(20) NOT NULL,
-                    `motDePasseAdherent` varchar(26) NOT NULL,
-                    `adresseMailAdherent` varchar(50) NOT NULL,
-                    `estAdminAdherent` tinyint(1) NOT NULL,
-                    `datePaiementAdherent` date NOT NULL,
-                    `nombreRetardAdherent` int(3) NOT NULL,
-                    `nombreJourRetardAdherent` int(3) NOT NULL,
-                    `reservationAnnuleAdherent` int(3) NOT NULL,
-                    `idEmprunt` int(11) NOT NULL,
-                    `idReservation` int(11) NOT NULL,
-                    PRIMARY KEY (`idAdherent`))""")
-BDD.conn.commit()
-
-
 class Adherent :
-
 
     #setters 
     @staticmethod
@@ -136,11 +112,22 @@ class Adherent :
     def getId(nomAdherent) :
         BDD.cur.execute(""" SELECT idAdherent FROM Adherent WHERE nomAdherent = ?""",(nomAdherent,))
         a= BDD.cur.fetchone()
-        if a!=None:
+        if a<>None:
             return a[0]
         else:
             return a
-
+            
+            
+    @staticmethod
+    def getIdByPseudo(pseudoAdherent) :
+      BDD.cur.execute(""" SELECT idAdherent FROM Adherent WHERE pseudoAdherent = ?""",(pseudoAdherent,))
+      idAd = BDD.cur.fetchone()
+      if idAd != None:
+          return idAd[0]
+      else:
+          return None
+          
+          
     @staticmethod
     def getNom(idAdherent) : 
       BDD.cur.execute("""SELECT nomAdherent FROM Adherent WHERE idAdherent = ?""",(idAdherent,))
@@ -253,7 +240,7 @@ class Adherent :
       
     @staticmethod
     def getAdherentByName(nomAdherent):
-      nomAdherents = nomAdherent + "%"
+      nomAdherents = "%" + nomAdherent + "%"
       BDD.cur.execute("""SELECT * FROM Adherent WHERE nomAdherent LIKE nomAdherents""")
       return BDD.cur.fetchall()
       
@@ -308,14 +295,15 @@ class Adherent :
         else:
             idAdherent =f+1
         BDD.cur.execute("""INSERT INTO Adherent(idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent,
-            villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent, nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-          (idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, prenomAdherent+"."+nomAdherent, adresseMailAdherent, False, datetime.datetime.now(), 0,0, 0, 0,0))
+            villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent,
+            nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation)
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+          (idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, prenomAdherent+"."+nomAdherent, adresseMailAdherent, False, datetime.datetime.now(), 0,0, 0, None,None))
         BDD.conn.commit()
-        
+
         #cur.execute("""INSERT INTO Adherent(idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent,
         #villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent, nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         #(0, "Istrateur", "Admin", datetime.date(1,1,1), "", 34000, "Montpellier", "0000000000",  "Admin", "Admin", "", True, datetime.date.today(), 0, 0, 0, 0, 0))
-        
             
     @staticmethod
     def compareMDP(idAdherent, motDePasse):
