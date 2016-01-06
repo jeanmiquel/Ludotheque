@@ -4,15 +4,7 @@ import Jeu
 
 import BDD
 
-BDD.cur.execute("""CREATE TABLE IF NOT EXISTS `Extension`
-    (`idExtension` int(6) NOT NULL, 
-     `idJeu` int(6) NOT NULL, 
-     `nomExtension` varchar(20) NOT NULL, 
-     `nbreTotalExtension` int(3) NOT NULL,
-     PRIMARY KEY (`idExtension`)
-     FOREIGN KEY (`idJeu`) REFERENCES Jeu(`idJeu`))""")
-BDD.conn.commit()
-    
+   
 class Extension:
 
 ###SETTERS###
