@@ -13,27 +13,64 @@ from Extension import Extension
 
 #FORMULAIRE DE JEU
 
-def formulaireJeu(nomJ="Nom du jeu", anneeJ=1960, ageJ=0, nbJoueurJ="00-00", quantiteJ=0, auteurJ="Auteur du jeu", illustrateurJ="Illustrateur du jeu",
-    editeurJ="Editeur du jeu", estEmpruntableJ=False, synopsisJ="Description sommaire du jeu."): #Par securite, remplir tout ou rien.
+def formulaireJeu(idJeu = -1): #Par défaut, -1 = creation
     """Prend les données d'un jeu ou des données par défaut, 
     Retourne un tuple du genre A tirer d'un formulaire.
     A =(nomJeu, anneeJeu, ageJeu, nbJoueurJeu, quantiteJeu, auteurJeu, illustrateurJeu,
     editeurJeu, estEmpruntableJeu, synopsisJeu)"""
     FJ = Tk()
     FJ.wm_attributes("-topmost" , -1) #Mets la fenetre au premier plan dès son apparition.
-    Confirmer = BooleanVar()            #Les variables declarée comme ceci semble être utilisable pour les fonctions imbriqué de Tkinter
-    Confirmer.set(False)
-    DonneesJeu = (nomJ, anneeJ, ageJ, nbJoueurJ, quantiteJ, auteurJ, illustrateurJ,editeurJ, estEmpruntableJ, synopsisJ) #Valeur par défaut
+    idJ = IntVar()
+    idJ.set(idJeu)
+    Creation = BooleanVar()            #Les variables declarée comme ceci semble être utilisable pour les fonctions imbriqué de Tkinter
+    Creation.set(False)
+    if idJ.get() < 0 : #Cas de creation du jeu, valeur par defaut
+        nomJ="Nom du jeu"
+        anneeJ=1960
+        ageJ=0
+        nbJoueurJ="00-00"
+        quantiteJ=0
+        auteurJ="Auteur du jeu"
+        illustrateurJ="Illustrateur du jeu"
+        editeurJ="Editeur du jeu"
+        estEmpruntableJ=False
+        synopsisJ="Description sommaire du jeu."
+        Creation.set(True)
+    else : #Jeu existant, recuperation, des infos
+        nomJ=Jeu.getNomJeu(idJ.get())
+        anneeJ=Jeu.getAnneeJeu(idJ.get())
+        ageJ=Jeu.getAgeJeu(idJ.get())
+        nbJoueurJ=Jeu.getNbJoueurJeu(idJ.get())
+        quantiteJ=Jeu.getQuantiteJeu(idJ.get())
+        auteurJ=Jeu.getAuteurJeu(idJ.get())
+        illustrateurJ=Jeu.getIllustrateurJeu(idJ.get())
+        editeurJ=Jeu.getEditeurJeu(idJ.get())
+        estEmpruntableJ=Jeu.estEmpruntable(idJ.get())
+        synopsisJ=Jeu.getSynopsisJeu(idJ.get())
+
     def submit(): #Fonction de confirmation DANS la fonction de fenetre.
         if askyesno("Confirmation", "Enregister le jeu ?"):
             FJ.quit()
-            Confirmer.set(True)
-            return #Ferme si "oui"
+            if Creation.get():
+                idJ.set(Jeu.ajoutJeu(nomJeu.get(),anneeJeu.get(),editeurJeu.get()))
+            Jeu.setNomJeu(idJ.get(),nomJeu.get())
+            Jeu.setAnneeJeu(idJ.get(),anneeJeu.get())
+            Jeu.setAgeJeu(idJ.get(),ageJeu.
+                          get())
+            Jeu.setNbJoueurJeu(idJ.get(),nbJoueurJeu.get())
+            Jeu.setQuantiteJeu(idJ.get(),quantiteJeu.get())
+            Jeu.setAuteurJeu(idJ.get(),auteurJeu.get())
+            Jeu.setIllustrateurJeu(idJ.get(),illustrateurJeu.get())
+            Jeu.setEditeurJeu(idJ.get(),editeurJeu.get())
+            Jeu.setEmpruntable(idJ.get(),Empbool.get())
+            Jeu.setSynopsisJeu(idJ.get(),synopsisJeu.get())
+            return FJ.destroy() #Ferme après avoir enregistre.
         else : return
 
     def cancel(): #Ferme la fenetre
         if askyesno("Quitter", "Annuler le formulaire ?"):
-            return FJ.quit() #Ferme la fenetre sans valider Confirmer.
+            FJ.quit() #Ferme la fenetre
+            return FJ.destroy() #N'enregistre rien
         else : return
     T1 = LabelFrame(FJ, text="Formulaire de jeu :")
     NJ = Label(FJ, text="Nom du jeu :")
@@ -118,13 +155,6 @@ def formulaireJeu(nomJ="Nom du jeu", anneeJ=1960, ageJ=0, nbJoueurJ="00-00", qua
     Cancel.pack()
     #Lancement de la fenetre
     FJ.mainloop()
-    #Recuperation des données
-    if Confirmer.get() :
-        DonneesJeu = (nomJeu.get(), anneeJeu.get(), ageJeu.get(),nbJoueurJeu.get(),
-                      quantiteJeu.get(),auteurJeu.get(),illustrateurJeu.get(),editeurJeu.get(), Empbool.get(), synopsisJeu.get())
-    #Enfin on detruit la fenetre
-    FJ.destroy()
-    return DonneesJeu
 
 
 
