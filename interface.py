@@ -155,7 +155,7 @@ def formulaireJeu(idJeu = -1): #Par défaut, -1 = creation
 
 
 
-def formulaireExt(idExt = -1, idJeu = 0): #Par défaut, idExt =-1 => creation
+def formulaireExt(idExt = -1, idJeu=0): #Par défaut, idExt =-1 => creation
     """Prend l'id d'une extension pour la modifier, ou -1 pour en creer une nouvelle"""
     
     FE = Tk()
@@ -174,17 +174,17 @@ def formulaireExt(idExt = -1, idJeu = 0): #Par défaut, idExt =-1 => creation
         Creation.set(True)
     else : #Extension existant, recuperation, des infos
         NomJeuE = Jeu.getNomJeu(idJeu)
-        nomE=Extension.getNomExt(idE.get())
-        quantiteE=Ext.getQuantiteExt(idE.get())
+        nomE=Extension.getNomExtension(idE.get())
+        quantiteE=Extension.getNbreTotalExtension(idE.get())
     
     def submit(): #Fonction de confirmation DANS la fonction de fenetre.
         if askyesno("Confirmation", "Enregister L'extension ?"):
             FE.quit()
             if Creation.get():
-                Extension.ajoutExtension(idJ.get(),nomExt.get(),quantiteExt.get())
+                Extension.ajoutExtension(idJ.get(),NEI.get(),QEI.get())
             else :
-                Extension.setNomExt(idE.get(),nomExt.get())
-                Ext.setQuantiteExt(idE.get(),quantiteExt.get())
+                Extension.setNomExtension(idE.get(),nomExt.get())
+                Extension.setNbreTotalExtension(idE.get(),quantiteExt.get())
             return FE.destroy() #Ferme après avoir enregistre.
         else : return
 
