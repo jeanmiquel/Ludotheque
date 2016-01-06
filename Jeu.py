@@ -226,7 +226,7 @@ class Jeu :
             BDD.cur.execute("""INSERT INTO Jeu(
                     idJeu, nomJeu, anneeJeu, nbJoueurJeu, ageJeu,
                     quantiteJeu, auteurJeu, illustrateurJeu, editeurJeu, estEmpruntableJeu, synopsisJeu)
-                    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                                     (idJeu, nomJeu, anneeJeu,2, 5,
                     1, "inconuu", "inconnu", editeurJeu, True, "a remplir"))
             BDD.conn.commit()
