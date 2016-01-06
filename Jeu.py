@@ -4,22 +4,6 @@ import Extension
 
 import BDD
 
-BDD.cur.execute("""CREATE TABLE IF NOT EXISTS `Jeu` (
-`idJeu` int(6) NOT NULL,
-`nomJeu` varchar(50) NOT NULL,
-`anneeJeu` int(4) NOT NULL,
-`ageJeu` int(2) NOT NULL,
-`nbJoueurJeu` varchar(5) NOT NULL,
-`quantiteJeu` int(3) NOT NULL,
-`auteurJeu` varchar(20) NOT NULL,
-`illustrateurJeu` varchar(20) NOT NULL,
-`editeurJeu` varchar(20) NOT NULL,
-`estEmpruntableJeu` tinyint(1) NOT NULL,
-`synopsisJeu` varchar(200) NOT NULL,
-PRIMARY KEY (`idJeu`))""")
-BDD.conn.commit()
-
-
 class Jeu :
 
         #setters ?
