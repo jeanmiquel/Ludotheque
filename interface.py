@@ -14,10 +14,7 @@ from Extension import Extension
 #FORMULAIRE DE JEU
 
 def formulaireJeu(idJeu = -1): #Par défaut, -1 = creation
-    """Prend les données d'un jeu ou des données par défaut, 
-    Retourne un tuple du genre A tirer d'un formulaire.
-    A =(nomJeu, anneeJeu, ageJeu, nbJoueurJeu, quantiteJeu, auteurJeu, illustrateurJeu,
-    editeurJeu, estEmpruntableJeu, synopsisJeu)"""
+    """Prend l'id d'un jeu pour le modifier, ou -1 pour en creer un nouveau"""
     FJ = Tk()
     FJ.wm_attributes("-topmost" , -1) #Mets la fenetre au premier plan dès son apparition.
     idJ = IntVar()
