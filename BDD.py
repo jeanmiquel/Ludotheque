@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect("P:/Piscine/ludotheque.db") # A modifier en fonction du chemin de votre bd
+conn = sqlite3.connect("ludotheque.db") # A modifier en fonction du chemin de votre bd
 conn.execute('pragma foreign_keys = on')
 conn.commit()
 cur = conn.cursor()
