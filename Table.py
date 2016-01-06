@@ -1,13 +1,13 @@
 import BDD
 
-BDD.cur.execute("""DROP TABLE Reservation""")
-BDD.cur.execute("""DROP TABLE Emprunt""")
-BDD.cur.execute("""DROP TABLE Adherent""")
-BDD.cur.execute("""DROP TABLE Categorie""")
-BDD.cur.execute("""DROP TABLE Appartient""")
-BDD.cur.execute("""DROP TABLE Extension""")
-BDD.cur.execute("""DROP TABLE Jeu""")
-BDD.conn.commit()
+##BDD.cur.execute("""DROP TABLE Reservation""")
+##BDD.cur.execute("""DROP TABLE Emprunt""")
+##BDD.cur.execute("""DROP TABLE Adherent""")
+##BDD.cur.execute("""DROP TABLE Categorie""")
+##BDD.cur.execute("""DROP TABLE Appartient""")
+##BDD.cur.execute("""DROP TABLE Extension""")
+##BDD.cur.execute("""DROP TABLE Jeu""")
+##BDD.conn.commit()
 
 
 BDD.cur.execute("""CREATE TABLE IF NOT EXISTS Reservation 
@@ -51,7 +51,7 @@ BDD.cur.execute("""CREATE TABLE IF NOT EXISTS `Adherent` (
                     `motDePasseAdherent` varchar(26) NOT NULL,
                     `adresseMailAdherent` varchar(50) NOT NULL,
                     `estAdminAdherent` tinyint(1) NOT NULL,
-                    `datePaiementAdherent` date NOT NULL,
+                    `datePaiementAdherent` date,
                     `nombreRetardAdherent` int(3) NOT NULL,
                     `nombreJourRetardAdherent` int(3) NOT NULL,
                     `reservationAnnuleAdherent` int(3) NOT NULL,
