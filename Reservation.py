@@ -6,19 +6,6 @@ import Emprunt
 
 import BDD
 
-BDD.cur.execute("""CREATE TABLE IF NOT EXISTS Reservation 
-  (idReservation int(6) NOT NULL, 
-  idAdherent int(6) NOT NULL, 
-  idJeu int(6), 
-  idExtension int(6), 
-  dateReservation date NOT NULL, 
-  dureeEmpruntPrevue int(3) NOT NULL, 
-  PRIMARY KEY (idReservation),
-  FOREIGN KEY (idJeu) REFERENCES Jeu(idJeu),
-  FOREIGN KEY (idExtension) REFERENCES Extension(idExtension),
-  FOREIGN KEY (idAdherent) REFERENCES Adherent(idAdherent))""")
-BDD.conn.commit()
-
 class Reservation:
   
   #setters
@@ -98,9 +85,9 @@ class Reservation:
                 (idReservation, idJeu, idAdherent, None, dateReservation, dureeEmpruntPrevue)) 
     BDD.conn.commit()
     
-    @staticmethod
+  @staticmethod
   def reserverExtensionAvecJeu(idAdherent, idExtension, dateReservation, dureeEmpruntPrevue):
-    idJeuExt = Extension.getIdJeu(idExtension) #on récupère l'id du jeu correspondant à l'extension
+    idJeuExt = Extension.getIdJeu(idExtension) #on rÃ©cupÃ¨re l'id du jeu correspondant Ã  l'extension
     BDD.cur.execute("""SELECT MAX(idReservation) FROM Reservation""")
     f = BDD.cur.fetchone()[0]
     if (f==None):
@@ -113,7 +100,7 @@ class Reservation:
                 (idReservation, idJeuExt, idAdherent,idExtension, dateReservation, dureeEmpruntPrevue)) 
     BDD.conn.commit()
     
-    @staticmethod
+  @staticmethod
   def reserverExtensionSansJeu(idAdherent, idExtension, dateReservation, dureeEmpruntPrevue):
     BDD.cur.execute("""SELECT MAX(idReservation) FROM Reservation""")
     f = BDD.cur.fetchone()[0]
@@ -135,27 +122,27 @@ class Reservation:
   
   @staticmethod
   def annulerReservApresDateButoire(idReservation):
-    Adherent.ajoutReservAnnule(Reservation.getIdAdhReserv(idReservation))     #on incrément son nombre d'annulation
-    Adherent.setReservEnCours(Reservation.getIdAdhReserv(idReservation), None) #on annule l'id Reservation chez l'adhérent
+    Adherent.ajoutReservAnnule(Reservation.getIdAdhReserv(idReservation))     #on incrÃ©ment son nombre d'annulation
+    Adherent.setReservEnCours(Reservation.getIdAdhReserv(idReservation), None) #on annule l'id Reservation chez l'adhÃ©rent
     Reservation.supprimerReserv(idReservation)
     
   @staticmethod
   def annulerReservAvantDateButoire(idReservation):
-    Adherent.setReservEnCours(Reservation.getIdAdhReserv(idReservation), None) #on annule l'id Reservation chez l'adhérent
+    Adherent.setReservEnCours(Reservation.getIdAdhReserv(idReservation), None) #on annule l'id Reservation chez l'adhÃ©rent
     Reservation.supprimerReserv(idReservation)
     
   @staticmethod
   def validerEmprunt(idReservation, date):
-    Adherent.setReservEnCours(Reservation.getIdAdhReserv(idReservation), None) #on annule l'id Reservation chez l'adhérent
-    if ((Reservation.aUnJeu(idReservation))and(Reservation.aUneExtension(idReservation))):  #si l'adherent a réservé 1 jeu + 1 extension
+    Adherent.setReservEnCours(Reservation.getIdAdhReserv(idReservation), None) #on annule l'id Reservation chez l'adhÃ©rent
+    if ((Reservation.aUnJeu(idReservation))and(Reservation.aUneExtension(idReservation))):  #si l'adherent a rÃ©servÃ© 1 jeu + 1 extension
         Emprunt.emprunterExtensionAvecJeu(Reservation.getIdAdhReserv(idReservation), 
                                           Reservation.getIdExtensionReserv(idReservation),
                                          date, Reservation.getDureeEmpruntPrevue(idReservation))
-    elif (Reservation.aUnJeu(idReservation)):                           #si l'adherent a réservé juste 1 jeu
+    elif (Reservation.aUnJeu(idReservation)):                           #si l'adherent a rÃ©servÃ© juste 1 jeu
         Emprunt.emprunterJeu(Reservation.getIdAdhReserv(idReservation), 
                            Reservation.getIdJeuReserv(idReservation),
                            date, Reservation.getDureeEmpruntPrevue(idReservation))
-    else:                                                              #si l'adherent a réservé juste 1 extension
+    else:                                                              #si l'adherent a rÃ©servÃ© juste 1 extension
         Emprunt.emprunterExtensionSansJeu(Reservation.getIdAdhReserv(idReservation), 
                                           Reservation.getIdExtensionReserv(idReservation),
                                          date, Reservation.getDureeEmpruntPrevue(idReservation))
