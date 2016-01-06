@@ -25,8 +25,7 @@ class Jeu :
         #setters ?
         
         @staticmethod
-        def setNomJeu(idJeu, nomJeu) :          
-                anneeJeu = self.getAnneeJeu()
+        def setNomJeu(idJeu, nomJeu) :
                 BDD.cur.execute("""UPDATE Jeu SET nomJeu = ? WHERE idJeu = ?""",
                                 (nomJeu, idJeu))
                 BDD.conn.commit()
