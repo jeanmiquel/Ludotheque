@@ -154,14 +154,8 @@ def formulaireJeu(idJeu = -1): #Par défaut, -1 = creation
     FJ.mainloop()
 
 #FormulaireExt
-from Tkinter import *
-from tkMessageBox import *
-from datetime import *
-from Jeu import Jeu
-from Extension import Extension
 
-
-def formulaireExt(idExt = -1): #Par défaut, -1 = creation
+def formulaireExt(idExt = -1, idJeu = 0): #Par défaut, idExt =-1 => creation
     """Prend l'id d'une extension pour la modifier, ou -1 pour en creer une nouvelle"""
     
     FE = Tk()
@@ -170,11 +164,15 @@ def formulaireExt(idExt = -1): #Par défaut, -1 = creation
     idE.set(idExt)
     Creation = BooleanVar()            #Les variables declarée comme ceci semble être utilisable pour les fonctions imbriqué de Tkinter
     Creation.set(False)
-    if idE.get() < 0 : #Cas de creation du Ext, valeur par defaut
+    idJ = IntVar()
+    idJ.set(idJeu)
+    if idE.get() < 0 : #Cas de creation du Ext, valeur par defaut.
+        NomJeuE = Jeu.getNomJeu(idJeu)
         nomE="Nom de l'extension"
         quantiteE=0
         Creation.set(True)
     else : #Extension existant, recuperation, des infos
+        NomJeuE = Jeu.getNomJeu(idJeu)
         nomE=Extension.getNomExt(idE.get())
         quantiteE=Ext.getQuantiteExt(idE.get())
     
@@ -182,9 +180,9 @@ def formulaireExt(idExt = -1): #Par défaut, -1 = creation
         if askyesno("Confirmation", "Enregister L'extension ?"):
             FE.quit()
             if Creation.get():
-                Extension.ajoutExtension(0,nomExt.get(),quantiteExt.get())
+                Extension.ajoutExtension(idJ.get(),nomExt.get(),quantiteExt.get())
             else :
-                Extension.setNomExt(0,idE.get(),nomExt.get())
+                Extension.setNomExt(idE.get(),nomExt.get())
                 Ext.setQuantiteExt(idE.get(),quantiteExt.get())
             return FE.destroy() #Ferme après avoir enregistre.
         else : return
@@ -202,7 +200,9 @@ def formulaireExt(idExt = -1): #Par défaut, -1 = creation
     #Titre
     T1.pack()
     #Nom du jeu (recupère l'id du jeu dans la liste)
-    
+    NJE.pack()
+    NomJeu = Label(FE, text =Jeu.getNomJeu(idJeu))
+    NomJeu.pack() 
     #Nom de l'extension (champs à remplir)
     NE.pack()
     nomExt = StringVar()
@@ -224,10 +224,6 @@ def formulaireExt(idExt = -1): #Par défaut, -1 = creation
     Cancel.pack()
     #Lancement de la fenetre
     FE.mainloop()
-
-
-
-
 
 
 
