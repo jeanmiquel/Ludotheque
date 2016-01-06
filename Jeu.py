@@ -4,29 +4,12 @@ import Extension
 
 import BDD
 
-BDD.cur.execute("""CREATE TABLE IF NOT EXISTS `Jeu` (
-`idJeu` int(6) NOT NULL,
-`nomJeu` varchar(50) NOT NULL,
-`anneeJeu` int(4) NOT NULL,
-`ageJeu` int(2) NOT NULL,
-`nbJoueurJeu` varchar(5) NOT NULL,
-`quantiteJeu` int(3) NOT NULL,
-`auteurJeu` varchar(20) NOT NULL,
-`illustrateurJeu` varchar(20) NOT NULL,
-`editeurJeu` varchar(20) NOT NULL,
-`estEmpruntableJeu` tinyint(1) NOT NULL,
-`synopsisJeu` varchar(200) NOT NULL,
-PRIMARY KEY (`idJeu`))""")
-BDD.conn.commit()
-
-
 class Jeu :
 
         #setters ?
         
         @staticmethod
-        def setNomJeu(idJeu, nomJeu) :          
-                anneeJeu = self.getAnneeJeu()
+        def setNomJeu(idJeu, nomJeu) :
                 BDD.cur.execute("""UPDATE Jeu SET nomJeu = ? WHERE idJeu = ?""",
                                 (nomJeu, idJeu))
                 BDD.conn.commit()
@@ -62,9 +45,9 @@ class Jeu :
         def setIllustrateurJeu(idJeu,illustrateurJeu) :
                 BDD.cur.execute("""UPDATE Jeu SET illustrateurJeu = ? WHERE idJeu = ?""",(illustrateurJeu, idJeu))
                 BDD.conn.commit()
-        
+
         @staticmethod
-        def setEditeurJeu(idJeu,editeurJeu) :
+        def setEditeurJeu(idJeu,editeurJeu):
                 BDD.cur.execute("""UPDATE Jeu SET editeurJeu = ? WHERE idJeu = ?""",(editeurJeu, idJeu))
                 BDD.conn.commit()
         
@@ -152,7 +135,7 @@ class Jeu :
                 BDD.cur.execute("""SELECT idAherent FROM Emprunt WHERE idJeu =?""",(idJeu,))
                 return BDD.cur.fetchall()
        
-       @staticmethod         
+        @staticmethod         
         def getEmprunts(idJeu):
                 BDD.cur.execute("""SELECT idEmprunt FROM Emprunt WHERE idJeu=?""",(idJeu,))
                 return BDD.cur.fetchall()
@@ -169,7 +152,7 @@ class Jeu :
         
         @staticmethod
         def aDesExtensions(idJeu):
-                return(Jeu.getExtension != None)
+                return(Jeu.getExtensions(idJeu) <> [])
                 
         @staticmethod
         def getCategories(idJeu):
@@ -198,18 +181,13 @@ class Jeu :
                         BDD.cur.execute("""SELECT idEmprunt FROM Emprunt WHERE idJeu = ? AND dateRenduEmprunt = ?""",(idJeu, None))
                         idEmprunt = BDD.cur.fetchone()[0]
                         mindate = Emprunt.getDateFinEmprunt(idEmprunt)
-                        while (idEmprunt != None):
+                        while (idEmprunt <> None):
                                 date = Emprunt.getDateFinEmprunt(idEmprunt)
                                 if (date < mindate):
                                         mindate = date
                                 idEmprunt = BDD.cur.fetchone()[0]
                         
-        
-        #@staticmethod
-        #def verifieDisponibilite(idJeu, date):
-        #Vérifier qu'il existe au moins une date de rendu prévue des emprunts en cours qui est inférieure à la date demandée 
-        #Vérifier les réservations
-                
+
         @staticmethod
         def getAllJeu():
                 BDD.cur.execute("""SELECT * FROM Jeu""")
@@ -217,12 +195,12 @@ class Jeu :
          
         @staticmethod
         def getJeuByNom(nomJeu):
-                nomJeux = nomJeu + "%" 
+                nomJeux = "%" + nomJeu + "%" 
                 BDD.cur.execute("""SELECT * FROM Jeu WHERE nomJeu LIKE ? """,(nomJeux,))
-                return BDD.cur.fetchall()      
+                return BDD.cur.fetchall()     
         
         @staticmethod
-        def ajoutJeu(nomJeu, anneejeu, editeurJeu):
+        def ajoutJeu(nomJeu, anneeJeu, editeurJeu):
             BDD.cur.execute("""SELECT MAX(idJeu) FROM Jeu""")
             f = BDD.cur.fetchone()[0]
             if (f==None):
@@ -232,10 +210,11 @@ class Jeu :
             BDD.cur.execute("""INSERT INTO Jeu(
                     idJeu, nomJeu, anneeJeu, nbJoueurJeu, ageJeu,
                     quantiteJeu, auteurJeu, illustrateurJeu, editeurJeu, estEmpruntableJeu, synopsisJeu)
-                    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                                     (idJeu, nomJeu, anneeJeu,2, 5,
                     1, "inconuu", "inconnu", editeurJeu, True, "a remplir"))
             BDD.conn.commit()
+            return idJeu
                                 
         @staticmethod
         def ajoutExemplaire(idJeu):
@@ -256,3 +235,4 @@ class Jeu :
         def supprimerJeu(idJeu):
                 BDD.cur.execute("""DELETE FROM Jeu WHERE idJeu =?""",(idJeu,))
                 BDD.conn.commit()
+
