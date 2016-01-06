@@ -492,13 +492,13 @@ def catalogue( modeAdmin=False, numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdheren
     Label(fcatalogue, text="Illustrateur", bg="green", width = 15).grid(row=2, column=7)
     Label(fcatalogue, text="Editeur", bg="green", width = 13).grid(row=2, column=8)
     if (modeAdmin):
-        Label(fcatalogue, text="Que faire ?", bg="green", width = 73).grid(row=2, column=9, columnspan=5)
+        Label(fcatalogue, text="Que faire ?", bg="green", width = 73).grid(row=2, column=9, columnspan=6)
     else:
         Label(fcatalogue, text="Que faire ?", bg="green", width = 73).grid(row=2, column=9, columnspan=4)
 
     numJeu=[0,0,len(Jeux)]
-    flecheH = Button(fcatalogue, text="^", command = partial(afficheJeu, numJeu, Jeux, -20), bg="blue", width=5,activebackground="blue").grid(row=3, column=14)
-    flecheB = Button(fcatalogue, text="v", command = partial(afficheJeu, numJeu, Jeux, 20), bg="blue", width=5,activebackground="blue").grid(row=22, column=14)
+    flecheH = Button(fcatalogue, text="^", command = partial(afficheJeu, numJeu, Jeux, -20), bg="blue", width=5,activebackground="blue").grid(row=3, column=15)
+    flecheB = Button(fcatalogue, text="v", command = partial(afficheJeu, numJeu, Jeux, 20), bg="blue", width=5,activebackground="blue").grid(row=22, column=15)
     afficheJeu(numJeu, Jeux)
     
         
