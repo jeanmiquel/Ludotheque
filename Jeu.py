@@ -216,7 +216,7 @@ class Jeu :
                 return BDD.cur.fetchall()     
         
         @staticmethod
-        def ajoutJeu(nomJeu, anneejeu, editeurJeu):
+        def ajoutJeu(nomJeu, anneeJeu, editeurJeu):
             BDD.cur.execute("""SELECT MAX(idJeu) FROM Jeu""")
             f = BDD.cur.fetchone()[0]
             if (f==None):
