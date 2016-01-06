@@ -471,7 +471,108 @@ def afficheExtensions(idJeu):
 
 
 
+from Tkinter import *
+from tkMessageBox import *
+from datetime import *
+import datetime
+from functools import partial
+from Jeu import Jeu
+from Adherent import Adherent
+from Extension import Extension
+from Emprunt import Emprunt
 
+
+def catalogue(numAdherent=0, Emprunt=Emprunt.getAllEmprunts(), modeAdmin=False): #idAdherent
+    def maj():
+        # on arrive ici toutes les 1000 ms
+        t=datetime.datetime.today()
+        heure.set(t.strftime('%m/%d/%Y  %H:%M:%S'))
+        fcatalogue.after(1000,maj)
+
+    def retourMenu():
+        fcatalogue.destroy()
+        return menu(numAdherent)
+
+
+    
+     
+    def afficheEmprunt(n, Emprunts, k=0):
+        n[0]=n[0]+k
+        r = n[2]-n[1]
+        if (r>20): r=20
+        if (n[0]<n[1]):
+            n[0]=n[1]
+        if (n[0]+r>n[2]):
+            n[0]=n[2]-r
+        j=3
+        
+        for i in range(n[0],n[0]+r):
+            Label(fcatalogue, text=str(Emprunt[i][1]), bg="orange", width = 25).grid(row=j, column=1)
+            Label(fcatalogue, text=str(Emprunt[i][2]), bg="orange", width = 10).grid(row=j, column=2)
+            Label(fcatalogue, text=str(Emprunt[i][3]), bg="orange", width = 10).grid(row=j, column=3)
+            Label(fcatalogue, text=str(Emprunt[i][4]), bg="orange", width = 10).grid(row=j, column=4)
+            Label(fcatalogue, text=str(Emprunt[i][5]), bg="orange", width = 15).grid(row=j, column=5)
+            Label(fcatalogue, text=str(Emprunt[i][6]), bg="orange", width = 15).grid(row=j, column=6)
+            
+            if (modeAdmin):
+                Button(fcatalogue, text="Modifier", command = rien,bg="blue", width=13,activebackground="blue").grid(row=j, column=9) #partial(formulaireJeu,Jeux[i][0])
+            else:
+                Button(fcatalogue, text="Détail", command = partial(afficheFicheJeu,Jeux[i][0]) ,bg="blue", width=13,activebackground="blue").grid(row=j, column=9)
+                
+            if (Jeu.aDesExtensions(Jeux[i][0])):
+                Button(fcatalogue, text="Extensions", command = rien,bg="red", width=13,activebackground="red").grid(row=j, column=10)
+            Button(fcatalogue, text="Emprunt", command = partial(lancerEmprunt, i),bg="green", width=13,activebackground="green").grid(row=j, column=11)
+            Button(fcatalogue, text="Reserv", command = rien,bg="red", width=13,activebackground="red").grid(row=j, column=12)
+            if (modeAdmin):
+                Button(fcatalogue, text="Supprimer", command = rien,bg="yellow", width=13,activebackground="red").grid(row=j, column=13)
+            j=j+1
+
+    
+    fcatalogue = Tk()
+    fcatalogue.title("Listes des emprunts")
+    fcatalogue.grid_columnconfigure(0,weight=1)
+    fcatalogue.grid_rowconfigure(20,weight=21)
+    
+    p = PanedWindow(fcatalogue, orient = HORIZONTAL, height=100, width=1000)
+    p.grid(row=1, column=1, columnspan=11)
+     
+    heure = StringVar()
+    p.add(Label(p, textvariable=heure, bg="red", anchor=CENTER,width=30))
+    maj()
+
+    rech=StringVar()
+    rech.set("Faites une recherche ici !")
+
+    entryRecherche = Entry(p, textvariable=rech, width = 30)
+    p.add(entryRecherche)
+    p.add(Button(p, text="Recherchez !", bg="orange", activebackground="orange", borderwidth=10, width=10, command= partial(lanceCatalogue,numAdherent,modeAdmin)))
+    
+    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(numAdherent), bg="white", anchor=CENTER, width=10))
+    if (modeAdmin):
+        p.add(Button(p, text="Ajouter un emprunt", bg="cyan", activebackground="cyan", borderwidth=10, width=10, command= rien))#partial(formulaireJeu,numAdh)))
+    p.add(Button(p, text="Retour au menu principal", bg="orange", activebackground="orange", borderwidth=10, width=10, command= retourMenu ))
+    p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fcatalogue.destroy ))
+
+    Label(fcatalogue, text="Adhérent", bg="green", width = 23).grid(row=2, column=1)
+    Label(fcatalogue, text="Jeu", bg="green", width = 8).grid(row=2, column=2)
+    Label(fcatalogue, text="Extension", bg="green", width = 8).grid(row=2, column=3)
+    Label(fcatalogue, text="Date du début de l'emprunt", bg="green", width = 8).grid(row=2, column=4)
+    Label(fcatalogue, text="Date de rendu de l'emprunt ", bg="green", width = 23).grid(row=2, column=5)
+    Label(fcatalogue, text="Durée prévu de l'emprunt", bg="green", width = 23).grid(row=2, column=6)
+    Label(fcatalogue, text="Emprunt en cours", bg="blue", width = 13).grid(row=2, column=6)
+    
+    if (modeAdmin):
+        Label(fcatalogue, text="Que faire ?", bg="green", width = 73).grid(row=2, column=9, columnspan=5)
+    else:
+        Label(fcatalogue, text="Que faire ?", bg="green", width = 73).grid(row=2, column=9, columnspan=4)
+
+    numEmprunt=[0,0,len(Emprunt)]
+    flecheH = Button(fcatalogue, text="^", command = partial(afficheEmprunts, numJeu, Jeux, -20), bg="blue", width=5,activebackground="blue").grid(row=3, column=14)
+    flecheB = Button(fcatalogue, text="v", command = partial(afficheJeu, numJeu, Jeux, 20), bg="blue", width=5,activebackground="blue").grid(row=22, column=14)
+    afficheEmprunts(numEmprunt, Emprunt)
+    
+        
+    fcatalogue.mainloop()
 
 
 
