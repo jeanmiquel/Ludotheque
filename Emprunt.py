@@ -6,25 +6,7 @@ import Extension
 
 import BDD
 
-
-BDD.cur.execute("""CREATE TABLE IF NOT EXISTS `Emprunt` (
-                                `idEmprunt` int(6) NOT NULL,
-                                `idAdherent` int(6) NOT NULL,
-                                `idJeu` int(6) NOT NULL,
-                                `idExtension` int(6) NOT NULL,
-                                `dateDebutEmprunt` date NOT NULL,
-                                `dateRenduEmprunt` date NOT NULL,
-                                `dureePrevueEmprunt` int(3) NOT NULL,
-                                PRIMARY KEY (`idEmprunt`),
-                                FOREIGN KEY (`idAdherent`) REFERENCES Adherent(`idAdherent`),
-                                FOREIGN KEY (`idExtension`) REFERENCES Extension(`idExtension`),
-                                FOREIGN KEY (`idJeu`) REFERENCES Jeu(`idJeu`)
-                                )""")
-BDD.conn.commit()
-
-
-
-class Emprunt :
+class Emprunt:
 
         #setters ?
         @staticmethod
@@ -102,11 +84,6 @@ class Emprunt :
         def empruntsEnCours():
           BDD.cur.execute("""SELECT * FROM Emprunt WHERE dateRenduEmprunt = ?""",(None,))
           return BDD.cur.fetchall()
-
-        @staticmethod
-        def EnCours():
-          BDD.cur.execute("""SELECT * FROM Emprunt WHERE dateRenduEmprunt = ?""",(None,))
-          return BDD.cur.fetchall()
         
         @staticmethod
         def getAllEmprunts():
@@ -123,13 +100,13 @@ class Emprunt :
             idEmprunt =f+1
           BDD.cur.execute("""INSERT INTO Emprunt(
                   idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dateRenduEmprunt, dureePrevueEmprunt)
-                  VALUES(?, ?, ?, ?, ?, ?, ?)""",
-                  (idEmprunt, idJeu, idAdherent, 0, dateDebutEmprunt, 0, dureePrevueEmprunt)) 
+                  VALUES(?, ?, ?, ?, ?, ?)""",
+                  (idEmprunt, idJeu, idAdherent, None, dateDebutEmprunt, None, dureePrevueEmprunt)) 
           BDD.conn.commit() 
           
         @staticmethod
         def emprunterExtensionAvecJeu(idAdherent, idExtension, dateDebutEmprunt, dureePrevueEmprunt):
-                idJeuExt = Extension.getIdJeu(idExtension) #on rcupre l'id du jeu correspondant l'extension
+                idJeuExt = Extension.getIdJeu(idExtension) #on recupere l'id du jeu correspondant a  l'extension
                 BDD.cur.execute("""SELECT MAX(idEmprunt) FROM Emprunt""")
                 f = BDD.cur.fetchone()[0]
                 if (f==None):
@@ -138,7 +115,7 @@ class Emprunt :
                   idEmprunt =f+1
                 BDD.cur.execute("""INSERT INTO Emprunt(
                           idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dateRenduEmprunt, dureePrevueEmprunt)
-                          VALUES(?, ?, ?, ?, ?, ?, ?)""",
+                          VALUES(?, ?, ?, ?, ?, ?)""",
                           (idEmprunt, idJeuExt, idAdherent, idExtension, dateDebutEmprunt, None, dureePrevueEmprunt)) 
                 BDD.conn.commit() 
         
@@ -152,9 +129,10 @@ class Emprunt :
                   idEmprunt =f+1
                 BDD.cur.execute("""INSERT INTO Emprunt(
                           idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dateRenduEmprunt, dureePrevueEmprunt)
-                          VALUES(?, ?, ?, ?, ?, ?)""",
+                          VALUES(?, ?, ?, ?, ?, ?, ?)""",
                           (idEmprunt, None, idAdherent, idExtension, dateDebutEmprunt, None,dureePrevueEmprunt))
-        
+                BDD.conn.commit() 
+                
         @staticmethod
         def getJourRetard(idEmprunt):
                 jourRetard = (Emprunt.getDateRenduEmprunt(idEmprunt) - Emprunt.getDateFinEmprunt(idEmprunt)).days
