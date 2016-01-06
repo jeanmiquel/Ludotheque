@@ -417,12 +417,11 @@ def catalogue( modeAdmin=False, numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdheren
     def lanceCatalogue(n, ma):
         r = entryRecherche.get()
         fcatalogue.destroy()
+        return catalogue(n, Jeu.getJeuByNom(r), ma)
 
     def lancerExtension(i, mode):
         fcatalogue.destroy()
         return afficheExtensions(i, mode)
-        
-        return catalogue(n, Jeu.getJeuByNom(r), ma)
 
     def afficheJeu(n, Jeux, k=0):
         n[0]=n[0]+k
