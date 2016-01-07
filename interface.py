@@ -1,4 +1,3 @@
-#-*- coding: utf-8 -*-
 from Tkinter import *
 from tkMessageBox import *
 from datetime import *
@@ -11,17 +10,17 @@ from Emprunt import Emprunt
 from Reservation import Reservation
 
 
-
+infos = [1,True]
 
 #FORMULAIRE DE JEU
 
-def formulaireJeu(idJeu = -1): #Par dÃ©faut, -1 = creation
+def formulaireJeu(idJeu = -1): #Par dÃƒÂ©faut, -1 = creation
     """Prend l'id d'un jeu pour le modifier, ou -1 pour en creer un nouveau"""
     FJ = Tk()
-    FJ.wm_attributes("-topmost" , -1) #Mets la fenetre au premier plan dÃ¨s son apparition.
+    FJ.wm_attributes("-topmost" , -1) #Mets la fenetre au premier plan dÃƒÂ¨s son apparition.
     idJ = IntVar()
     idJ.set(idJeu)
-    Creation = BooleanVar()            #Les variables declarÃ©e comme ceci semble Ãªtre utilisable pour les fonctions imbriquÃ© de Tkinter
+    Creation = BooleanVar()            #Les variables declarÃƒÂ©e comme ceci semble ÃƒÂªtre utilisable pour les fonctions imbriquÃƒÂ© de Tkinter
     Creation.set(False)
     if idJ.get() < 0 : #Cas de creation du jeu, valeur par defaut
         nomJ="Nom du jeu"
@@ -63,7 +62,7 @@ def formulaireJeu(idJeu = -1): #Par dÃ©faut, -1 = creation
             Jeu.setEditeurJeu(idJ.get(),editeurJeu.get())
             Jeu.setEmpruntable(idJ.get(),Empbool.get())
             Jeu.setSynopsisJeu(idJ.get(),synopsisJeu.get())
-            return FJ.destroy() #Ferme aprÃ¨s avoir enregistre.
+            return FJ.destroy() #Ferme aprÃƒÂ¨s avoir enregistre.
         else : return
 
     def cancel(): #Ferme la fenetre
@@ -73,19 +72,19 @@ def formulaireJeu(idJeu = -1): #Par dÃ©faut, -1 = creation
         else : return
     T1 = LabelFrame(FJ, text="Formulaire de jeu :")
     NJ = Label(FJ, text="Nom du jeu :")
-    AnJ = Label(FJ, text="AnnÃ©e de sortie du jeu :")
+    AnJ = Label(FJ, text="AnnÃƒÂ©e de sortie du jeu :")
     AgJ = Label(FJ, text="Ages du public du jeu :")
     NbJ = Label(FJ, text="Nombre de joueur pour ce jeu($$-$$) :")
     QJ = Label(FJ, text="Nombre d'exemplaire total du jeu :")
     AJ = Label(FJ, text="Auteur du jeu :")
     IJ = Label(FJ, text="Illustrateur du jeu :")
     EJ = Label(FJ, text="Editeur du jeu :")
-    Emp = Label(FJ, text="Ce jeu peut-etre EmpruntÃ© :")
-    SJ =Label(FJ, text="Description du jeu (200caractÃ¨res) :")
+    Emp = Label(FJ, text="Ce jeu peut-etre EmpruntÃƒÂ© :")
+    SJ =Label(FJ, text="Description du jeu (200caractÃƒÂ¨res) :")
     AddJ = Label(FJ, text="Ajouter le jeu :")
     #Titre
     T1.pack()
-    #Nom du jeu (champs Ã  remplir)
+    #Nom du jeu (champs ÃƒÂ  remplir)
     NJ.pack()
     nomJeu = StringVar()
     nomJeu.set(nomJ)
@@ -97,7 +96,7 @@ def formulaireJeu(idJeu = -1): #Par dÃ©faut, -1 = creation
     anneeJeu.set(anneeJ)
     AnJI = Spinbox(FJ, from_=1960, to = date.today().year, textvariable=anneeJeu)
     AnJI.pack()
-    #Age joueurs(Champs Ã  remplir)
+    #Age joueurs(Champs ÃƒÂ  remplir)
     AgJ.pack()
     ageJeu=IntVar()
     ageJeu.set(ageJ)
@@ -115,37 +114,37 @@ def formulaireJeu(idJeu = -1): #Par dÃ©faut, -1 = creation
     quantiteJeu.set(quantiteJ)
     QJI = Spinbox(FJ, from_=0, to=999, textvariable=quantiteJeu)
     QJI.pack()
-    #Auteur du jeu (champs Ã  remplir)
+    #Auteur du jeu (champs ÃƒÂ  remplir)
     AJ.pack()
     auteurJeu=StringVar()
     auteurJeu.set(auteurJ)
     AJI = Entry(FJ, textvariable=auteurJeu, width = 45)
     AJI.pack()
-    #Illustrateur du jeu (champs Ã  remplir)
+    #Illustrateur du jeu (champs ÃƒÂ  remplir)
     IJ.pack()
     illustrateurJeu=StringVar()
     illustrateurJeu.set(illustrateurJ)
     IJI = Entry(FJ, textvariable=illustrateurJeu, width = 45)
     IJI.pack()
-    #Editeur du jeu (champs Ã  remplir)
+    #Editeur du jeu (champs ÃƒÂ  remplir)
     EJ.pack()
     editeurJeu=StringVar()
     editeurJeu.set(editeurJ)
     EJI = Entry(FJ, textvariable=editeurJeu, width = 45)
     EJI.pack()
-    #Empruntable ou non ? (case Ã  cocher)
+    #Empruntable ou non ? (case ÃƒÂ  cocher)
     Emp.pack()
     Empbool = BooleanVar()
     Empbool.set(estEmpruntableJ)
     EmpI = Checkbutton(FJ, text="Est-il empruntable?", variable = Empbool)
     EmpI.pack()
-    #Synospis du jeu (Champs Ã  remplir)
+    #Synospis du jeu (Champs ÃƒÂ  remplir)
     SJ.pack()
     synopsisJeu = StringVar()
     synopsisJeu.set(synopsisJ)
     SJI = Entry(FJ, textvariable=synopsisJeu, width = 45)
     SJI.pack()
-    #Fin : Confirmation de l'ajout/modification du jeu, appel de la fonction submit (sans parenthÃ¨ses)
+    #Fin : Confirmation de l'ajout/modification du jeu, appel de la fonction submit (sans parenthÃƒÂ¨ses)
     AddJ.pack()
     AddJI = Button(FJ, text="Confirmer", command = submit)
     AddJI.pack()
@@ -154,18 +153,18 @@ def formulaireJeu(idJeu = -1): #Par dÃ©faut, -1 = creation
     Cancel.pack()
     #Lancement de la fenetre
     FJ.mainloop()
+    return catalogue()
 
 
-
-def formulaireExt(idExt = -1, idJeu=0): #Par dÃ©faut, idExt =-1 => creation
+def formulaireExt(idExt = -1, idJeu=0): #Par dÃƒÂ©faut, idExt =-1 => creation
     """Prend l'id d'une extension pour la modifier, ou -1 pour en creer une nouvelle"""
     
     FE = Tk()
     FE.title("Formulaire d'extension")
-    FE.wm_attributes("-topmost" , -1) #Mets la fenetre au premier plan dÃ¨s son apparition.
+    FE.wm_attributes("-topmost" , -1) #Mets la fenetre au premier plan dÃƒÂ¨s son apparition.
     idE = IntVar()
     idE.set(idExt)
-    Creation = BooleanVar()            #Les variables declarÃ©e comme ceci semble Ãªtre utilisable pour les fonctions imbriquÃ© de Tkinter
+    Creation = BooleanVar()            #Les variables declarÃƒÂ©e comme ceci semble ÃƒÂªtre utilisable pour les fonctions imbriquÃƒÂ© de Tkinter
     Creation.set(False)
     idJ = IntVar()
     idJ.set(idJeu)
@@ -187,7 +186,7 @@ def formulaireExt(idExt = -1, idJeu=0): #Par dÃ©faut, idExt =-1 => creation
             else :
                 Extension.setNomExtension(idE.get(),nomExt.get())
                 Extension.setNbreTotalExtension(idE.get(),quantiteExt.get())
-            return FE.destroy() #Ferme aprÃ¨s avoir enregistre.
+            return FE.destroy() #Ferme aprÃƒÂ¨s avoir enregistre.
         else : return
 
     def cancel(): #Ferme la fenetre
@@ -202,11 +201,11 @@ def formulaireExt(idExt = -1, idJeu=0): #Par dÃ©faut, idExt =-1 => creation
     AddE = Label(FE, text="Ajouter l'extension :")
     #Titre
     T1.pack()
-    #Nom du jeu (recupÃ¨re l'id du jeu dans la liste)
+    #Nom du jeu (recupÃƒÂ¨re l'id du jeu dans la liste)
     NJE.pack()
     NomJeu = Label(FE, text =Jeu.getNomJeu(idJeu))
     NomJeu.pack() 
-    #Nom de l'extension (champs Ã  remplir)
+    #Nom de l'extension (champs ÃƒÂ  remplir)
     NE.pack()
     nomExt = StringVar()
     nomExt.set(nomE)
@@ -218,7 +217,7 @@ def formulaireExt(idExt = -1, idJeu=0): #Par dÃ©faut, idExt =-1 => creation
     quantiteExt.set(quantiteE)
     QEI = Spinbox(FE, from_=0, to=999, textvariable=quantiteExt)
     QEI.pack()
-    #Fin : Confirmation de l'ajout/modification du extension, appel de la fonction submit (sans parenthÃ¨ses)
+    #Fin : Confirmation de l'ajout/modification du extension, appel de la fonction submit (sans parenthÃƒÂ¨ses)
     AddE.pack()
     AddEI = Button(FE, text="Confirmer", command = submit)
     AddEI.pack()
@@ -227,7 +226,7 @@ def formulaireExt(idExt = -1, idJeu=0): #Par dÃ©faut, idExt =-1 => creation
     Cancel.pack()
     #Lancement de la fenetre
     FE.mainloop()
-
+    return catalogue()
 
 
 
@@ -238,11 +237,12 @@ def formulaireExt(idExt = -1, idJeu=0): #Par dÃ©faut, idExt =-1 => creation
 
 def connexion():
     def verification():
-        ID = Adherent.getId(pseudo.get())
-        if (ID <> None):
-            if (mdp.get()==Adherent.getMotDePasse(ID)):
+        infos[0] = Adherent.getId(pseudo.get())
+        if (infos[0] <> None):
+            if (mdp.get()==Adherent.getMotDePasse(infos[0])):
+                infos[1]=(Adherent.getEstAdministrateur(infos[0])<>None and Adherent.getEstAdministrateur(infos[0]))
                 fconnexion.destroy()
-                menu(ID)
+                menu()
             else:
                 showwarning('Mot de passe incorrect','Mot de passe incorrect.\nVeuillez recommencer !')
                 mdp.set('')
@@ -252,7 +252,7 @@ def connexion():
             pseudo.set('')
         
     fconnexion = Tk()
-    fconnexion.title("Connexion Ã  la LudothÃ©que")
+    fconnexion.title("Connexion ÃƒÂ  la LudothÃƒÂ©que")
     
     p = PanedWindow(fconnexion, orient = HORIZONTAL, height = 20, width = 300)
     p.grid(row=1)
@@ -286,7 +286,7 @@ def rien():
 
 #MENU PRINCIPAL
         
-def menu(numAdh=0): #numIdAdhÃƒÂ©rent
+def menu(): #numIdAdhÃƒÂ©rent
     def maj():
         # on arrive ici toutes les 1000 ms
         t=datetime.datetime.today()
@@ -295,24 +295,25 @@ def menu(numAdh=0): #numIdAdhÃƒÂ©rent
 
     def LancePanneauAdmin():
         fmenu.destroy()
-        return panneauAdmin(numAdh) 
+        return panneauAdmin() 
         
     def LanceCatalogue():
         fmenu.destroy()
-        return catalogue(numAdherent=numAdh)
+        return catalogue()
 
     def LanceProfil():
         fmenu.destroy()
-        return formulaireAdherent(numAdh)
+        return formulaireAdherent()
 
     def LanceEmprunt():
         fmenu.destroy()
-        return catalogueEmprunt(numAdh, Adherent.getAllEmpruntAdherent(numAdh))
+        return catalogueEmprunt(Adherent.getAllEmpruntAdherent(infos[0]))
 
     def LancerReserver():
         fmenu.destroy()
-        return reserver(0,numAdh)
-        
+        return reserver(0)
+
+    
     fmenu = Tk()
     fmenu.title("Menu principal")
     p = PanedWindow(fmenu,orient=HORIZONTAL, height=100, width=600)
@@ -322,8 +323,8 @@ def menu(numAdh=0): #numIdAdhÃƒÂ©rent
     p.add(Label(p, textvariable=heure, bg="red", anchor=CENTER,width=20))
     maj()
     
-    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(numAdh), bg="white", anchor=CENTER, width=20))
-    if (Adherent.getEstAdministrateur(numAdh)<>None and Adherent.getEstAdministrateur(numAdh)):
+    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(infos[0]), bg="white", anchor=CENTER, width=20))
+    if (infos[1]):
         p.add(Button(p, text="Panneau d'administration", bg="orange", activebackground="orange", borderwidth=10, width=20, command=LancePanneauAdmin ))
     p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fmenu.destroy ))
     
@@ -355,7 +356,7 @@ def menu(numAdh=0): #numIdAdhÃƒÂ©rent
 #PANNEAU D'ADMINISTRATION
 
 
-def panneauAdmin(numAdh=0): #numIdAdhÃƒÂ©rent
+def panneauAdmin(): #numIdAdhÃƒÂ©rent
     def maj():
         # on arrive ici toutes les 1000 ms
         t=datetime.datetime.today()
@@ -364,21 +365,21 @@ def panneauAdmin(numAdh=0): #numIdAdhÃƒÂ©rent
 
     def retourMenu():
         fpanneauadmin.destroy()
-        return menu(numAdh)
+        return menu()
 
     def LanceCatalogue():
         fpanneauadmin.destroy()
-        return catalogue(numAdherent=numAdh, modeAdmin=True)
+        return catalogue()
 
     def LanceEmprunt():
         fpanneauadmin.destroy()
-        return catalogueEmprunt(numAdh, modeAdmin=True)
+        return catalogueEmprunt()
 
     def LanceReservation():
         fpanneauadmin.destroy()
         return catalogueReservation(numAdh)
-        
-    if (not(Adherent.getEstAdministrateur(numAdh)<>None and Adherent.getEstAdministrateur(numAdh))):
+
+    if (not(infos[1])):
         return menu(numAdh)
     
     fpanneauadmin = Tk()
@@ -391,7 +392,7 @@ def panneauAdmin(numAdh=0): #numIdAdhÃƒÂ©rent
     p.add(Label(p, textvariable=heure, bg="red", anchor=CENTER,width=20))
     maj()
     
-    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(numAdh), bg="white", anchor=CENTER, width=20))
+    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(infos[0]), bg="white", anchor=CENTER, width=20))
     p.add(Button(p, text="Retour menu", bg="orange", activebackground="orange", borderwidth=10, width=20, command= retourMenu))
     p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fpanneauadmin.destroy ))
     
@@ -414,7 +415,7 @@ def panneauAdmin(numAdh=0): #numIdAdhÃƒÂ©rent
 #CATALOGUE DES JEUX
 
 
-def catalogue( modeAdmin=False, numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdherent
+def catalogue(Jeux=Jeu.getAllJeu()): #idAdherent
     def maj():
         # on arrive ici toutes les 1000 ms
         t=datetime.datetime.today()
@@ -423,11 +424,11 @@ def catalogue( modeAdmin=False, numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdheren
 
     def retourMenu():
         fcatalogue.destroy()
-        return menu(numAdherent)
+        return menu()
 
     def afficheFicheJeu(i):
         fcatalogue.destroy()
-        return ficheJeu(numAdherent, i)
+        return ficheJeu(i)
     
     def lancerEmprunt(i):
         fcatalogue.destroy()
@@ -437,14 +438,14 @@ def catalogue( modeAdmin=False, numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdheren
         fcatalogue.destroy()
         return reserver(i)
 
-    def lanceCatalogue(n, ma):
+    def lanceCatalogue():
         r = entryRecherche.get()
         fcatalogue.destroy()
-        return catalogue(ma, n, Jeu.getJeuByNom(r))
+        return catalogue(Jeu.getJeuByNom(r))
 
-    def lancerExtension(i, mode):
+    def lancerExtension(i):
         fcatalogue.destroy()
-        return afficheExtensions(i, mode)
+        return afficheExtensions(i)
 
     def lanceFormulaireExt(j, i):
         fcatalogue.destroy()
@@ -473,19 +474,19 @@ def catalogue( modeAdmin=False, numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdheren
             Label(fcatalogue, text=str(Jeux[i][6]), bg="orange", width = 15).grid(row=j, column=6)
             Label(fcatalogue, text=str(Jeux[i][7]), bg="orange", width = 15).grid(row=j, column=7)
             Label(fcatalogue, text=str(Jeux[i][8]), bg="orange", width = 15).grid(row=j, column=8)
-            if (modeAdmin):
+            if (infos[1]):
                 Button(fcatalogue, text="Modifier", command = partial(lanceFormulaireJeu, Jeux[i][0]),bg="blue", width=13,activebackground="blue").grid(row=j, column=9) #partial(formulaireJeu,Jeux[i][0])
                 Button(fcatalogue, text="CrÃƒÂ©er extension", command = partial(lanceFormulaireExt, -1, Jeux[i][0]),bg="cyan", width=13,activebackground="cyan").grid(row=j, column=14)
             else:
                 Button(fcatalogue, text="DÃƒÂ©tail", command = partial(afficheFicheJeu,Jeux[i][0]) ,bg="blue", width=13,activebackground="blue").grid(row=j, column=9)
                 
             if (Jeu.aDesExtensions(Jeux[i][0])):
-                Button(fcatalogue, text="Extensions", command = partial(lancerExtension, Jeux[i][0], modeAdmin),bg="red", width=13,activebackground="red").grid(row=j, column=10)
+                Button(fcatalogue, text="Extensions", command = partial(lancerExtension, Jeux[i][0]),bg="red", width=13,activebackground="red").grid(row=j, column=10)
             else:
                 Label(fcatalogue, bg="lightgrey", width = 14, height=1).grid(row=j, column=10)
             Button(fcatalogue, text="Emprunt", command = partial(lancerEmprunt, Jeux[i][0]),bg="green", width=13,activebackground="green").grid(row=j, column=11)
             Button(fcatalogue, text="Reserv", command = partial(lancerReserv, Jeux[i][0]),bg="red", width=13,activebackground="red").grid(row=j, column=12)
-            if (modeAdmin):
+            if (infos[1]):
                 Button(fcatalogue, text="Supprimer", command = rien,bg="yellow", width=13,activebackground="red").grid(row=j, column=13)
             j=j+1
 
@@ -509,10 +510,10 @@ def catalogue( modeAdmin=False, numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdheren
 
     entryRecherche = Entry(p, textvariable=rech, width = 30)
     p.add(entryRecherche)
-    p.add(Button(p, text="Recherchez !", bg="orange", activebackground="orange", borderwidth=10, width=10, command= partial(lanceCatalogue,numAdherent,modeAdmin)))
+    p.add(Button(p, text="Recherchez !", bg="orange", activebackground="orange", borderwidth=10, width=10, command= lanceCatalogue))
 
-    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(numAdherent), bg="white", anchor=CENTER, width=10))
-    if (modeAdmin):
+    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(infos[0]), bg="white", anchor=CENTER, width=10))
+    if (infos[1]):
         p.add(Button(p, text="Ajouter un jeu", bg="cyan", activebackground="cyan", borderwidth=10, width=10, command= partial(lanceFormulaireJeu,-1)))
     p.add(Button(p, text="Retour au menu principal", bg="orange", activebackground="orange", borderwidth=10, width=10, command= retourMenu ))
     p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fcatalogue.destroy ))
@@ -529,7 +530,7 @@ def catalogue( modeAdmin=False, numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdheren
     Label(fcatalogue, text="Auteur", bg="green", width = 13).grid(row=2, column=6)
     Label(fcatalogue, text="Illustrateur", bg="green", width = 15).grid(row=2, column=7)
     Label(fcatalogue, text="Editeur", bg="green", width = 13).grid(row=2, column=8)
-    if (modeAdmin):
+    if (infos[1]):
         Label(fcatalogue, text="Que faire ?", bg="green", width = 73).grid(row=2, column=9, columnspan=6)
     else:
         Label(fcatalogue, text="Que faire ?", bg="green", width = 73).grid(row=2, column=9, columnspan=4)
@@ -546,11 +547,11 @@ def catalogue( modeAdmin=False, numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdheren
 
 
 #EXTENSIONS A PARTIR DU BOUTON "EXTENSION" SUR JEU
-def afficheExtensions(idJeu, modeAdmin=False):
+def afficheExtensions(idJeu):
     
-    def retourCatalogue(mode):
+    def retourCatalogue():
         fextension.destroy()
-        return catalogue(mode)
+        return catalogue()
 
     def lancerEmprunt(i):
         fextension.destroy()
@@ -567,9 +568,9 @@ def afficheExtensions(idJeu, modeAdmin=False):
 
     p = PanedWindow(fextension, orient = HORIZONTAL, height=100, width=600)
     p.grid(row=1, column=1, columnspan=4)
-    p.add(Label(p, text="Bonjour pseudo", bg="white", anchor=CENTER, width=20))
-    p.add(Button(p, text="Retour au catalogue", bg="orange", activebackground="orange", borderwidth=10, width=20, command=partial(retourCatalogue,modeAdmin)))
-    if (modeAdmin):
+    p.add(Label(p, text="Bonjour " + Adherent.getPseudo(infos[0]), bg="white", anchor=CENTER, width=20))
+    p.add(Button(p, text="Retour au catalogue", bg="orange", activebackground="orange", borderwidth=10, width=20, command=retourCatalogue))
+    if (infos[1]):
         p.add(Button(p, text="Ajouter Extension", bg="cyan", activebackground="cyan", borderwidth=10, width=20, command=partial(formulaireExt)))
     p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fextension.destroy ))
     
@@ -587,7 +588,7 @@ def afficheExtensions(idJeu, modeAdmin=False):
             Button(fextension, text="Reserv", command = partial(lancerReserv, i[0]),bg="red", width=13,activebackground="red").grid(row=k, column=5)
             Label(fextension, text="QuantitÃƒÂ© disponible", bg="red", width=30).grid(row=2, column=3)
             Label(fextension, text=Extension.getNbreTotalExtension(i[0]), bg="white", width=25).grid(row=k,column=3)
-            if (modeAdmin):
+            if (infos[1]):
                 Button(fextension, text="Modifier", command = partial(formulaireExt, i[0]), bg="yellow", width=13, activebackground="yellow").grid(row=k, column=6)  
                 Button(fextension, text="Supprimer", command=rien, bg="yellow", width=13, activebackground="yellow").grid(row=k, column=7)
             k=k+1
@@ -604,11 +605,11 @@ def afficheExtensions(idJeu, modeAdmin=False):
 
 #AFFICHAGE JEU COTE UTILISATEUR
 
-def ficheJeu(numAdherent, numJeu, modeAdmin=False): #idAdherent + idJeu
+def ficheJeu(numJeu): #idAdherent + idJeu
     
     def retourCatalogue():
         fficheJeu.destroy()
-        return catalogue(numAdherent)
+        return catalogue()
 
     def lancerEmprunt(i):
         fficheJeu.destroy()
@@ -622,9 +623,9 @@ def ficheJeu(numAdherent, numJeu, modeAdmin=False): #idAdherent + idJeu
         fficheJeu.destroy()
         return afficheExtensions(i)
 
-    def lancerExtension(i, mode):
+    def lancerExtension(i):
         fficheJeu.destroy()
-        return afficheExtensions(i, mode)
+        return afficheExtensions(i)
 
     def lanceFormulaireExt(j, i):
         fficheJeu.destroy()
@@ -642,7 +643,7 @@ def ficheJeu(numAdherent, numJeu, modeAdmin=False): #idAdherent + idJeu
     p = PanedWindow(fficheJeu, orient = HORIZONTAL, height=100, width=600)
     p.grid(row=1, column=1, columnspan=3)
     
-    p.add(Label(p, text="Bonjour Pseudo", bg="white", anchor=CENTER, width=20))
+    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(infos[0]), bg="white", anchor=CENTER, width=20))
     p.add(Button(p, text="Retour au catalogue", bg="orange", activebackground="orange", borderwidth=10, width=20, command= retourCatalogue ))
     p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fficheJeu.destroy ))
 
@@ -682,19 +683,19 @@ def ficheJeu(numAdherent, numJeu, modeAdmin=False): #idAdherent + idJeu
     Label(fficheJeu, text=str(Jeu.getSynopsisJeu(numJeu)), bg="orange", width = 15).grid(row=10, column=2)
 
     r = 6
-    if (modeAdmin):
+    if (infos[1]):
         Button(fficheJeu, text="Modifier", command = partial(lanceFormulaireJeu, numJeu),bg="blue", width=13,activebackground="blue").grid(row=r, column=3) #partial(formulaireJeu,Jeux[i][0])
         Button(fficheJeu, text="CrÃƒÂ©er extension", command = partial(lanceFormulaireExt, -1, numJeu),bg="cyan", width=13,activebackground="cyan").grid(row=r+1, column=3)
         r=r+2
 
     if (Jeu.aDesExtensions(numJeu)):
-        Button(fficheJeu, text="Extensions", command = partial(lancerExtension, numJeu, modeAdmin),bg="red", width=13,activebackground="red").grid(row=r, column=3)
+        Button(fficheJeu, text="Extensions", command = partial(lancerExtension, numJeu),bg="red", width=13,activebackground="red").grid(row=r, column=3)
         r=r+1
     
     Button(fficheJeu, text="Emprunt", command = partial(lancerEmprunt, numJeu),bg="green", width=13,activebackground="green").grid(row=r, column=3)
     Button(fficheJeu, text="Reserv", command = partial(lancerReserv, numJeu),bg="red", width=13,activebackground="red").grid(row=r+1, column=3)
     r=r+2
-    if (modeAdmin):
+    if (infos[1]):
         Button(fficheJeu, text="Supprimer", command = rien,bg="yellow", width=13,activebackground="red").grid(row=r, column=3)
 
     fficheJeu.mainloop()
@@ -713,15 +714,15 @@ def ficheJeu(numAdherent, numJeu, modeAdmin=False): #idAdherent + idJeu
 
 #INTERFACE D'EMPRUNT D'UN JEU
 
-def formulaireEmprunt( numJeu, numAdh=0): #idJeu/extension + idAdherent + boolÃ©en + boolÃ©en
+def formulaireEmprunt(numJeu): #idJeu/extension + idAdherent + boolÃƒÂ©en + boolÃƒÂ©en
     def CallBackEmprunt(): #Fonction de confirmation DANS la fonction de fenetre.
-        if askyesno("Confirmation", "ÃŠtes-vous sÃ»r de vouloir emprunt ce jeu ?"):
+        if askyesno("Confirmation", "ÃƒÅ tes-vous sÃƒÂ»r de vouloir emprunt ce jeu ?"):
             return fEmprunt.quit() #Ferme si "oui"
         else : return
 
     def retourJeu(numJeu):
         fEmprunt.destroy()
-        return ficheJeu(numAdh, numJeu)
+        return ficheJeu(numJeu)
 
     def retourCatalogue():
         fEmprunt.destroy()
@@ -734,14 +735,14 @@ def formulaireEmprunt( numJeu, numAdh=0): #idJeu/extension + idAdherent + boolÃ
 
     p = PanedWindow(fEmprunt, orient = HORIZONTAL, height=100, width=300)
     p.grid(row=1)
-    p.add(Label(p, text="Bonjour Pseudo", bg="white", anchor=CENTER, width=20))
+    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(infos[0]), bg="white", anchor=CENTER, width=20))
     p.add(Button(p, text="Retour au catalogue", bg="orange", activebackground="orange", borderwidth=10, width=20, command= retourCatalogue ))
     p.add(Button(p, text="Retour au jeu", bg="orange", activebackground="orange", borderwidth=10, width=20, command= partial(retourJeu, numJeu)))
     p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fEmprunt.destroy ))
     
     pd = PanedWindow(fEmprunt, orient = HORIZONTAL, height = 20, width = 400)
     pd.grid(row=2)
-    pd.add(Label(pd, text="Date de dÃ©but : ", anchor=CENTER, width= 20))
+    pd.add(Label(pd, text="Date de dÃƒÂ©but : ", anchor=CENTER, width= 20))
     ddd = Spinbox(pd, from_=1, to=31, width= 5)
     ddm = Spinbox(pd, from_=1, to=12, width= 5)
     ddy = Spinbox(pd, from_=2015, to=2017, width= 8)
@@ -788,16 +789,16 @@ def formulaireEmprunt( numJeu, numAdh=0): #idJeu/extension + idAdherent + boolÃ
 #INTERFACE DE RESERVATION D'UN JEU
 
 
-def reserver( numJeu,numAdh=0): #idJeu/extension + idAdherent + boolÃ©enJeu (Vrai si l'id en param est un Jeu, Faux si c'est une extension
-    # + boolÃ©enExtension (Par dÃ©faut Ã  faux, vrai si on ne rÃ©serve qu'UNE extension)
+def reserver(numJeu): #idJeu/extension + idAdherent + boolÃƒÂ©enJeu (Vrai si l'id en param est un Jeu, Faux si c'est une extension
+    # + boolÃƒÂ©enExtension (Par dÃƒÂ©faut ÃƒÂ  faux, vrai si on ne rÃƒÂ©serve qu'UNE extension)
     def CallBackEmprunt(): #Fonction de confirmation DANS la fonction de fenetre.
-        if askyesno("Confirmation", "ÃŠtes-vous sÃ»r de vouloir emprunt ce jeu ?"):
+        if askyesno("Confirmation", "ÃƒÅ tes-vous sÃƒÂ»r de vouloir emprunt ce jeu ?"):
             return fResa.quit() #Ferme si "oui"
         else : return
 
     def retourJeu(numJeu):
         fResa.destroy()
-        return ficheJeu(numAdh, numJeu)
+        return ficheJeu(numJeu)
 
     def retourCatalogue():
         fResa.destroy()
@@ -810,14 +811,14 @@ def reserver( numJeu,numAdh=0): #idJeu/extension + idAdherent + boolÃ©enJeu (V
 
     p = PanedWindow(fResa, orient = HORIZONTAL, height=100, width=300)
     p.grid(row=1)
-    p.add(Label(p, text="Bonjour Pseudo", bg="white", anchor=CENTER, width=20))
+    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(infos[0]), bg="white", anchor=CENTER, width=20))
     p.add(Button(p, text="Retour au catalogue", bg="orange", activebackground="orange", borderwidth=10, width=20, command= retourCatalogue ))
     p.add(Button(p, text="Retour au jeu", bg="orange", activebackground="orange", borderwidth=10, width=20, command= partial(retourJeu, numJeu)))
     p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fResa.destroy ))
     
     pd = PanedWindow(fResa, orient = HORIZONTAL, height = 20, width = 400)
     pd.grid(row=2)
-    pd.add(Label(pd, text="Date de dÃ©but : ", anchor=CENTER, width= 20))
+    pd.add(Label(pd, text="Date de dÃƒÂ©but : ", anchor=CENTER, width= 20))
     ddd = Spinbox(pd, from_=1, to=31, width= 5)
     ddm = Spinbox(pd, from_=1, to=12, width= 5)
     ddy = Spinbox(pd, from_=2015, to=2017, width= 8)
@@ -864,50 +865,50 @@ def reserver( numJeu,numAdh=0): #idJeu/extension + idAdherent + boolÃ©enJeu (V
 #MODIFICATION/CREATION D'UN ADHERENT
 
 
-def formulaireAdherent(numAdh=0): #numAdhÃ©rent + boolÃ©en pour savoir si mode Admin ou pas + boolÃ©en savoir si crÃ©ation ou modification
+def formulaireAdherent(): #numAdhÃƒÂ©rent + boolÃƒÂ©en pour savoir si mode Admin ou pas + boolÃƒÂ©en savoir si crÃƒÂ©ation ou modification
     
     fAdh = Tk()
-    fAdh.title("Profil de "+Adherent.getPrenom(numAdh))
+    fAdh.title("Profil de "+Adherent.getPrenom(infos[0]))
 
-    def CallBackFormulaireAdh(num): #Fonction de confirmation DANS la fonction de fenetre.
+    def CallBackFormulaireAdh(): #Fonction de confirmation DANS la fonction de fenetre.
         if (askyesno("Confirmation", "Enregister ces informations ?")):
             return fAdh.quit() #Ferme si "oui"
         else:
             fAdh.destroy()
-            return menu(num)
+            return menu()
 
 
     p = PanedWindow(fAdh, orient = HORIZONTAL, height=100, width=1000)
     p.grid(row=1, column=1, columnspan=4)
     
-    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(numAdh), bg="white", anchor=CENTER, width=20))
-    p.add(Button(p, text="Retour au menu", bg="orange", activebackground="orange", borderwidth=10, width=20, command= partial(CallBackFormulaireAdh, numAdh)))
+    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(infos[0]), bg="white", anchor=CENTER, width=20))
+    p.add(Button(p, text="Retour au menu", bg="orange", activebackground="orange", borderwidth=10, width=20, command= CallBackFormulaireAdh))
     p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fAdh.destroy ))
     
     Label(fAdh, text="Profil", font=("Helvetica", 30), height=4).grid(row=2, column=1, columnspan=4)
     
     Label(fAdh, text="Nom : ").grid(row=3, column=1, columnspan=2)
     nomAdh = StringVar()
-    nomAdh.set(Adherent.getNom(numAdh))
+    nomAdh.set(Adherent.getNom(infos[0]))
     entryNomAdh = Entry(fAdh,textvariable=nomAdh,width=40)
     entryNomAdh.grid(row=3, column=3, columnspan=2)
 
-    Label(fAdh, text="PrÃ©nom : ").grid(row=4, column=1, columnspan=2)
+    Label(fAdh, text="PrÃƒÂ©nom : ").grid(row=4, column=1, columnspan=2)
     prenomAdh = StringVar()
-    prenomAdh.set(Adherent.getPrenom(numAdh))
+    prenomAdh.set(Adherent.getPrenom(infos[0]))
     entryPrenomAdh = Entry(fAdh,textvariable=prenomAdh,width=40)
     entryPrenomAdh.grid(row=4, column=3, columnspan=2)
 
 
     Label(fAdh, text="Pseudo : ").grid(row=5, column=1, columnspan=2)
     pseudoAdh = StringVar()
-    pseudoAdh.set(Adherent.getPseudo(numAdh))
+    pseudoAdh.set(Adherent.getPseudo(infos[0]))
     entryPseudoAdh = Entry(fAdh,textvariable=pseudoAdh,width=40)
     entryPseudoAdh.grid(row=5, column=3, columnspan=2)
 
     Label(fAdh, text="Mot de passe : ").grid(row=6, column=1, columnspan=2)
     mdpAdh = StringVar()
-    mdpAdh.set(Adherent.getMotDePasse(numAdh))
+    mdpAdh.set(Adherent.getMotDePasse(infos[0]))
     entryMdpAdh = Entry(fAdh,textvariable=mdpAdh,width=40,show="*")
     entryMdpAdh.grid(row=6, column=3, columnspan=2)
 
@@ -916,11 +917,11 @@ def formulaireAdherent(numAdh=0): #numAdhÃ©rent + boolÃ©en pour savoir si mo
     Label(fAdh, text="Date de naissance : ").grid(row=7, column=1)
     
     dnaAdh = StringVar()
-    dnaAdh.set(Adherent.getNaissance(numAdh)[0:4])
+    dnaAdh.set(Adherent.getNaissance(infos[0])[0:4])
     dnmAdh = StringVar()
-    dnmAdh.set(Adherent.getNaissance(numAdh)[5:7])
+    dnmAdh.set(Adherent.getNaissance(infos[0])[5:7])
     dnjAdh = StringVar()
-    dnjAdh.set(Adherent.getNaissance(numAdh)[8:10])
+    dnjAdh.set(Adherent.getNaissance(infos[0])[8:10])
     
     entryDnjAdh = Spinbox(fAdh, textvariable=dnjAdh, from_=1, to =31)
     entryDnjAdh.grid(row=7, column=2)
@@ -934,49 +935,49 @@ def formulaireAdherent(numAdh=0): #numAdhÃ©rent + boolÃ©en pour savoir si mo
 
     Label(fAdh, text="Adresse : ").grid(row=8,column=1, columnspan=2)
     adrAdh = StringVar()
-    adrAdh.set(Adherent.getAdresse(numAdh))
+    adrAdh.set(Adherent.getAdresse(infos[0]))
     entryAdrAdh = Entry(fAdh,textvariable=adrAdh,width=40)
     entryAdrAdh.grid(row=8, column=3, columnspan=2)
 
     Label(fAdh, text="Code postal : ").grid(row=9, column=1, columnspan=2)
     cpAdh = StringVar()
-    cpAdh.set(Adherent.getCodePostal(numAdh))
+    cpAdh.set(Adherent.getCodePostal(infos[0]))
     entryCpAdh = Entry(fAdh,textvariable=cpAdh,width=40)
     entryCpAdh.grid(row=9, column=3, columnspan=2)
 
     Label(fAdh, text="Ville : ").grid(row=10, column=1, columnspan=2)
     villeAdh = StringVar()
-    villeAdh.set(Adherent.getVille(numAdh))
+    villeAdh.set(Adherent.getVille(infos[0]))
     entryVilleAdh = Entry(fAdh,textvariable=villeAdh,width=40)
     entryVilleAdh.grid(row=10, column=3, columnspan=2)
 
-    Label(fAdh, text="NumÃ©ro : ").grid(row=11, column=1, columnspan=2)
+    Label(fAdh, text="NumÃƒÂ©ro : ").grid(row=11, column=1, columnspan=2)
     numeroAdh = StringVar()
-    numeroAdh.set(Adherent.getNumTelephone(numAdh))
+    numeroAdh.set(Adherent.getNumTelephone(infos[0]))
     entryNumAdh = Entry(fAdh,textvariable=numeroAdh,width=40)
     entryNumAdh.grid(row=11, column=3, columnspan=2)
 
     Label(fAdh, text="Adresse Mail : ").grid(row=12, column=1, columnspan=2)
     mailAdh = StringVar()
-    mailAdh.set(Adherent.getMail(numAdh))
+    mailAdh.set(Adherent.getMail(infos[0]))
     entryMailAdh = Entry(fAdh,textvariable=mailAdh,width=40)
     entryMailAdh.grid(row=12, column=3, columnspan=2)    
 
    
     #admAdh = Checkbutton(FJ, text="Est-il empruntable?", variable = Empbool)
     
-    Button(fAdh, text="Enregistrer", command = partial(CallBackFormulaireAdh,numAdh)).grid(row=13, column=1, columnspan=4)
+    Button(fAdh, text="Enregistrer", command = CallBackFormulaireAdh).grid(row=13, column=1, columnspan=4)
    
     #Lancement de la fenetre
     fAdh.mainloop()
-    #On recupere les donnÃƒÂ©es de chaque entrÃƒÂ©e.
+    #On recupere les donnÃƒÆ’Ã‚Â©es de chaque entrÃƒÆ’Ã‚Â©e.
     #DonneesJeu = (NJI.get(), AnJI.get(), AgJI.get(),NbJI.get(), QJI.get(),AJI.get(),IJI.get(),EJI.get(), bool(Empbool.get()), SJI.get())
     #Enfin on detruit la fenetre
     fAdh.destroy()
 
-    #Mettre Ã  jour les donnÃ©es
+    #Mettre ÃƒÂ  jour les donnÃƒÂ©es
     
-    menu(1)
+    menu()
 
 
 
@@ -991,7 +992,7 @@ def connexion2():
             else:
                 print("Connexion reussi")
 
-    #creation de la fÃªnetre principle
+    #creation de la fÃƒÂªnetre principle
     fenetre = Tk()
     fenetre.title('Ludotheque')
 
@@ -1041,7 +1042,7 @@ def connexion2():
 
 ####AFFICHAGE DES EMPRUNTS
 
-def catalogueEmprunt(numAdherent=0, Emprunt=Emprunt.getAllEmprunts(), modeAdmin=False): #idAdherent
+def catalogueEmprunt(Emprunt=Emprunt.getAllEmprunts()): #idAdherent
     def maj():
         # on arrive ici toutes les 1000 ms
         t=datetime.datetime.today()
@@ -1050,7 +1051,7 @@ def catalogueEmprunt(numAdherent=0, Emprunt=Emprunt.getAllEmprunts(), modeAdmin=
 
     def retourMenu():
         fcatalogue.destroy()
-        return menu(numAdherent)
+        return menu()
 
     def afficheEmprunts(n, Emprunts, k=0):
         n[0]=n[0]+k
@@ -1073,10 +1074,10 @@ def catalogueEmprunt(numAdherent=0, Emprunt=Emprunt.getAllEmprunts(), modeAdmin=
                 Label(fcatalogue, text=str("EN COURS"), bg="cyan", width = 10).grid(row=j, column=7)
             else:
                 Label(fcatalogue, text=str("RENDU"), bg="orange", width = 10).grid(row=j, column=7)
-            if (modeAdmin):
+            if (infos[1]):
                 Button(fcatalogue, text="Modifier", command = rien,bg="blue", width=13,activebackground="blue").grid(row=j, column=8)
 
-            if (modeAdmin):
+            if (infos[1]):
                 Button(fcatalogue, text="Supprimer", command = rien,bg="yellow", width=13,activebackground="red").grid(row=j, column=9)
             j=j+1
 
@@ -1093,21 +1094,21 @@ def catalogueEmprunt(numAdherent=0, Emprunt=Emprunt.getAllEmprunts(), modeAdmin=
     p.add(Label(p, textvariable=heure, bg="red", anchor=CENTER,width=30))
     maj()
     
-    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(numAdherent), bg="white", anchor=CENTER, width=10))
-    if (modeAdmin):
+    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(infos[0]), bg="white", anchor=CENTER, width=10))
+    if (infos[1]):
         p.add(Button(p, text="Ajouter un emprunt", bg="cyan", activebackground="cyan", borderwidth=10, width=10, command= rien))#partial(formulaireJeu,numAdh)))
     p.add(Button(p, text="Retour au menu principal", bg="orange", activebackground="orange", borderwidth=10, width=10, command= retourMenu ))
     p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fcatalogue.destroy ))
 
-    Label(fcatalogue, text="AdhÃ©rent", bg="green", width = 25).grid(row=2, column=1)
+    Label(fcatalogue, text="AdhÃƒÂ©rent", bg="green", width = 25).grid(row=2, column=1)
     Label(fcatalogue, text="Jeu", bg="green", width = 25).grid(row=2, column=2)
     Label(fcatalogue, text="Extension", bg="green", width = 20).grid(row=2, column=3)
-    Label(fcatalogue, text="Date du dÃ©but", bg="green", width = 15).grid(row=2, column=4)
+    Label(fcatalogue, text="Date du dÃƒÂ©but", bg="green", width = 15).grid(row=2, column=4)
     Label(fcatalogue, text="Date de rendu", bg="green", width = 15).grid(row=2, column=5)
-    Label(fcatalogue, text="DurÃ©e prÃ©vu", bg="green", width = 10).grid(row=2, column=6)
+    Label(fcatalogue, text="DurÃƒÂ©e prÃƒÂ©vu", bg="green", width = 10).grid(row=2, column=6)
     Label(fcatalogue, text="Emprunt en cours", bg="blue", width = 13).grid(row=2, column=7)
     
-    if (modeAdmin):
+    if (infos[1]):
         Label(fcatalogue, text="Que faire ?", bg="green", width = 24).grid(row=2, column=8, columnspan=2)
 
     numEmprunt=[0,0,len(Emprunt)]
@@ -1117,10 +1118,10 @@ def catalogueEmprunt(numAdherent=0, Emprunt=Emprunt.getAllEmprunts(), modeAdmin=
     
         
     fcatalogue.mainloop()
-    
+
     ####AFFICHAGE DES RESERVATION
 
-def catalogueReservation(numAdherent=0, Reservations=Reservation.getAllReservations()): #idAdherent
+def catalogueReservation(Reservations=Reservation.getAllReservations()): #idAdherent
     def maj():
         # on arrive ici toutes les 1000 ms
         t=datetime.datetime.today()
@@ -1129,7 +1130,7 @@ def catalogueReservation(numAdherent=0, Reservations=Reservation.getAllReservati
 
     def retourMenu():
         fcatalogue.destroy()
-        return menu(numAdherent)
+        return menu()
 
     def afficheReservations(n, Reservations, k=0):
         n[0]=n[0]+k
@@ -1169,7 +1170,7 @@ def catalogueReservation(numAdherent=0, Reservations=Reservation.getAllReservati
     p.add(Label(p, textvariable=heure, bg="red", anchor=CENTER,width=30))
     maj()
     
-    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(numAdherent), bg="white", anchor=CENTER, width=10))
+    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(infos[0]), bg="white", anchor=CENTER, width=10))
     p.add(Button(p, text="Ajouter une réservation", bg="cyan", activebackground="cyan", borderwidth=10, width=10, command= rien))#partial(formulaireReservation,numAdh)))
     p.add(Button(p, text="Retour au menu principal", bg="orange", activebackground="orange", borderwidth=10, width=10, command= retourMenu ))
     p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fcatalogue.destroy ))
