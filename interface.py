@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 from Tkinter import *
 from tkMessageBox import *
 from datetime import *
