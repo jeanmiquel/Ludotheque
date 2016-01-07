@@ -284,7 +284,7 @@ def rien():
 
 #MENU PRINCIPAL
         
-def menu(numAdh=0): #numIdAdhÃ©rent
+def menu(numAdh=0): #numIdAdhÃƒÂ©rent
     def maj():
         # on arrive ici toutes les 1000 ms
         t=datetime.datetime.today()
@@ -335,7 +335,7 @@ def menu(numAdh=0): #numIdAdhÃ©rent
     pt = PanedWindow(fmenu,orient=HORIZONTAL, height=350, width=600)
     pt.grid(row=3)
     pt.add(Button(pt, text="Mes emprunts", command = LanceEmprunt, bg="green", width=38,activebackground="green", borderwidth=10))
-    pt.add(Button(pt, text="RÃ©servation", command = LancerReserver,bg="cyan", width=38,activebackground="cyan", borderwidth=10))
+    pt.add(Button(pt, text="RÃƒÂ©servation", command = LancerReserver,bg="cyan", width=38,activebackground="cyan", borderwidth=10))
     
     fmenu.mainloop()
 
@@ -353,7 +353,7 @@ def menu(numAdh=0): #numIdAdhÃ©rent
 #PANNEAU D'ADMINISTRATION
 
 
-def panneauAdmin(numAdh=0): #numIdAdhÃ©rent
+def panneauAdmin(numAdh=0): #numIdAdhÃƒÂ©rent
     def maj():
         # on arrive ici toutes les 1000 ms
         t=datetime.datetime.today()
@@ -371,6 +371,10 @@ def panneauAdmin(numAdh=0): #numIdAdhÃ©rent
     def LanceEmprunt():
         fpanneauadmin.destroy()
         return catalogueEmprunt(numAdh, modeAdmin=True)
+
+    def LanceReservation():
+        fpanneauadmin.destroy()
+        return catalogueReservation(numAdh)
         
     if (not(Adherent.getEstAdministrateur(numAdh)<>None and Adherent.getEstAdministrateur(numAdh))):
         return menu(numAdh)
@@ -391,14 +395,14 @@ def panneauAdmin(numAdh=0): #numIdAdhÃ©rent
     
     pd = PanedWindow(fpanneauadmin,orient=HORIZONTAL, height=350, width=600)
     pd.grid(row=2)
-    pd.add(Button(pd, text="Gestion des AdhÃ©rents", width=38, command = rien, bg="yellow", activebackground="yellow", borderwidth=10))
+    pd.add(Button(pd, text="Gestion des AdhÃƒÂ©rents", width=38, command = rien, bg="yellow", activebackground="yellow", borderwidth=10))
     pd.add(Button(pd, text="Gestion des Jeux", width=38, command = LanceCatalogue, bg="red", activebackground="red", borderwidth=10))
 
 
     pt = PanedWindow(fpanneauadmin,orient=HORIZONTAL, height=350, width=600)
     pt.grid(row=3)
     pt.add(Button(pt, text="Gestion des Emprunts", command = LanceEmprunt, bg="green", width=38,activebackground="green", borderwidth=10))
-    pt.add(Button(pt, text="Gestion des rÃ©servations", command = rien,bg="cyan", width=38,activebackground="cyan", borderwidth=10))
+    pt.add(Button(pt, text="Gestion des rÃƒÂ©servations", command = LanceReservation,bg="cyan", width=38,activebackground="cyan", borderwidth=10))
 
     fpanneauadmin.mainloop()
 
@@ -440,6 +444,14 @@ def catalogue( modeAdmin=False, numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdheren
         fcatalogue.destroy()
         return afficheExtensions(i, mode)
 
+    def lanceFormulaireExt(j, i):
+        fcatalogue.destroy()
+        return formulaireExt(j, i)
+
+    def lanceFormulaireJeu(i):
+        fcatalogue.destroy()
+        return formulaireJeu(i)
+
     def afficheJeu(n, Jeux, k=0):
         n[0]=n[0]+k
         r = n[2]-n[1]
@@ -460,13 +472,15 @@ def catalogue( modeAdmin=False, numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdheren
             Label(fcatalogue, text=str(Jeux[i][7]), bg="orange", width = 15).grid(row=j, column=7)
             Label(fcatalogue, text=str(Jeux[i][8]), bg="orange", width = 15).grid(row=j, column=8)
             if (modeAdmin):
-                Button(fcatalogue, text="Modifier", command = partial(formulaireJeu, Jeux[i][0]),bg="blue", width=13,activebackground="blue").grid(row=j, column=9) #partial(formulaireJeu,Jeux[i][0])
-                Button(fcatalogue, text="CrÃ©er extension", command = partial(formulaireExt, -1, Jeux[i][0]),bg="cyan", width=13,activebackground="cyan").grid(row=j, column=14)
+                Button(fcatalogue, text="Modifier", command = partial(lanceFormulaireJeu, Jeux[i][0]),bg="blue", width=13,activebackground="blue").grid(row=j, column=9) #partial(formulaireJeu,Jeux[i][0])
+                Button(fcatalogue, text="CrÃƒÂ©er extension", command = partial(lanceFormulaireExt, -1, Jeux[i][0]),bg="cyan", width=13,activebackground="cyan").grid(row=j, column=14)
             else:
-                Button(fcatalogue, text="DÃ©tail", command = partial(afficheFicheJeu,Jeux[i][0]) ,bg="blue", width=13,activebackground="blue").grid(row=j, column=9)
+                Button(fcatalogue, text="DÃƒÂ©tail", command = partial(afficheFicheJeu,Jeux[i][0]) ,bg="blue", width=13,activebackground="blue").grid(row=j, column=9)
                 
             if (Jeu.aDesExtensions(Jeux[i][0])):
                 Button(fcatalogue, text="Extensions", command = partial(lancerExtension, Jeux[i][0], modeAdmin),bg="red", width=13,activebackground="red").grid(row=j, column=10)
+            else:
+                Label(fcatalogue, bg="lightgrey", width = 14, height=1).grid(row=j, column=10)
             Button(fcatalogue, text="Emprunt", command = partial(lancerEmprunt, Jeux[i][0]),bg="green", width=13,activebackground="green").grid(row=j, column=11)
             Button(fcatalogue, text="Reserv", command = partial(lancerReserv, Jeux[i][0]),bg="red", width=13,activebackground="red").grid(row=j, column=12)
             if (modeAdmin):
@@ -475,7 +489,7 @@ def catalogue( modeAdmin=False, numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdheren
 
     
     fcatalogue = Tk()
-    fcatalogue.title("Les jeux de la ludothÃ¨que")
+    fcatalogue.title("Les jeux de la ludothÃƒÂ¨que")
     fcatalogue.grid_columnconfigure(0,weight=1)
     fcatalogue.grid_rowconfigure(20,weight=21)
 
@@ -497,7 +511,7 @@ def catalogue( modeAdmin=False, numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdheren
 
     p.add(Label(p, text="Bonjour "+Adherent.getPseudo(numAdherent), bg="white", anchor=CENTER, width=10))
     if (modeAdmin):
-        p.add(Button(p, text="Ajouter un jeu", bg="cyan", activebackground="cyan", borderwidth=10, width=10, command= formulaireJeu))#partial(formulaireJeu,numAdh)))
+        p.add(Button(p, text="Ajouter un jeu", bg="cyan", activebackground="cyan", borderwidth=10, width=10, command= partial(lanceFormulaireJeu,-1)))
     p.add(Button(p, text="Retour au menu principal", bg="orange", activebackground="orange", borderwidth=10, width=10, command= retourMenu ))
     p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fcatalogue.destroy ))
 
@@ -506,10 +520,10 @@ def catalogue( modeAdmin=False, numAdherent=0, Jeux=Jeu.getAllJeu()): #idAdheren
 
 
     Label(fcatalogue, text="Nom", bg="green", width = 23).grid(row=2, column=1)
-    Label(fcatalogue, text="AnnÃ©e", bg="green", width = 8).grid(row=2, column=2)
+    Label(fcatalogue, text="AnnÃƒÂ©e", bg="green", width = 8).grid(row=2, column=2)
     Label(fcatalogue, text="Age Min.", bg="green", width = 8).grid(row=2, column=3)
     Label(fcatalogue, text="Nb Joueur", bg="green", width = 8).grid(row=2, column=4)
-    Label(fcatalogue, text="DisponibilitÃ©", bg="green", width = 13).grid(row=2, column=5)
+    Label(fcatalogue, text="DisponibilitÃƒÂ©", bg="green", width = 13).grid(row=2, column=5)
     Label(fcatalogue, text="Auteur", bg="green", width = 13).grid(row=2, column=6)
     Label(fcatalogue, text="Illustrateur", bg="green", width = 15).grid(row=2, column=7)
     Label(fcatalogue, text="Editeur", bg="green", width = 13).grid(row=2, column=8)
@@ -569,7 +583,7 @@ def afficheExtensions(idJeu, modeAdmin=False):
             Label(fextension, text=str(Jeu.getNomJeu(Extension.getIdJeu(i[0]))), bg="white", width=25).grid(row=k, column=1)
             Button(fextension, text="Emprunt", command = partial(lancerEmprunt, i[0]),bg="green", width=13,activebackground="green").grid(row=k, column=4)
             Button(fextension, text="Reserv", command = partial(lancerReserv, i[0]),bg="red", width=13,activebackground="red").grid(row=k, column=5)
-            Label(fextension, text="QuantitÃ© disponible", bg="red", width=30).grid(row=2, column=3)
+            Label(fextension, text="QuantitÃƒÂ© disponible", bg="red", width=30).grid(row=2, column=3)
             Label(fextension, text=Extension.getNbreTotalExtension(i[0]), bg="white", width=25).grid(row=k,column=3)
             if (modeAdmin):
                 Button(fextension, text="Modifier", command = partial(formulaireExt, i[0]), bg="yellow", width=13, activebackground="yellow").grid(row=k, column=6)  
