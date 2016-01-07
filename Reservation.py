@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import datetime
 import sqlite3
 import Jeu
