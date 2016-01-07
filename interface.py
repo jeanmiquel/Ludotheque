@@ -1101,3 +1101,76 @@ def catalogueEmprunt(numAdherent=0, Emprunt=Emprunt.getAllEmprunts(), modeAdmin=
     
         
     fcatalogue.mainloop()
+    
+    ####AFFICHAGE DES RESERVATION
+
+def catalogueReservation(numAdherent=0, Reservations=Reservation.getAllReservations()): #idAdherent
+    def maj():
+        # on arrive ici toutes les 1000 ms
+        t=datetime.datetime.today()
+        heure.set(t.strftime('%m/%d/%Y  %H:%M:%S'))
+        fcatalogue.after(1000,maj)
+
+    def retourMenu():
+        fcatalogue.destroy()
+        return menu(numAdherent)
+
+    def afficheReservations(n, Reservations, k=0):
+        n[0]=n[0]+k
+        r = n[2]-n[1]
+        if (r>20): r=20
+        if (n[0]<n[1]):
+            n[0]=n[1]
+        if (n[0]+r>n[2]):
+            n[0]=n[2]-r
+        j=3
+        
+        for i in range(n[0],n[0]+r):
+            Label(fcatalogue, text=str(Adherent.getNom(Reservations[i][1])), bg="orange", width = 20).grid(row=j, column=1)
+            Label(fcatalogue, text=str(Jeu.getNomJeu(Reservations[i][2])), bg="orange", width = 25).grid(row=j, column=2)
+            Label(fcatalogue, text=str(Extension.getNomExtension(Reservations[i][3])), bg="orange", width = 20).grid(row=j, column=3)
+            Label(fcatalogue, text=str(Reservations[i][4]), bg="orange", width = 25).grid(row=j, column=4)
+            Label(fcatalogue, text=str(Reservations[i][5]), bg="orange", width = 25).grid(row=j, column=5)
+            Label(fcatalogue, text=str(Reservation.getDateFinEmprunt(Reservations[i][0])), bg="orange", width = 20).grid(row=j, column=6)
+            if (Reservation.enAttente(Reservations[i][0])):
+                Label(fcatalogue, text=str("En Retard"), bg="red", width = 20).grid(row=j, column=7)
+            else:
+                Label(fcatalogue, text=str("En Attente"), bg="cyan", width =20).grid(row=j, column=7)
+            Button(fcatalogue, text="Modifier", command = rien,bg="blue", width=13,activebackground="blue").grid(row=j, column=8)
+            Button(fcatalogue, text="Supprimer", command = rien,bg="yellow", width=13,activebackground="red").grid(row=j, column=9)
+            j=j+1
+
+    
+    fcatalogue = Tk()
+    fcatalogue.title("Listes des réservations")
+    fcatalogue.grid_columnconfigure(0,weight=1)
+    fcatalogue.grid_rowconfigure(20,weight=21)
+    
+    p = PanedWindow(fcatalogue, orient = HORIZONTAL, height=100, width=1000)
+    p.grid(row=1, column=1, columnspan=11)
+     
+    heure = StringVar()
+    p.add(Label(p, textvariable=heure, bg="red", anchor=CENTER,width=30))
+    maj()
+    
+    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(numAdherent), bg="white", anchor=CENTER, width=10))
+    p.add(Button(p, text="Ajouter une réservation", bg="cyan", activebackground="cyan", borderwidth=10, width=10, command= rien))#partial(formulaireReservation,numAdh)))
+    p.add(Button(p, text="Retour au menu principal", bg="orange", activebackground="orange", borderwidth=10, width=10, command= retourMenu ))
+    p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fcatalogue.destroy ))
+
+    Label(fcatalogue, text="AdhÃƒÂ©rent", bg="green", width = 20).grid(row=2, column=1)
+    Label(fcatalogue, text="Jeu", bg="green", width = 25).grid(row=2, column=2)
+    Label(fcatalogue, text="Extension", bg="green", width = 20).grid(row=2, column=3)
+    Label(fcatalogue, text="Date de la Réservation", bg="green", width = 25).grid(row=2, column=4)
+    Label(fcatalogue, text="Durée prévu de l'emprunt", bg="green", width = 25).grid(row=2, column=5)
+    Label(fcatalogue, text="Date de fin d'emprunt", bg="green", width = 20).grid(row=2, column=6)
+    Label(fcatalogue, text="Réservation en attente", bg="blue", width = 20).grid(row=2, column=7)
+    Label(fcatalogue, text="Que faire ?", bg="green", width = 24).grid(row=2, column=8, columnspan=2)
+
+    numReservation=[0,0,len(Reservations)]
+    flecheH = Button(fcatalogue, text="^", command = partial(afficheReservations, numReservation, Reservations, -20), bg="blue", width=5,activebackground="blue").grid(row=3, column=11)
+    flecheB = Button(fcatalogue, text="v", command = partial(afficheReservations, numReservation, Reservations, 20), bg="blue", width=5,activebackground="blue").grid(row=22, column=11)
+    afficheReservations(numReservation, Reservations)
+    
+        
+    fcatalogue.mainloop()
