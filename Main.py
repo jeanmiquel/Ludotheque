@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import Jeu
 import Adherent
 import Emprunt
