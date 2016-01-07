@@ -69,7 +69,7 @@ class Emprunt :
         
         @staticmethod  
         def getDateFinEmprunt(idEmprunt):
-                return datetime.date(int(Emprunt.getDateDebutEmprunt(1)[0:4]),int(Emprunt.getDateDebutEmprunt(1)[5:7]),int(Emprunt.getDateDebutEmprunt(1)[8:10])) + timedelta(Emprunt.getDureePrevue(1))
+                return datetime.date(int(Emprunt.getDateDebutEmprunt(idEmprunt)[0:4]),int(Emprunt.getDateDebutEmprunt(idEmprunt)[5:7]),int(Emprunt.getDateDebutEmprunt(idEmprunt)[8:10])) + timedelta(Emprunt.getDureePrevue(idEmprunt))
  
         
         @staticmethod 
