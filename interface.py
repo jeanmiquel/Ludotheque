@@ -588,7 +588,7 @@ def afficheExtensions(idJeu, modeAdmin=False):
 
 #AFFICHAGE JEU COTE UTILISATEUR
 
-def ficheJeu(numAdherent, numJeu): #idAdherent + idJeu
+def ficheJeu(numAdherent, numJeu, modeAdmin=False): #idAdherent + idJeu
     
     def retourCatalogue():
         fficheJeu.destroy()
@@ -605,6 +605,18 @@ def ficheJeu(numAdherent, numJeu): #idAdherent + idJeu
     def lancerExtension(i):
         fficheJeu.destroy()
         return afficheExtensions(i)
+
+    def lancerExtension(i, mode):
+        fficheJeu.destroy()
+        return afficheExtensions(i, mode)
+
+    def lanceFormulaireExt(j, i):
+        fficheJeu.destroy()
+        return formulaireExt(j, i)
+
+    def lanceFormulaireJeu(i):
+        fficheJeu.destroy()
+        return formulaireJeu(i)
     
     fficheJeu = Tk()
     fficheJeu.title(str(Jeu.getNomJeu(numJeu)))
@@ -621,7 +633,7 @@ def ficheJeu(numAdherent, numJeu): #idAdherent + idJeu
    
     Label(fficheJeu, text=str(Jeu.getNomJeu(numJeu)), bg="orange", width = 50, height=5, anchor = CENTER).grid(row=2, column=1, columnspan=3)
 
-    Label(fficheJeu, text="AnnÃ©e de parution : ", bg="green", width = 15).grid(row=3, column=1)
+    Label(fficheJeu, text="AnnÃƒÂ©e de parution : ", bg="green", width = 15).grid(row=3, column=1)
     Label(fficheJeu, text=str(Jeu.getAnneeJeu(numJeu)), bg="orange", width = 15).grid(row=3, column=2)
 
     Label(fficheJeu, text="Age Mininimum : ", bg="green", width = 15).grid(row=4, column=1)
@@ -638,7 +650,7 @@ def ficheJeu(numAdherent, numJeu): #idAdherent + idJeu
     Label(fficheJeu, text="Nombre de Joueurs : ", bg="green", width = 15).grid(row=5, column=1)
     Label(fficheJeu, text=str(Jeu.getNbJoueurJeu(numJeu)), bg="orange", width = 15).grid(row=5, column=2)
 
-    Label(fficheJeu, text="QuantitÃ© en stock : ", bg="green", width = 15).grid(row=6, column=1)
+    Label(fficheJeu, text="QuantitÃƒÂ© en stock : ", bg="green", width = 15).grid(row=6, column=1)
     Label(fficheJeu, text=str(Jeu.getQuantiteJeu(numJeu)), bg="orange", width = 15).grid(row=6, column=2)
     
     Label(fficheJeu, text="Auteur : ", bg="green", width = 15).grid(row=7, column=1)
@@ -653,10 +665,21 @@ def ficheJeu(numAdherent, numJeu): #idAdherent + idJeu
     Label(fficheJeu, text="Synopsis : ", bg="green", width = 15).grid(row=10, column=1)
     Label(fficheJeu, text=str(Jeu.getSynopsisJeu(numJeu)), bg="orange", width = 15).grid(row=10, column=2)
 
-    Label(fficheJeu, text="Action", bg="green", width = 15).grid(row=7, column=3)
-    Button(fficheJeu, text="Voir ses extensions", command = partial(lancerExtension,numJeu),bg="green", width=15,activebackground="green").grid(row=8, column=3)
-    Button(fficheJeu, text="Emprunt", command = partial(lancerEmprunt, numJeu),bg="green", width=15,activebackground="green").grid(row=9, column=3)
-    Button(fficheJeu, text="Reserv", command = partial(lancerReserv, numJeu),bg="red", width=15,activebackground="red").grid(row=10, column=3)
+    r = 6
+    if (modeAdmin):
+        Button(fficheJeu, text="Modifier", command = partial(lanceFormulaireJeu, numJeu),bg="blue", width=13,activebackground="blue").grid(row=r, column=3) #partial(formulaireJeu,Jeux[i][0])
+        Button(fficheJeu, text="CrÃƒÂ©er extension", command = partial(lanceFormulaireExt, -1, numJeu),bg="cyan", width=13,activebackground="cyan").grid(row=r+1, column=3)
+        r=r+2
+
+    if (Jeu.aDesExtensions(numJeu)):
+        Button(fficheJeu, text="Extensions", command = partial(lancerExtension, numJeu, modeAdmin),bg="red", width=13,activebackground="red").grid(row=r, column=3)
+        r=r+1
+    
+    Button(fficheJeu, text="Emprunt", command = partial(lancerEmprunt, numJeu),bg="green", width=13,activebackground="green").grid(row=r, column=3)
+    Button(fficheJeu, text="Reserv", command = partial(lancerReserv, numJeu),bg="red", width=13,activebackground="red").grid(row=r+1, column=3)
+    r=r+2
+    if (modeAdmin):
+        Button(fficheJeu, text="Supprimer", command = rien,bg="yellow", width=13,activebackground="red").grid(row=r, column=3)
 
     fficheJeu.mainloop()
 
