@@ -82,7 +82,7 @@ class Reservation:
     BDD.cur.execute("""INSERT INTO Reservation(
                  idReservation, idJeu, idAdherent, idExtension, dateReservation, dureeEmpruntPrevue)
                 VALUES(?, ?, ?, ?, ?, ?)""",
-                (idReservation, idJeu, idAdherent, None, dateReservation, dureeEmpruntPrevue)) 
+                (idReservation, idJeu, idAdherent, 0, dateReservation, dureeEmpruntPrevue)) 
     BDD.conn.commit()
     
   @staticmethod
@@ -111,7 +111,7 @@ class Reservation:
     BDD.cur.execute("""INSERT INTO Reservation(
                  idReservation, idJeu, idAdherent, idExtension, dateReservation, dureeEmpruntPrevue)
                 VALUES(?, ?, ?, ?, ?, ?)""",
-                (idReservation, None, idAdherent, idExtension, dateReservation, dureeEmpruntPrevue)) 
+                (idReservation, 0, idAdherent, idExtension, dateReservation, dureeEmpruntPrevue)) 
     BDD.conn.commit()
   
   @staticmethod
@@ -152,6 +152,9 @@ class Reservation:
   def enAttente(idReservation):
     return (datetime.date.today() > Jeu.getDateReserv(idReservation))
     
+  @staticmethod
+  def getDateFinEmprunt(idReservation):
+    return datetime.date(int(Reservation.getDateReserv(idReservation)[0:4]),int(Reservation.getDateReserv(idReservation)[5:7]),int(Reservation.getDateReserv(idReservation)[8:10])) + timedelta(Reservation.getDureeEmpruntPrevue(idReservation))
   
    
   
