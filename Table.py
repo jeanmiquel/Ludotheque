@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import BDD
 
 ##BDD.cur.execute("""DROP TABLE Reservation""")
