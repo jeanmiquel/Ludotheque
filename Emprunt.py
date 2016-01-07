@@ -3,6 +3,7 @@ import datetime
 import Jeu
 import Adherent
 import Extension
+from datetime import timedelta
 
 import BDD
 
@@ -68,8 +69,8 @@ class Emprunt :
         
         @staticmethod  
         def getDateFinEmprunt(idEmprunt):
-                dateFin = Emprunt.getDateDebutEmprunt(idEmprunt).day + Emprunt.getDureePrevue(idEmprunt)
-                return dateFin
+                return datetime.date(int(Emprunt.getDateDebutEmprunt(1)[0:4]),int(Emprunt.getDateDebutEmprunt(1)[5:7]),int(Emprunt.getDateDebutEmprunt(1)[8:10])) + timedelta(Emprunt.getDureePrevue(1))
+ 
         
         @staticmethod 
         def getIdJeuEmprunt(idEmprunt):
