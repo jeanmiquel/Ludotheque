@@ -3,6 +3,7 @@ import sqlite3
 import Jeu
 import Adherent
 import Emprunt
+from datetime import timedelta
 
 import BDD
 
