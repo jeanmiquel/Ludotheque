@@ -1192,3 +1192,108 @@ def catalogueReservation(Reservations=Reservation.getAllReservations()): #idAdhe
     
         
     fcatalogue.mainloop()
+
+####AFFICHAGE DES ADHERENTS
+
+def catalogueAdherents(numAdherent=0, Adherents=Adherent.getAllAdherent()): #idAdherent
+    def maj():
+        # on arrive ici toutes les 1000 ms
+        t=datetime.datetime.today()
+        heure.set(t.strftime('%m/%d/%Y  %H:%M:%S'))
+        fcatalogue.after(1000,maj)
+
+    def retourMenu():
+        fcatalogue.destroy()
+        return menu(numAdherent)
+
+    def afficheAdherents(n, Adherents, k=0):
+        n[0]=n[0]+k
+        r = n[2]-n[1]
+        if (r>20): r=20
+        if (n[0]<n[1]):
+            n[0]=n[1]
+        if (n[0]+r>n[2]):
+            n[0]=n[2]-r
+        j=3
+        
+        for i in range(n[0],n[0]+r):
+            Label(fcatalogue, text=str(Adherents[i][1]), bg="orange", width = 10).grid(row=j, column=1)
+            Label(fcatalogue, text=str(Adherents[i][2]), bg="orange", width = 10).grid(row=j, column=2)
+            Label(fcatalogue, text=str(Adherents[i][3]), bg="orange", width =10).grid(row=j, column=3)
+            Label(fcatalogue, text=str(Adherents[i][4]), bg="orange", width = 12).grid(row=j, column=4)
+            Label(fcatalogue, text=str(Adherents[i][5]), bg="orange", width = 8).grid(row=j, column=5)
+            Label(fcatalogue, text=str(Adherents[i][6]), bg="orange", width = 10).grid(row=j, column=6)
+            Label(fcatalogue, text=str(Adherents[i][7]), bg="orange", width = 10).grid(row=j, column=7)
+            Label(fcatalogue, text=str(Adherents[i][8]), bg="orange", width = 10).grid(row=j, column=8)
+            Label(fcatalogue, text=str(Adherents[i][10]), bg="orange", width = 10).grid(row=j, column=10)
+            if (Adherents[i][11]):
+                Label(fcatalogue, text="Oui", bg="orange", width = 7).grid(row=j, column=11)
+            else:
+                Label(fcatalogue, text="Non", bg="orange", width = 7).grid(row=j, column=11)
+            Label(fcatalogue, text=str(Adherents[i][12]), bg="orange", width = 10).grid(row=j, column=12)
+            Label(fcatalogue, text=str(Adherents[i][13]), bg="orange", width = 5).grid(row=j, column=14)
+            Label(fcatalogue, text=str(Adherents[i][14]), bg="orange", width = 5).grid(row=j, column=15)
+            Label(fcatalogue, text=str(Adherents[i][15]), bg="orange", width = 5).grid(row=j, column=16)
+            if (Adherents[i][16]<> 0):
+                Label(fcatalogue, text=str(Jeu.getNomJeu(Emprunt.getIdJeuEmprunt(Adherents[i][16]))), bg="cyan", width = 10).grid(row=j, column=17)
+            else:
+                Label(fcatalogue, text=str("AUCUN"), bg="orange", width = 10).grid(row=j, column=17)
+            if (Adherents[i][17]<>0):
+                Label(fcatalogue, text=str(Jeu.getNomJeu(Reservation.getIdJeuReserv(Adherents[i][17]))), bg="cyan", width = 10).grid(row=j, column=18)
+            else:
+                Label(fcatalogue, text=str("AUCUN"), bg="orange", width = 10).grid(row=j, column=18)
+            
+            if (Adherent.estAJour(Adherents[i][0])):
+                Label(fcatalogue, text=str("DEPASSE"), bg="red", width = 10).grid(row=j, column=13)
+            else:
+                Label(fcatalogue, text=str("A JOUR"), bg="cyan", width =10).grid(row=j, column=13)
+            Button(fcatalogue, text="Modifier", command = rien,bg="blue", width=13,activebackground="blue").grid(row=j, column=19)
+            Button(fcatalogue, text="Supprimer", command = rien,bg="yellow", width=13,activebackground="red").grid(row=j, column=20)
+            Button(fcatalogue, text="Réinitialiser", command = rien,bg="yellow", width=10,activebackground="red").grid(row=j, column=9)
+            j=j+1
+
+    
+    fcatalogue = Tk()
+    fcatalogue.title("Listes des adherents")
+    fcatalogue.grid_columnconfigure(0,weight=1)
+    fcatalogue.grid_rowconfigure(20,weight=21)
+    
+    p = PanedWindow(fcatalogue, orient = HORIZONTAL, height=100, width=1600)
+    p.grid(row=1, column=1, columnspan=21)
+     
+    heure = StringVar()
+    p.add(Label(p, textvariable=heure, bg="red", anchor=CENTER,width=30))
+    maj()
+    
+    p.add(Label(p, text="Bonjour "+Adherent.getPseudo(numAdherent), bg="white", anchor=CENTER, width=10))
+    p.add(Button(p, text="Ajouter un adherent", bg="cyan", activebackground="cyan", borderwidth=10, width=10, command= rien))#partial(formulaireAdhésion,numAdh)))
+    p.add(Button(p, text="Retour au menu principal", bg="orange", activebackground="orange", borderwidth=10, width=10, command= retourMenu ))
+    p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fcatalogue.destroy ))
+
+    Label(fcatalogue, text="Nom", bg="green", width = 10).grid(row=2, column=1)
+    Label(fcatalogue, text="Prénom", bg="green", width = 10).grid(row=2, column=2)
+    Label(fcatalogue, text="Anniversaire", bg="green", width = 10).grid(row=2, column=3)
+    Label(fcatalogue, text="Adresse", bg="green", width = 12).grid(row=2, column=4)
+    Label(fcatalogue, text="Code Postal", bg="green", width = 8).grid(row=2, column=5)
+    Label(fcatalogue, text="Ville", bg="green", width = 10).grid(row=2, column=6)
+    Label(fcatalogue, text="Telephone", bg="green", width = 10).grid(row=2, column=7)
+    Label(fcatalogue, text="Pseudo", bg="green", width = 10).grid(row=2, column=8)
+    Label(fcatalogue, text="Mot de Passe", bg="green", width = 10).grid(row=2, column=9)
+    Label(fcatalogue, text="Email", bg="green", width = 10).grid(row=2, column=10)
+    Label(fcatalogue, text="Admin", bg="green", width = 7).grid(row=2, column=11)
+    Label(fcatalogue, text="Paiement", bg="green", width = 10).grid(row=2, column=12)
+    Label(fcatalogue, text="A jour ?", bg="green", width = 10).grid(row=2, column=13)
+    Label(fcatalogue, text="NR", bg="green", width = 5).grid(row=2, column=14)
+    Label(fcatalogue, text="JR", bg="green", width = 5).grid(row=2, column=15)
+    Label(fcatalogue, text="RA", bg="green", width = 5).grid(row=2, column=16)
+    Label(fcatalogue, text="Jeu Emprunté", bg="green", width = 10).grid(row=2, column=17)
+    Label(fcatalogue, text="Jeu Réservé", bg="green", width = 10).grid(row=2, column=18)
+    Label(fcatalogue, text="Que faire ?", bg="green", width = 24).grid(row=2, column=19, columnspan=2)
+
+    numAdherents=[0,0,len(Adherents)]
+    flecheH = Button(fcatalogue, text="^", command = partial(afficheAdherents, numAdherents, Adherents, -20), bg="blue", width=5,activebackground="blue").grid(row=3, column=21)
+    flecheB = Button(fcatalogue, text="v", command = partial(afficheAdherents, numAdherents, Adherents, 20), bg="blue", width=5,activebackground="blue").grid(row=22, column=21)
+    afficheAdherents(numAdherents, Adherents)
+    
+        
+    fcatalogue.mainloop()
