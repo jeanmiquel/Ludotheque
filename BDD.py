@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import sqlite3
 
 conn = sqlite3.connect("ludotheque.db") # A modifier en fonction du chemin de votre bd
