@@ -151,7 +151,8 @@ class Reservation:
   
   @staticmethod 
   def enAttente(idReservation):
-    return (datetime.date.today() > Jeu.getDateReserv(idReservation))
+    return (datetime.date.today() > datetime.date(int(Reservation.getDateReserv(idReservation)[0:4]),int(Reservation.getDateReserv(idReservation)[5:7]),int(Reservation.getDateReserv(idReservation)[8:10])))
+    
     
   @staticmethod
   def getDateFinEmprunt(idReservation):
