@@ -7,6 +7,7 @@ from Jeu import Jeu
 from Adherent import Adherent
 from Extension import Extension
 from Emprunt import Emprunt
+from Reservation import Reservation
 
 
 
