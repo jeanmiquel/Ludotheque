@@ -231,7 +231,7 @@ class Adherent :
     @staticmethod
     def estAJour(idAdherent):
       annee = datetime.timedelta(days=365)
-      dateFinAbonnement = Adherent.getDatePaiement(idAdherent) + annee
+      dateFinAbonnement = datetime.date(int(Adherent.getDatePaiement(idAdherent)[0:4]),int(Adherent.getDatePaiement(idAdherent)[5:7]),int(Adherent.getDatePaiement(idAdherent)[8:10])) + annee
       return(datetime.date.today() < dateFinAbonnement)
 
     @staticmethod
