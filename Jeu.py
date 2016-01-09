@@ -234,6 +234,9 @@ class Jeu :
         
         @staticmethod
         def supprimerJeu(idJeu):
+                BDD.cur.execute("""DELETE FROM Reservation WHERE idJeu =?""",(idJeu,))
+                BDD.cur.execute("""DELETE FROM Emprunt WHERE idJeu =?""",(idJeu,))
+                BDD.cur.execute("""DELETE FROM Extension WHERE idJeu =?""",(idJeu,))
                 BDD.cur.execute("""DELETE FROM Jeu WHERE idJeu =?""",(idJeu,))
                 BDD.conn.commit()
 
