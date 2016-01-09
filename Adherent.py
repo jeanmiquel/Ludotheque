@@ -6,7 +6,7 @@ import BDD
 
 class Adherent :
 
-    #setters 
+     #setters 
     @staticmethod
     def setNom(idAdherent, nomAdherent) : 
       BDD.cur.execute("""UPDATE Adherent SET nomAdherent= ? WHERE idAdherent = ?""",
@@ -284,10 +284,12 @@ class Adherent :
 
     @staticmethod
     def supprimerAdherent(idAdherent):
-        BDD.cursor.execute("""DELETE FROM Adherent WHERE idAdherent= ?""",(idAdherent,))
+        BDD.cur.execute("""DELETE FROM Reservation WHERE idAdherent= ?""",(idAdherent,))
+        BDD.cur.execute("""DELETE FROM Emprunt WHERE idAdherent= ?""",(idAdherent,))
+        BDD.cur.execute("""DELETE FROM Adherent WHERE idAdherent= ?""",(idAdherent,))
         BDD.conn.commit()
 
-   @staticmethod
+    @staticmethod
     def ajoutAdherent(nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, adresseMailAdherent,estAdmin):
         BDD.cur.execute("""SELECT MAX(idAdherent) FROM Adherent""")
         f = BDD.cur.fetchone()[0]
@@ -299,8 +301,9 @@ class Adherent :
             villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent,
             nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation)
             VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-          (idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, prenomAdherent+"."+nomAdherent, adresseMailAdherent, estAdmin, datetime.datetime.now(), 0,0, 0, 0,0))
+          (idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, prenomAdherent+"."+nomAdherent, adresseMailAdherent, estAdmin, datetime.date.today(), 0,0, 0, 0,0))
         BDD.conn.commit()
+
 
         #cur.execute("""INSERT INTO Adherent(idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent,
         #villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent, nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
