@@ -950,175 +950,235 @@ def reserver( numJeu,numAdh=0): #idJeu/extension + idAdherent + booléenJeu (Vra
 
 
 
+##Si modification=-1 : modification d'un adhérent par l'adhérent
+##    -Permet à l'adhérent de modifier ses infos
+##
+##Si modification= 0 : modification d'un adhérent par l'administrateur
+##    -Permet à l'admin de modifier les infos d'un adhérent
+##    -Le paramètre numAdh est égale à l'id de l'adhérent qui doit etre modifier
+##
+##Si modification= 1 : création d'un adhérent par l'administrateur
+##    -Permet à l'admin de créer un adhérent. L'idAdhérent en paramètre n'a pas d'importance
+##    -Le paramètre idAdmin est égale à l'id de l'administrateur qui modifie l'adhérent
+
+
 #MODIFICATION/CREATION D'UN ADHERENT
 
 
-def formulaireAdherent(numAdh=0): #numAdhérent + booléen pour savoir si mode Admin ou pas + booléen savoir si création ou modification
-    
+def formulaireAdherent(numAdh, modification=0):
     fAdh = Tk()
     fAdh.title("Profil de "+Adherent.getPrenom(numAdh))
 
-    def CallBackFormulaireAdh(num): #Fonction de confirmation DANS la fonction de fenetre.
-        if (askyesno("Confirmation", "Enregister ces informations ?")):
-            return fAdh.quit() #Ferme si "oui"
+    def retourMenu(): #Fonction de confirmation DANS la fonction de fenetre.
+        fAdh.destroy()
+        return menu()
+
+
+    def CallBackFormulaireAdh(): #Fonction de confirmation DANS la fonction de fenetre.
+        #recupere les infos 
+        infoAdh.append(entryNomAdh.get())
+        infoAdh.append(entryPrenomAdh.get())
+        infoAdh.append(entryPseudoAdh.get())
+        if(modification == -1):
+                infoAdh.append(entryMdpAdh.get())
         else:
-            fAdh.destroy()
-            return menu(num)
+            infoAdh.append(None)
+        j = int(entryDnjAdh.get())
+        m = int(entryDnmAdh.get())
+        a = int(entryDnaAdh.get())
+        d = datetime.datetime(a, m, j)
+        infoAdh.append(d)
+        infoAdh.append(entryAdrAdh.get())
+        infoAdh.append(entryVilleAdh.get())
+        infoAdh.append(entryCpAdh.get())
+        infoAdh.append(entryNumAdh.get())
+        infoAdh.append(entryMailAdh.get())
+        if(cocher.get()==1):
+            infoAdh.append(True)
+        else:
+            infoAdh.append(False)
+        
+        #ordre infoAdh : nom,prenom,pseudo,mdp,dateNaissance,adresse,ville,codepostale,numTel,@Mail,estAdmin
+        #on modifie un adherent
+        if(modification<>1):
+            if (askyesno("Confirmation", "Enregistrer vos modification")):
+                Adherent.setNom(numAdh,infoAdh[0])
+                Adherent.setPrenom(numAdh,infoAdh[1])
+                Adherent.setPseudo(numAdh,infoAdh[2])
+                if modification == -1:
+                    Adherent.setMotDePasse(numAdh,infoAdh[3])
+                Adherent.setNaissance(numAdh,infoAdh[4])
+                Adherent.setAdresse(numAdh,infoAdh[5])
+                Adherent.setVille(numAdh,infoAdh[6])
+                Adherent.setCodePostale(numAdh,infoAdh[7])
+                Adherent.setNumeroTelephone(numAdh,infoAdh[8])
+                Adherent.setMail(numAdh,infoAdh[9])
+                if modification == 0:
+                    Adherent.setAdministrateur(numAdh,infoAdh[10])
+                return fAdh.quit() #Ferme si "oui"
+            else:
+                fAdh.destroy()
+                return menu(num)
+        #on creer un adherent
+        else:    
+            if (askyesno("Confirmation", "Creer ce nouveau adherent ?")):
+                #ajoutAdherent(nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, adresseMailAdherent, estAdmin)
+                Adherent.ajoutAdherent(infoAdh[0],infoAdh[1],infoAdh[4],infoAdh[5],infoAdh[7],infoAdh[6],infoAdh[8],infoAdh[2],infoAdh[9],infoAdh[10])
+                return fAdh.quit() #Ferme si "oui"
+            else:
+                fAdh.destroy()
+                return menu(num)
 
-
+    #menu haut
     p = PanedWindow(fAdh, orient = HORIZONTAL, height=100, width=1000)
     p.grid(row=1, column=1, columnspan=4)
     
     p.add(Label(p, text="Bonjour "+Adherent.getPseudo(numAdh), bg="white", anchor=CENTER, width=20))
-    p.add(Button(p, text="Retour au menu", bg="orange", activebackground="orange", borderwidth=10, width=20, command= partial(CallBackFormulaireAdh, numAdh)))
+    p.add(Button(p, text="Retour au menu", bg="orange", activebackground="orange", borderwidth=10, width=20, command= partial(retourMenu)))
     p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = fAdh.destroy ))
     
     Label(fAdh, text="Profil", font=("Helvetica", 30), height=4).grid(row=2, column=1, columnspan=4)
+
     
+    #ordre : nom,prenom,pseudo,mdp,dateNaissance,adresse,ville,codepostale,numTel,@Mail,estAdmin
+    infoAdh = []
+    
+    #nom
     Label(fAdh, text="Nom : ").grid(row=3, column=1, columnspan=2)
-    nomAdh = StringVar()
-    nomAdh.set(Adherent.getNom(numAdh))
+    if(modification == 1):
+        nomAdh = ""
+    else:
+        nomAdh = StringVar()
+        nomAdh.set(Adherent.getNom(numAdh))
     entryNomAdh = Entry(fAdh,textvariable=nomAdh,width=40)
     entryNomAdh.grid(row=3, column=3, columnspan=2)
-
+    
+    #prenom
     Label(fAdh, text="Prénom : ").grid(row=4, column=1, columnspan=2)
-    prenomAdh = StringVar()
-    prenomAdh.set(Adherent.getPrenom(numAdh))
+    if(modification == 1):
+        prenomAdh = ""
+    else:
+        prenomAdh = StringVar()
+        prenomAdh.set(Adherent.getPrenom(numAdh))
     entryPrenomAdh = Entry(fAdh,textvariable=prenomAdh,width=40)
     entryPrenomAdh.grid(row=4, column=3, columnspan=2)
-
-
+    
+    #pseudo
     Label(fAdh, text="Pseudo : ").grid(row=5, column=1, columnspan=2)
-    pseudoAdh = StringVar()
-    pseudoAdh.set(Adherent.getPseudo(numAdh))
+    if(modification == 1):
+        pseudoAdh = ""
+    else:
+        pseudoAdh = StringVar()
+        pseudoAdh.set(Adherent.getPseudo(numAdh))
     entryPseudoAdh = Entry(fAdh,textvariable=pseudoAdh,width=40)
     entryPseudoAdh.grid(row=5, column=3, columnspan=2)
-
-    Label(fAdh, text="Mot de passe : ").grid(row=6, column=1, columnspan=2)
-    mdpAdh = StringVar()
-    mdpAdh.set(Adherent.getMotDePasse(numAdh))
-    entryMdpAdh = Entry(fAdh,textvariable=mdpAdh,width=40,show="*")
-    entryMdpAdh.grid(row=6, column=3, columnspan=2)
-
-      
-
+    
+    #mdp
+    if(modification <> 1):
+        Label(fAdh, text="Mot de passe : ").grid(row=6, column=1, columnspan=2)
+        if modification == 0:
+            Button(fAdh, text="Reinitialiser MDP", command= Adherent.reinitialiserMDPAdherent(numAdh)).grid(row=6, column=3, columnspan=2)
+        else:
+            mdpAdh = StringVar()
+            mdpAdh.set(Adherent.getMotDePasse(numAdh))
+            entryMdpAdh = Entry(fAdh,textvariable=mdpAdh,width=40,show="*")
+            entryMdpAdh.grid(row=6, column=3, columnspan=2)
+        
+    #date Naissance
     Label(fAdh, text="Date de naissance : ").grid(row=7, column=1)
-    
-    dnaAdh = StringVar()
-    dnaAdh.set(Adherent.getNaissance(numAdh)[0:4])
-    dnmAdh = StringVar()
-    dnmAdh.set(Adherent.getNaissance(numAdh)[5:7])
-    dnjAdh = StringVar()
-    dnjAdh.set(Adherent.getNaissance(numAdh)[8:10])
-    
+    if(modification == 1):
+        dnjAdh=""
+        dnmAdh=""
+        dnaAdh="1900"
+
+    else:
+        dnaAdh = StringVar()
+        dnaAdh.set(Adherent.getNaissance(numAdh)[0:4])
+        dnmAdh = StringVar()
+        dnmAdh.set(Adherent.getNaissance(numAdh)[5:7])
+        dnjAdh = StringVar()
+        dnjAdh.set(Adherent.getNaissance(numAdh)[8:10])
+        
     entryDnjAdh = Spinbox(fAdh, textvariable=dnjAdh, from_=1, to =31)
     entryDnjAdh.grid(row=7, column=2)
-
+    
     entryDnmAdh = Spinbox(fAdh, textvariable=dnmAdh, from_=1, to =12)
     entryDnmAdh.grid(row=7, column=3)
-
+    
     entryDnaAdh = Spinbox(fAdh, textvariable=dnaAdh, from_=1900, to=datetime.date.today().year)
-    entryDnaAdh.grid(row=7, column=4)
+    entryDnaAdh.grid(row=7, column=4) 
 
-
+    #adresse
     Label(fAdh, text="Adresse : ").grid(row=8,column=1, columnspan=2)
-    adrAdh = StringVar()
-    adrAdh.set(Adherent.getAdresse(numAdh))
+    if(modification == 1):
+        adrAdh = ""
+    else:
+        adrAdh = StringVar()
+        adrAdh.set(Adherent.getAdresse(numAdh))
     entryAdrAdh = Entry(fAdh,textvariable=adrAdh,width=40)
     entryAdrAdh.grid(row=8, column=3, columnspan=2)
 
-    Label(fAdh, text="Code postal : ").grid(row=9, column=1, columnspan=2)
-    cpAdh = StringVar()
-    cpAdh.set(Adherent.getCodePostal(numAdh))
-    entryCpAdh = Entry(fAdh,textvariable=cpAdh,width=40)
-    entryCpAdh.grid(row=9, column=3, columnspan=2)
-
+    #ville
     Label(fAdh, text="Ville : ").grid(row=10, column=1, columnspan=2)
-    villeAdh = StringVar()
-    villeAdh.set(Adherent.getVille(numAdh))
+    if(modification == 1):
+        villeAdh = ""
+    else:
+        villeAdh = StringVar()
+        villeAdh.set(Adherent.getVille(numAdh))
     entryVilleAdh = Entry(fAdh,textvariable=villeAdh,width=40)
     entryVilleAdh.grid(row=10, column=3, columnspan=2)
-
+    
+    #code postale
+    Label(fAdh, text="Code postal : ").grid(row=9, column=1, columnspan=2)
+    if(modification == 1):
+        cpAdh = ""
+    else:
+        cpAdh = StringVar()
+        cpAdh.set(Adherent.getCodePostal(numAdh))
+    entryCpAdh = Entry(fAdh,textvariable=cpAdh,width=40)
+    entryCpAdh.grid(row=9, column=3, columnspan=2)
+    
+    #num telephone
     Label(fAdh, text="Numéro : ").grid(row=11, column=1, columnspan=2)
-    numeroAdh = StringVar()
-    numeroAdh.set(Adherent.getNumTelephone(numAdh))
+    if(modification == 1):
+        numeroAdh = ""
+    else:
+        numeroAdh = StringVar()
+        numeroAdh.set(Adherent.getNumTelephone(numAdh))
     entryNumAdh = Entry(fAdh,textvariable=numeroAdh,width=40)
     entryNumAdh.grid(row=11, column=3, columnspan=2)
 
+    #adresse mail
     Label(fAdh, text="Adresse Mail : ").grid(row=12, column=1, columnspan=2)
-    mailAdh = StringVar()
-    mailAdh.set(Adherent.getMail(numAdh))
+    if(modification == 1):
+        mailAdh = ""
+    else:
+        mailAdh = StringVar()
+        mailAdh.set(Adherent.getMail(numAdh))
     entryMailAdh = Entry(fAdh,textvariable=mailAdh,width=40)
-    entryMailAdh.grid(row=12, column=3, columnspan=2)    
-
-   
-    #admAdh = Checkbutton(FJ, text="Est-il empruntable?", variable = Empbool)
+    entryMailAdh.grid(row=12, column=3, columnspan=2)
     
-    Button(fAdh, text="Enregistrer", command = partial(CallBackFormulaireAdh,numAdh)).grid(row=13, column=1, columnspan=4)
-   
+
+    #estAdmin
+    cocher = IntVar()    
+    Label(fAdh, text="Administrateur : ").grid(row=13, column=1, columnspan=2)
+    if modification == -1:
+       admAdh = Checkbutton(fAdh, text="", variable = cocher, state=DISABLED)
+    else:
+        admAdh = Checkbutton(fAdh, text="", variable = cocher)
+    admAdh.grid(row=13, column=3, columnspan=2)
+    if Adherent.getEstAdministrateur(numAdh)==True:
+        admAdh.select()
+    else:
+        admAdh.deselect()
+    
+       
+    
+    Button(fAdh, text="Enregistrer", command = partial(CallBackFormulaireAdh)).grid(row=14, column=1, columnspan=4)
+    
     #Lancement de la fenetre
     fAdh.mainloop()
-    #On recupere les donnÃ©es de chaque entrÃ©e.
-    #DonneesJeu = (NJI.get(), AnJI.get(), AgJI.get(),NbJI.get(), QJI.get(),AJI.get(),IJI.get(),EJI.get(), bool(Empbool.get()), SJI.get())
     #Enfin on detruit la fenetre
     fAdh.destroy()
-
-    #Mettre à jour les données
     
-    menu(1)
-
-
-
-def connexion2():
-    def verificationConnexion():
-        idAd =  Adherent.getId(pseudo.get())
-        if idAd == None:
-            print("Mauvais pseudo")
-        else:
-            if Adherent.compareMDP(idAd,mdp.get()) == False:
-                print("Mauvais MDP")
-            else:
-                print("Connexion reussi")
-
-    #creation de la fênetre principle
-    fenetre = Tk()
-    fenetre.title('Ludotheque')
-
-    framePrincip = Frame(fenetre)
-    framePrincip.pack(padx = 30, pady = 30)
-
-    labelTitre = Label(framePrincip, text = "Connexion")
-    labelTitre.pack(padx = 50, pady = 10)
-
-    #pseudo
-    framePseudo = Frame(framePrincip)
-    framePseudo.pack(pady = 20)
-
-    labPseudo = Label(framePseudo, text = "Pseudo")
-    labPseudo.pack(side = "left", padx = 5, pady = 5)
-
-    #Saisie du pseudo
-    pseudo = StringVar()
-    champPseudo = Entry(framePseudo, textvariable = pseudo, bg ='bisque', fg='maroon')
-    champPseudo.focus_set()
-    champPseudo.pack(side = "left", padx = 5, pady = 5)
-
-
-    #MDP
-    frameMDP = Frame(framePrincip)
-    frameMDP.pack(pady = 20)
-
-    labMdp = Label(frameMDP, text = "Mot de passe ")
-    labMdp.pack(side = "left", padx = 5, pady = 5)
-
-    #Saisie du MDP
-    mdp = StringVar()
-    champMdp = Entry(frameMDP, textvariable = mdp, show='*', bg ='bisque', fg='maroon')
-    champMdp.pack(side = "left", padx = 5, pady = 5)
-
-
-    #Bouton Valider
-    Bouton = Button(framePrincip, text ='Valider', command = verificationConnexion)
-    Bouton.pack(side = "right", padx = 5, pady = 5)
-
-    fenetre.mainloop()
+    menu()
