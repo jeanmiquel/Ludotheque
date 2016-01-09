@@ -301,7 +301,7 @@ class Adherent :
         BDD.conn.commit()
 
     @staticmethod
-    def ajoutAdherent(nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, adresseMailAdherent):
+    def ajoutAdherent(nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, adresseMailAdherent,estAdmin):
         BDD.cur.execute("""SELECT MAX(idAdherent) FROM Adherent""")
         f = BDD.cur.fetchone()[0]
         if (f==None):
@@ -312,7 +312,7 @@ class Adherent :
             villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent,
             nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation)
             VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-          (idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, prenomAdherent+"."+nomAdherent, adresseMailAdherent, False, datetime.datetime.now(), 0,0, 0, 0,0))
+          (idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, prenomAdherent+"."+nomAdherent, adresseMailAdherent, estAdmin, datetime.datetime.now(), 0,0, 0, 0,0))
         BDD.conn.commit()
 
         #cur.execute("""INSERT INTO Adherent(idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent,
