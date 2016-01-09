@@ -1,9 +1,9 @@
 #-*- coding: utf-8 -*-
 import sqlite3
 import datetime
-import Jeu
-import Adherent
-import Extension
+from Jeu import Jeu
+from Adherent import Adherent
+from Extension import Extension
 from datetime import timedelta
 
 import BDD
@@ -70,7 +70,8 @@ class Emprunt :
         
         @staticmethod  
         def getDateFinEmprunt(idEmprunt):
-                return datetime.date(int(Emprunt.getDateDebutEmprunt(idEmprunt)[0:4]),int(Emprunt.getDateDebutEmprunt(idEmprunt)[5:7]),int(Emprunt.getDateDebutEmprunt(idEmprunt)[8:10])) + timedelta(Emprunt.getDureePrevue(idEmprunt))
+                return datetime.date(int(Emprunt.getDateDebutEmprunt(idEmprunt)[0:4]),int(Emprunt.getDateDebutEmprunt(idEmprunt)[5:7]),
+                                     int(Emprunt.getDateDebutEmprunt(idEmprunt)[8:10])) + timedelta(Emprunt.getDureePrevue(idEmprunt))
  
         
         @staticmethod 
@@ -141,7 +142,7 @@ class Emprunt :
                 BDD.cur.execute("""INSERT INTO Emprunt(
                           idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dateRenduEmprunt, dureePrevueEmprunt)
                           VALUES(?, ?, ?, ?, ?, ?, ?)""",
-                          (idEmprunt, idJeuExt, idAdherent, idExtension, dateDebutEmprunt, None, dureePrevueEmprunt)) 
+                          (idEmprunt, idJeuExt, idAdherent, idExtension, dateDebutEmprunt, 0, dureePrevueEmprunt)) 
                 BDD.conn.commit() 
         
         @staticmethod
@@ -155,23 +156,28 @@ class Emprunt :
                 BDD.cur.execute("""INSERT INTO Emprunt(
                           idEmprunt, idJeu, idAdherent, idExtension, dateDebutEmprunt, dateRenduEmprunt, dureePrevueEmprunt)
                           VALUES(?, ?, ?, ?, ?, ?, ?)""",
-                          (idEmprunt, None, idAdherent, idExtension, dateDebutEmprunt, None,dureePrevueEmprunt))
+                          (idEmprunt, 0, idAdherent, idExtension, dateDebutEmprunt, 0,dureePrevueEmprunt))
                           
                 BDD.conn.commit() 
         
         @staticmethod
         def getJourRetard(idEmprunt):
-                jourRetard = (Emprunt.getDateRenduEmprunt(idEmprunt) - Emprunt.getDateFinEmprunt(idEmprunt)).days
+                jourRetard = (datetime.date(int(Emprunt.getDateRenduEmprunt(idEmprunt)[0:4]),
+                                        int(Emprunt.getDateRenduEmprunt(idEmprunt)[5:7]),
+                                        int(Emprunt.getDateRenduEmprunt(idEmprunt)[8:10]))
+                              + timedelta(Emprunt.getDureePrevue(idEmprunt))
+                              - Emprunt.getDateFinEmprunt(idEmprunt)).days
                 return jourRetard
         
         @staticmethod
         def estEnRetard(idEmprunt):
-                return(Emprunt.getDateRenduEmprunt(idEmprunt) > Emprunt.getDateFinEmprunt(idEmprunt))
+                return(datetime.date(int(Emprunt.getDateRenduEmprunt(idEmprunt)[0:4]),int(Emprunt.getDateRenduEmprunt(idEmprunt)[5:7]),int(Emprunt.getDateRenduEmprunt(idEmprunt)[8:10])) + timedelta(Emprunt.getDureePrevue(idEmprunt))
+  > Emprunt.getDateFinEmprunt(idEmprunt))
                         
         @staticmethod
         def rendre(idEmprunt, date):
                 Emprunt.setDateRenduEmprunt(idEmprunt, date)
-                if (estEnRetard(idEmprunt)):
-                        Adherent.ajoutRetard(Emprunt.getIdAdherentEmprunt(idEmprunt))
+                if (Emprunt.estEnRetard(idEmprunt)):
+                        Adherent.ajoutRetard(Emprunt.getIdAdherentEmprunt(idEmprunt)) 
                         Adherent.ajoutJourRetard(Emprunt.getIdAdherentEmprunt(idEmprunt),Emprunt.getJourRetard(idEmprunt))
 
