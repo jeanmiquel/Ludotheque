@@ -242,7 +242,7 @@ class Adherent :
     @staticmethod
     def getAdherentByName(nomAdherent):
       nomAdherents = "%" + nomAdherent + "%"
-      BDD.cur.execute("""SELECT * FROM Adherent WHERE nomAdherent LIKE nomAdherents""")
+      BDD.cur.execute("""SELECT * FROM Adherent WHERE nomAdherent LIKE ?""",(nomAdherents,))
       return BDD.cur.fetchall()
       
     @staticmethod
