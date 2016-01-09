@@ -1,7 +1,5 @@
 #-*- coding: utf-8 -*-
-import Jeu
-import Adherent
-import Emprunt
-import Reservation
-import Extension
-import connexionbase
+import interface
+
+
+interface.connexion()
