@@ -101,5 +101,7 @@ class Extension:
                     
     @staticmethod
     def supprimerExtension(idExtension):
+        BDD.cur.execute("""DELETE FROM Emprunt WHERE idExtension = ?""",(idExtension,))
+        BDD.cur.execute("""DELETE FROM Reservation WHERE idExtension = ?""",(idExtension,))
         BDD.cur.execute("""DELETE FROM Extension WHERE idExtension = ?""",(idExtension,))
         BDD.conn.commit()
