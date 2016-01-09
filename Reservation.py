@@ -1,9 +1,10 @@
 #-*- coding: utf-8 -*-
 import datetime
 import sqlite3
-import Jeu
-import Adherent
-import Emprunt
+from Jeu import Jeu
+from Adherent import Adherent
+from Emprunt import Emprunt
+from Extension import Extension
 from datetime import timedelta
 
 import BDD
@@ -120,22 +121,22 @@ class Reservation:
   def supprimerReserv(idReservation):
     BDD.cur.execute("""DELETE FROM Reservation WHERE idReservation = ?""",
                       (idReservation,))
-    BDD.cur.commit()
+    BDD.conn.commit()
   
   @staticmethod
   def annulerReservApresDateButoire(idReservation):
     Adherent.ajoutReservAnnule(Reservation.getIdAdhReserv(idReservation))     #on incrÃ©ment son nombre d'annulation
-    Adherent.setReservEnCours(Reservation.getIdAdhReserv(idReservation), None) #on annule l'id Reservation chez l'adhÃ©rent
+    Adherent.setReservEnCours(Reservation.getIdAdhReserv(idReservation), 0) #on annule l'id Reservation chez l'adhÃ©rent
     Reservation.supprimerReserv(idReservation)
     
   @staticmethod
   def annulerReservAvantDateButoire(idReservation):
-    Adherent.setReservEnCours(Reservation.getIdAdhReserv(idReservation), None) #on annule l'id Reservation chez l'adhÃ©rent
+    Adherent.setReservEnCours(Reservation.getIdAdhReserv(idReservation), 0) #on annule l'id Reservation chez l'adhÃ©rent
     Reservation.supprimerReserv(idReservation)
     
   @staticmethod
   def validerEmprunt(idReservation, date):
-    Adherent.setReservEnCours(Reservation.getIdAdhReserv(idReservation), None) #on annule l'id Reservation chez l'adhÃ©rent
+    Adherent.setReservEnCours(Reservation.getIdAdhReserv(idReservation), 0) #on annule l'id Reservation chez l'adhÃ©rent
     if ((Reservation.aUnJeu(idReservation))and(Reservation.aUneExtension(idReservation))):  #si l'adherent a rÃ©servÃ© 1 jeu + 1 extension
         Emprunt.emprunterExtensionAvecJeu(Reservation.getIdAdhReserv(idReservation), 
                                           Reservation.getIdExtensionReserv(idReservation),
