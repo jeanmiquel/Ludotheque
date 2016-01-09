@@ -20,13 +20,13 @@ class Adherent :
       BDD.conn.commit()
       
     @staticmethod
-    def setNaissance(idAdherent, dateNaissance):
-      BDD.cur.execute("""UPDATE Adherent SET dateNaissance= ? WHERE idAdherent = ?""",
-      (dateNaissance, idAdherent))
+    def setNaissance(idAdherent, dateNaissanceAdherent):
+      BDD.cur.execute("""UPDATE Adherent SET dateNaissanceAdherent= ? WHERE idAdherent = ?""",
+      (dateNaissanceAdherent, idAdherent))
       BDD.conn.commit()
 
     @staticmethod
-    def setPseudo(idAdherent, pseudoAdh) :
+    def setPseudo(idAdherent, pseudoAdherent) :
       BDD.cur.execute("""UPDATE Adherent SET pseudoAdherent = ? WHERE idAdherent = ?""",
       (pseudoAdherent, idAdherent))
       BDD.conn.commit()
@@ -42,7 +42,7 @@ class Adherent :
       BDD.conn.commit()
 
     @staticmethod
-    def setMail(idAdherent, adressMailAdherent):
+    def setMail(idAdherent, adresseMailAdherent):
       BDD.cur.execute(""" UPDATE Adherent SET adresseMailAdherent = ? WHERE idAdherent = ?""",(adresseMailAdherent,idAdherent))
       BDD.conn.commit()
 
@@ -53,13 +53,13 @@ class Adherent :
       BDD.conn.commit()
     
     @staticmethod    
-    def setAdresse(idAdherent, codePostalAdherent):
+    def setCodePostale(idAdherent, codePostalAdherent):
       BDD.cur.execute(""" UPDATE Adherent SET codePostalAdherent = ? WHERE idAdherent = ?""",
       (codePostalAdherent, idAdherent))
       BDD.conn.commit()
       
     @staticmethod    
-    def setAdresse(idAdherent, villeAdherent):
+    def setVille(idAdherent, villeAdherent):
       BDD.cur.execute(""" UPDATE Adherent SET villeAdherent = ? WHERE idAdherent = ?""",
       (villeAdherent, idAdherent))
       BDD.conn.commit()
@@ -287,8 +287,8 @@ class Adherent :
         BDD.cursor.execute("""DELETE FROM Adherent WHERE idAdherent= ?""",(idAdherent,))
         BDD.conn.commit()
 
-    @staticmethod
-    def ajoutAdherent(nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, adresseMailAdherent):
+   @staticmethod
+    def ajoutAdherent(nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, adresseMailAdherent,estAdmin):
         BDD.cur.execute("""SELECT MAX(idAdherent) FROM Adherent""")
         f = BDD.cur.fetchone()[0]
         if (f==None):
@@ -299,7 +299,7 @@ class Adherent :
             villeAdherent, numeroTelAdherent, pseudoAdherent, motDePasseAdherent, adresseMailAdherent, estAdminAdherent, datePaiementAdherent, nombreRetardAdherent,
             nombreJourRetardAdherent, reservationAnnuleAdherent, idEmprunt, idReservation)
             VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-          (idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, prenomAdherent+"."+nomAdherent, adresseMailAdherent, False, datetime.date.today(), 0,0, 0, 0,0))
+          (idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, prenomAdherent+"."+nomAdherent, adresseMailAdherent, estAdmin, datetime.datetime.now(), 0,0, 0, 0,0))
         BDD.conn.commit()
 
         #cur.execute("""INSERT INTO Adherent(idAdherent, nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent,
@@ -312,7 +312,7 @@ class Adherent :
     
     @staticmethod
     def reinitialiserMDPAdherent(idAdherent):
-        BDD.cur.execute("""UPDATE Adherent SET motDePasseAdherent = ? WHERE idAdherent = ?""",(Adherent.getPrenomAdh(idAdherent)+"."+Adherent.getNomAdh(idAdherent),idAdherent))
+        BDD.cur.execute("""UPDATE Adherent SET motDePasseAdherent = ? WHERE idAdherent = ?""",(Adherent.getPrenom(idAdherent)+"."+Adherent.getNom(idAdherent),idAdherent))
         BDD.conn.commit()
         
     @staticmethod
