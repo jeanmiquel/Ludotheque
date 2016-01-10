@@ -12,8 +12,6 @@ Priorité moyenne + :
 Priorité moyenne - :
 
 - Réinitialiser mdp dans catalogue Adherent
-- Vérifier que le pseudo de l'adhérent créé est unique
-- Que l'adhérent se connecte avec son pseudo.
 - Vérifier que l'adhérent a UN emprunt en cours
 - Vérifier que l'adhérent a UNE réservation en cours
 
