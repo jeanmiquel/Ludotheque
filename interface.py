@@ -1250,8 +1250,8 @@ def catalogueEmprunt(Emprunts=Emprunt.getAllEmprunts()): #idAdherent
     maj()
     
     p.add(Label(p, text="Bonjour "+Adherent.getPseudo(infos[0]), bg="white", anchor=CENTER, width=10))
-    if (infos[1]):
-        p.add(Button(p, text="Ajouter un emprunt", bg="cyan", activebackground="cyan", borderwidth=10, width=10, command= rien))#partial(formulaireJeu,numAdh)))
+#    if (infos[1]):
+#        p.add(Button(p, text="Ajouter un emprunt", bg="cyan", activebackground="cyan", borderwidth=10, width=10, command= rien))#partial(formulaireJeu,numAdh)))
     p.add(Button(p, text="Retour au menu principal", bg="orange", activebackground="orange", borderwidth=10, width=10, command= retourMenu ))
     p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = infos[2].destroy ))
 
@@ -1365,7 +1365,7 @@ def catalogueReservation(Reservations=Reservation.getAllReservations()): #idAdhe
     maj()
     
     p.add(Label(p, text="Bonjour "+Adherent.getPseudo(infos[0]), bg="white", anchor=CENTER, width=10))
-    p.add(Button(p, text="Ajouter une réservation", bg="cyan", activebackground="cyan", borderwidth=10, width=10, command= rien))#partial(formulaireReservation,numAdh)))
+#    p.add(Button(p, text="Ajouter une réservation", bg="cyan", activebackground="cyan", borderwidth=10, width=10, command= rien))#partial(formulaireReservation,numAdh)))
     p.add(Button(p, text="Retour au menu principal", bg="orange", activebackground="orange", borderwidth=10, width=10, command= retourMenu ))
     p.add(Button(p, text="Quitter", bg="white", activebackground="black", borderwidth=10, width=10, command = infos[2].destroy ))
 
