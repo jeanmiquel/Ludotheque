@@ -944,7 +944,7 @@ def reserver(numJeu, mode=-1): #idJeu/extension + idAdherent + booleenJeu (Vrai 
 #MODIFICATION/CREATION D'UN ADHERENT
 
 
-def formulaireAdherent(numAdh=infos[0], modification=1):
+def formulaireAdherent(numAdh=infos[0], modification=-1):
     fAdh = Frame(infos[2])
     infos[2].title("Profil de "+Adherent.getPrenom(numAdh))
 
@@ -1114,7 +1114,7 @@ def formulaireAdherent(numAdh=infos[0], modification=1):
         villeAdh = StringVar()
         villeAdh.set(Adherent.getVille(numAdh))
     entryVilleAdh = Entry(fAdh,textvariable=villeAdh,width=40)
-    entryVilleAdh.grid(row=10, column=2, columnspan=1)
+    entryVilleAdh.grid(row=9, column=2, columnspan=1)
     
     #code postale
     Label(fAdh, text="Code postal : ").grid(row=10, column=1, columnspan=1)
@@ -1124,7 +1124,7 @@ def formulaireAdherent(numAdh=infos[0], modification=1):
         cpAdh = StringVar()
         cpAdh.set(Adherent.getCodePostal(numAdh))
     entryCpAdh = Entry(fAdh,textvariable=cpAdh,width=40)
-    entryCpAdh.grid(row=9, column=2, columnspan=1)
+    entryCpAdh.grid(row=10, column=2, columnspan=1)
     
     #num telephone
     Label(fAdh, text="Numéro : ").grid(row=11, column=1, columnspan=1)
