@@ -243,7 +243,7 @@ def formulaireExt(idExt = -1, idJeu=0): #Par dÃƒÂ©faut, idExt =-1 => creatio
 
 def connexion():
     def verification():
-        infos[0] = Adherent.getId(pseudo.get())
+        infos[0] = Adherent.getIdByPseudo(pseudo.get())
         if (infos[0] <> None):
             if (mdp.get()==Adherent.getMotDePasse(infos[0])):
                 infos[1]=(Adherent.getEstAdministrateur(infos[0])<>None and Adherent.getEstAdministrateur(infos[0]))
@@ -253,16 +253,16 @@ def connexion():
                 showwarning('Mot de passe incorrect','Mot de passe incorrect.\nVeuillez recommencer !')
                 mdp.set('')
         else:
-            showwarning('Pseudo inexistant','Adresse mail ou pseudo inexistant.\nVeuillez recommencer !')
+            showwarning('Pseudo inexistant','Pseudo inexistant.\nVeuillez recommencer !')
             mdp.set('')
             pseudo.set('')
         
     fconnexion =  Frame(infos[2])
-    infos[2].title("Connexion ÃƒÂ  la LudothÃƒÂ©que")
+    infos[2].title("Connexion a  la Ludotheque")
     
     p = PanedWindow(fconnexion, orient = HORIZONTAL, height = 20, width = 300)
     p.grid(row=1)
-    p.add(Label(p, text="Nom de connexion : ", anchor=CENTER, width= 20))
+    p.add(Label(p, text="Pseudo : ", anchor=CENTER, width= 20))
     pseudo = StringVar()
     p.add(Entry(p, width = 20, textvariable = pseudo))
     
