@@ -15,13 +15,13 @@ infos = [1,True, Tk()]
 
 #FORMULAIRE DE JEU
 
-def formulaireJeu(idJeu = -1): #Par dÃƒÂ©faut, -1 = creation
+def formulaireJeu(idJeu = -1): #Par defaut, -1 = creation
     """Prend l'id d'un jeu pour le modifier, ou -1 pour en creer un nouveau"""
     FJ = Frame(infos[2])
-    #FJ.wm_attributes("-topmost" , -1) #Mets la fenetre au premier plan dÃƒÂ¨s son apparition.
+    #FJ.wm_attributes("-topmost" , -1) #Mets la fenetre au premier plan des son apparition.
     idJ = IntVar()
     idJ.set(idJeu)
-    Creation = BooleanVar()            #Les variables declarÃƒÂ©e comme ceci semble ÃƒÂªtre utilisable pour les fonctions imbriquÃƒÂ© de Tkinter
+    Creation = BooleanVar()            #Les variables declaree comme ceci semble etre utilisable pour les fonctions imbrique de Tkinter
     Creation.set(False)
     if idJ.get() < 0 : #Cas de creation du jeu, valeur par defaut
         nomJ="Nom du jeu"
@@ -63,7 +63,7 @@ def formulaireJeu(idJeu = -1): #Par dÃƒÂ©faut, -1 = creation
             Jeu.setEditeurJeu(idJ.get(),editeurJeu.get())
             Jeu.setEmpruntable(idJ.get(),Empbool.get())
             Jeu.setSynopsisJeu(idJ.get(),synopsisJeu.get())
-            return FJ.destroy() #Ferme aprÃƒÂ¨s avoir enregistre.
+            return FJ.destroy() #Ferme apres avoir enregistre.
         else : return 
 
     def cancel(): #Ferme la fenetre
@@ -85,7 +85,7 @@ def formulaireJeu(idJeu = -1): #Par dÃƒÂ©faut, -1 = creation
     AddJ = Label(FJ, text="Ajouter le jeu :")
     #Titre
     T1.pack()
-    #Nom du jeu (champs ÃƒÂ  remplir)
+    #Nom du jeu (champs a remplir)
     NJ.pack()
     nomJeu = StringVar()
     nomJeu.set(nomJ)
@@ -97,7 +97,7 @@ def formulaireJeu(idJeu = -1): #Par dÃƒÂ©faut, -1 = creation
     anneeJeu.set(anneeJ)
     AnJI = Spinbox(FJ, from_=1960, to = date.today().year, textvariable=anneeJeu)
     AnJI.pack()
-    #Age joueurs(Champs ÃƒÂ  remplir)
+    #Age joueurs(Champs a remplir)
     AgJ.pack()
     ageJeu=IntVar()
     ageJeu.set(ageJ)
@@ -115,37 +115,37 @@ def formulaireJeu(idJeu = -1): #Par dÃƒÂ©faut, -1 = creation
     quantiteJeu.set(quantiteJ)
     QJI = Spinbox(FJ, from_=0, to=999, textvariable=quantiteJeu)
     QJI.pack()
-    #Auteur du jeu (champs ÃƒÂ  remplir)
+    #Auteur du jeu (champs a remplir)
     AJ.pack()
     auteurJeu=StringVar()
     auteurJeu.set(auteurJ)
     AJI = Entry(FJ, textvariable=auteurJeu, width = 45)
     AJI.pack()
-    #Illustrateur du jeu (champs ÃƒÂ  remplir)
+    #Illustrateur du jeu (champs a remplir)
     IJ.pack()
     illustrateurJeu=StringVar()
     illustrateurJeu.set(illustrateurJ)
     IJI = Entry(FJ, textvariable=illustrateurJeu, width = 45)
     IJI.pack()
-    #Editeur du jeu (champs ÃƒÂ  remplir)
+    #Editeur du jeu (champs a remplir)
     EJ.pack()
     editeurJeu=StringVar()
     editeurJeu.set(editeurJ)
     EJI = Entry(FJ, textvariable=editeurJeu, width = 45)
     EJI.pack()
-    #Empruntable ou non ? (case ÃƒÂ  cocher)
+    #Empruntable ou non ? (case a cocher)
     Emp.pack()
     Empbool = BooleanVar()
     Empbool.set(estEmpruntableJ)
     EmpI = Checkbutton(FJ, text="Est-il empruntable?", variable = Empbool)
     EmpI.pack()
-    #Synospis du jeu (Champs ÃƒÂ  remplir)
+    #Synospis du jeu (Champs a remplir)
     SJ.pack()
     synopsisJeu = StringVar()
     synopsisJeu.set(synopsisJ)
     SJI = Entry(FJ, textvariable=synopsisJeu, width = 45)
     SJI.pack()
-    #Fin : Confirmation de l'ajout/modification du jeu, appel de la fonction submit (sans parenthÃƒÂ¨ses)
+    #Fin : Confirmation de l'ajout/modification du jeu, appel de la fonction submit (sans parentheses)
     AddJ.pack()
     AddJI = Button(FJ, text="Confirmer", command = submit)
     AddJI.pack()
@@ -158,15 +158,15 @@ def formulaireJeu(idJeu = -1): #Par dÃƒÂ©faut, -1 = creation
     return catalogue(Jeu.getAllJeu())
 
 
-def formulaireExt(idExt = -1, idJeu=0): #Par dÃƒÂ©faut, idExt =-1 => creation
+def formulaireExt(idExt = -1, idJeu=0): #Par defaut, idExt =-1 => creation
     """Prend l'id d'une extension pour la modifier, ou -1 pour en creer une nouvelle"""
     
     FE = Frame(infos[2])
     infos[2].title("Formulaire d'extension")
-    #FE.wm_attributes("-topmost" , -1) #Mets la fenetre au premier plan dÃƒÂ¨s son apparition.
+    #FE.wm_attributes("-topmost" , -1) #Mets la fenetre au premier plan des son apparition.
     idE = IntVar()
     idE.set(idExt)
-    Creation = BooleanVar()            #Les variables declarÃƒÂ©e comme ceci semble ÃƒÂªtre utilisable pour les fonctions imbriquÃƒÂ© de Tkinter
+    Creation = BooleanVar()            #Les variables declaree comme ceci semble etre utilisable pour les fonctions imbrique de Tkinter
     Creation.set(False)
     if idE.get() >= 0:
         idJeu = Extension.getIdJeu(idExt)
@@ -190,7 +190,7 @@ def formulaireExt(idExt = -1, idJeu=0): #Par dÃƒÂ©faut, idExt =-1 => creatio
             else :
                 Extension.setNomExtension(idE.get(),nomExt.get())
                 Extension.setNbreTotalExtension(idE.get(),quantiteExt.get())
-            return FE.destroy() #Ferme aprÃƒÂ¨s avoir enregistre.
+            return FE.destroy() #Ferme apres avoir enregistre.
         else : return
 
     def cancel(): #Ferme la fenetre
@@ -206,11 +206,11 @@ def formulaireExt(idExt = -1, idJeu=0): #Par dÃƒÂ©faut, idExt =-1 => creatio
     AddE = Label(FE, text="Ajouter l'extension :")
     #Titre
     T1.pack()
-    #Nom du jeu (recupÃƒÂ¨re l'id du jeu dans la liste)
+    #Nom du jeu (recupere l'id du jeu dans la liste)
     NJE.pack()
     NomJeu = Label(FE, text =Jeu.getNomJeu(idJeu))
     NomJeu.pack() 
-    #Nom de l'extension (champs ÃƒÂ  remplir)
+    #Nom de l'extension (champs a remplir)
     NE.pack()
     nomExt = StringVar()
     nomExt.set(nomE)
@@ -222,7 +222,7 @@ def formulaireExt(idExt = -1, idJeu=0): #Par dÃƒÂ©faut, idExt =-1 => creatio
     quantiteExt.set(quantiteE)
     QEI = Spinbox(FE, from_=0, to=999, textvariable=quantiteExt)
     QEI.pack()
-    #Fin : Confirmation de l'ajout/modification du extension, appel de la fonction submit (sans parenthÃƒÂ¨ses)
+    #Fin : Confirmation de l'ajout/modification du extension, appel de la fonction submit (sans parentheses)
     AddE.pack()
     AddEI = Button(FE, text="Confirmer", command = submit)
     AddEI.pack()
@@ -259,6 +259,8 @@ def connexion():
         
     fconnexion =  Frame(infos[2])
     infos[2].title("Connexion a  la Ludotheque")
+    #fenetre aparaisse au premier plan
+    infos[2].wm_attributes("-topmost", 1)
     
     p = PanedWindow(fconnexion, orient = HORIZONTAL, height = 20, width = 300)
     p.grid(row=1)
@@ -293,7 +295,7 @@ def rien():
 
 #MENU PRINCIPAL
         
-def menu(): #numIdAdhÃƒÂ©rent
+def menu(): #numIdAdherent
     def maj():
         # on arrive ici toutes les 1000 ms
         t=datetime.datetime.today()
@@ -364,7 +366,7 @@ def menu(): #numIdAdhÃƒÂ©rent
 #PANNEAU D'ADMINISTRATION
 
 
-def panneauAdmin(): #numIdAdhÃƒÂ©rent
+def panneauAdmin(): #numIdAdherent
     def maj():
         # on arrive ici toutes les 1000 ms
         t=datetime.datetime.today()
@@ -412,14 +414,14 @@ def panneauAdmin(): #numIdAdhÃƒÂ©rent
     
     pd = PanedWindow(fpanneauadmin,orient=HORIZONTAL, height=350, width=600)
     pd.grid(row=2)
-    pd.add(Button(pd, text="Gestion des AdhÃƒÂ©rents", width=38, command = LanceAdherent, bg="yellow", activebackground="yellow", borderwidth=10))
+    pd.add(Button(pd, text="Gestion des Adherents", width=38, command = LanceAdherent, bg="yellow", activebackground="yellow", borderwidth=10))
     pd.add(Button(pd, text="Gestion des Jeux", width=38, command = LanceCatalogue, bg="red", activebackground="red", borderwidth=10))
 
 
     pt = PanedWindow(fpanneauadmin,orient=HORIZONTAL, height=350, width=600)
     pt.grid(row=3)
     pt.add(Button(pt, text="Gestion des Emprunts", command = LanceEmprunt, bg="green", width=38,activebackground="green", borderwidth=10))
-    pt.add(Button(pt, text="Gestion des rÃƒÂ©servations", command = LanceReservation,bg="cyan", width=38,activebackground="cyan", borderwidth=10))
+    pt.add(Button(pt, text="Gestion des Reservations", command = LanceReservation,bg="cyan", width=38,activebackground="cyan", borderwidth=10))
 
     fpanneauadmin.pack()
     infos[2].mainloop()
@@ -499,9 +501,9 @@ def catalogue(Jeux=Jeu.getAllJeu()): #idAdherent
             Label(fcatalogue, text=str(Jeux[i][8]), bg="orange", width = 15).grid(row=j, column=8)
             if (infos[1]):
                 Button(fcatalogue, text="Modifier", command = partial(lanceFormulaireJeu, Jeux[i][0]),bg="blue", width=13,activebackground="blue").grid(row=j, column=9) #partial(formulaireJeu,Jeux[i][0])
-                Button(fcatalogue, text="CrÃƒÂ©er extension", command = partial(lanceFormulaireExt, -1, Jeux[i][0]),bg="cyan", width=13,activebackground="cyan").grid(row=j, column=14)
+                Button(fcatalogue, text="Creer extension", command = partial(lanceFormulaireExt, -1, Jeux[i][0]),bg="cyan", width=13,activebackground="cyan").grid(row=j, column=14)
             else:
-                Button(fcatalogue, text="DÃƒÂ©tail", command = partial(afficheFicheJeu,Jeux[i][0]) ,bg="blue", width=13,activebackground="blue").grid(row=j, column=9)
+                Button(fcatalogue, text="Detail", command = partial(afficheFicheJeu,Jeux[i][0]) ,bg="blue", width=13,activebackground="blue").grid(row=j, column=9)
                 
             if (Jeu.aDesExtensions(Jeux[i][0])):
                 Button(fcatalogue, text="Extensions", command = partial(lancerExtension, Jeux[i][0]),bg="red", width=13,activebackground="red").grid(row=j, column=10)
@@ -515,7 +517,7 @@ def catalogue(Jeux=Jeu.getAllJeu()): #idAdherent
 
     
     fcatalogue = Frame(infos[2])
-    infos[2].title("Les jeux de la ludothÃƒÂ¨que")
+    infos[2].title("Les jeux de la ludotheque")
     #fcatalogue.grid_columnconfigure(0,weight=1)
     #fcatalogue.grid_rowconfigure(20,weight=21)
 
@@ -546,10 +548,10 @@ def catalogue(Jeux=Jeu.getAllJeu()): #idAdherent
 
 
     Label(fcatalogue, text="Nom", bg="green", width = 23).grid(row=2, column=1)
-    Label(fcatalogue, text="AnnÃƒÂ©e", bg="green", width = 8).grid(row=2, column=2)
+    Label(fcatalogue, text="Annee", bg="green", width = 8).grid(row=2, column=2)
     Label(fcatalogue, text="Age Min.", bg="green", width = 8).grid(row=2, column=3)
     Label(fcatalogue, text="Nb Joueur", bg="green", width = 8).grid(row=2, column=4)
-    Label(fcatalogue, text="DisponibilitÃƒÂ©", bg="green", width = 13).grid(row=2, column=5)
+    Label(fcatalogue, text="Disponibilite", bg="green", width = 13).grid(row=2, column=5)
     Label(fcatalogue, text="Auteur", bg="green", width = 13).grid(row=2, column=6)
     Label(fcatalogue, text="Illustrateur", bg="green", width = 15).grid(row=2, column=7)
     Label(fcatalogue, text="Editeur", bg="green", width = 13).grid(row=2, column=8)
@@ -715,7 +717,7 @@ def ficheJeu(numJeu): #idAdherent + idJeu
     Label(fficheJeu, text="Nombre de Joueurs : ", bg="green", width = 15).grid(row=5, column=1)
     Label(fficheJeu, text=str(Jeu.getNbJoueurJeu(numJeu)), bg="orange", width = 15).grid(row=5, column=2)
 
-    Label(fficheJeu, text="QuantitÃƒÂ© en stock : ", bg="green", width = 15).grid(row=6, column=1)
+    Label(fficheJeu, text="Quantitee en stock : ", bg="green", width = 15).grid(row=6, column=1)
     Label(fficheJeu, text=str(Jeu.getQuantiteJeu(numJeu)), bg="orange", width = 15).grid(row=6, column=2)
     
     Label(fficheJeu, text="Auteur : ", bg="green", width = 15).grid(row=7, column=1)
@@ -733,7 +735,7 @@ def ficheJeu(numJeu): #idAdherent + idJeu
     r = 5
     if (infos[1]):
         Button(fficheJeu, text="Modifier", command = partial(lanceFormulaireJeu, numJeu),bg="blue", width=13,activebackground="blue").grid(row=r, column=3) #partial(formulaireJeu,Jeux[i][0])
-        Button(fficheJeu, text="CrÃƒÂ©er extension", command = partial(lanceFormulaireExt, -1, numJeu),bg="cyan", width=13,activebackground="cyan").grid(row=r+1, column=3)
+        Button(fficheJeu, text="Creer extension", command = partial(lanceFormulaireExt, -1, numJeu),bg="cyan", width=13,activebackground="cyan").grid(row=r+1, column=3)
         r=r+2
 
     if (Jeu.aDesExtensions(numJeu)):
@@ -848,8 +850,8 @@ def formulaireEmprunt(numJeu, mode=-1): #idJeu/extension + idAdherent + boolÃƒ
 #INTERFACE DE RESERVATION D'UN JEU
 
 
-def reserver(numJeu, mode=-1): #idJeu/extension + idAdherent + boolÃƒÂ©enJeu (Vrai si l'id en param est un Jeu, Faux si c'est une extension
-    # + boolÃƒÂ©enExtension (Par dÃƒÂ©faut ÃƒÂ  faux, vrai si on ne rÃƒÂ©serve qu'UNE extension)
+def reserver(numJeu, mode=-1): #idJeu/extension + idAdherent + booleenJeu (Vrai si l'id en param est un Jeu, Faux si c'est une extension
+    # + booleenExtension (Par defaut a faux, vrai si on ne reserve qu'UNE extension)
     def CallBackReserv(adh, numJeu): #Fonction de confirmation DANS la fonction de fenetre.
         if askyesno("Confirmation", "etes-vous sur de vouloir réserver ce jeu ?"):
             dateDeb = datetime.date(int(ddy.get()), int(ddm.get()), int(ddd.get()))
