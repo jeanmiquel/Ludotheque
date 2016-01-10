@@ -942,7 +942,7 @@ def reserver(numJeu, mode=-1): #idJeu/extension + idAdherent + boolÃƒÂ©enJeu
 #MODIFICATION/CREATION D'UN ADHERENT
 
 
-def formulaireAdherent(numAdh=infos[0], modification=-1):
+def formulaireAdherent(numAdh=infos[0], modification=1):
     fAdh = Frame(infos[2])
     infos[2].title("Profil de "+Adherent.getPrenom(numAdh))
 
@@ -996,13 +996,20 @@ def formulaireAdherent(numAdh=infos[0], modification=-1):
             else:
                 return 
         #on creer un adherent
-        else:    
-            if (askyesno("Confirmation", "Creer ce nouveau adherent ?")):
-                #ajoutAdherent(nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, adresseMailAdherent, estAdmin)
-                Adherent.ajoutAdherent(infoAdh[0],infoAdh[1],infoAdh[4],infoAdh[5],infoAdh[7],infoAdh[6],infoAdh[8],infoAdh[2],infoAdh[9],infoAdh[10])
-                return fAdh.quit() #Ferme si "oui"
+        else:
+            #verification de l'unicité du pseudo
+            if Adherent.getIdByPseudo(infoAdh[2]) <> None:
+                showwarning('Pseudo','Ce pseudo est déja utilisé.\nVeuillez recommencer !')
+                entryPseudoAdh.delete(0, END)
+                return
             else:
-                return 
+                #ajout de l'adherent
+                if (askyesno("Confirmation", "Creer ce nouveau adherent ?")):
+                    #ajoutAdherent(nomAdherent, prenomAdherent, dateNaissanceAdherent, adresseAdherent, codePostalAdherent, villeAdherent, numeroTelAdherent,  pseudoAdherent, adresseMailAdherent, estAdmin)
+                    Adherent.ajoutAdherent(infoAdh[0],infoAdh[1],infoAdh[4],infoAdh[5],infoAdh[7],infoAdh[6],infoAdh[8],infoAdh[2],infoAdh[9],infoAdh[10])
+                    return fAdh.quit() #Ferme si "oui"
+                else:
+                    return 
 
     #menu haut
     p = PanedWindow(fAdh, orient = HORIZONTAL, height=100, width=600)
@@ -1042,10 +1049,11 @@ def formulaireAdherent(numAdh=infos[0], modification=-1):
     Label(fAdh, text="Pseudo : ").grid(row=5, column=1, columnspan=1)
     if(modification == 1):
         pseudoAdh = ""
+        entryPseudoAdh = Entry(fAdh,textvariable=pseudoAdh,width=40)
     else:
         pseudoAdh = StringVar()
         pseudoAdh.set(Adherent.getPseudo(numAdh))
-    entryPseudoAdh = Entry(fAdh,textvariable=pseudoAdh,width=40)
+        entryPseudoAdh = Entry(fAdh,textvariable=pseudoAdh,width=40, state=DISABLED)
     entryPseudoAdh.grid(row=5, column=2, columnspan=1)
     
     #mdp
